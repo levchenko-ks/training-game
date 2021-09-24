@@ -25,6 +25,14 @@ public class @ActionAssetControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Looking"",
+                    ""type"": ""Value"",
+                    ""id"": ""1e25639b-4ab2-4a9f-8049-7daeaee2b9e9"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -82,6 +90,17 @@ public class @ActionAssetControls : IInputActionCollection, IDisposable
                     ""action"": ""Moving"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dcca65f9-eac3-4c10-bb65-85f884a5b17c"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Looking"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -97,6 +116,7 @@ public class @ActionAssetControls : IInputActionCollection, IDisposable
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Moving = m_Gameplay.FindAction("Moving", throwIfNotFound: true);
+        m_Gameplay_Looking = m_Gameplay.FindAction("Looking", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
     }
@@ -149,11 +169,13 @@ public class @ActionAssetControls : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Gameplay;
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_Moving;
+    private readonly InputAction m_Gameplay_Looking;
     public struct GameplayActions
     {
         private @ActionAssetControls m_Wrapper;
         public GameplayActions(@ActionAssetControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Moving => m_Wrapper.m_Gameplay_Moving;
+        public InputAction @Looking => m_Wrapper.m_Gameplay_Looking;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -166,6 +188,9 @@ public class @ActionAssetControls : IInputActionCollection, IDisposable
                 @Moving.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoving;
                 @Moving.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoving;
                 @Moving.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnMoving;
+                @Looking.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLooking;
+                @Looking.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLooking;
+                @Looking.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLooking;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -173,6 +198,9 @@ public class @ActionAssetControls : IInputActionCollection, IDisposable
                 @Moving.started += instance.OnMoving;
                 @Moving.performed += instance.OnMoving;
                 @Moving.canceled += instance.OnMoving;
+                @Looking.started += instance.OnLooking;
+                @Looking.performed += instance.OnLooking;
+                @Looking.canceled += instance.OnLooking;
             }
         }
     }
@@ -205,6 +233,7 @@ public class @ActionAssetControls : IInputActionCollection, IDisposable
     public interface IGameplayActions
     {
         void OnMoving(InputAction.CallbackContext context);
+        void OnLooking(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

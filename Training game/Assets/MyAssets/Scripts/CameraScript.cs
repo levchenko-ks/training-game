@@ -9,7 +9,7 @@ public class CameraScript : MonoBehaviour
     private Camera _cam;
     private float _horizontal;
     private float _vertical;
-    private float _height = 8f;
+    private float _height = 12f;
 
     void Start()
     {

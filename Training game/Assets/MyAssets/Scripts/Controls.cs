@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Settings/Input/Controls.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/MyAssets/Settings/Input/Controls.inputactions'
 
 using System;
 using System.Collections;
@@ -31,6 +31,14 @@ public class @ActionAssetControls : IInputActionCollection, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""1e25639b-4ab2-4a9f-8049-7daeaee2b9e9"",
                     ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""7eb61051-5db6-46db-9c6a-2ed609d557bc"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -101,14 +109,19 @@ public class @ActionAssetControls : IInputActionCollection, IDisposable
                     ""action"": ""Looking"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d8fa606b-050a-43b0-a6ca-b49ee214787e"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
-        },
-        {
-            ""name"": ""UI"",
-            ""id"": ""e399e49a-1933-4fba-a34c-f1bb601dd179"",
-            ""actions"": [],
-            ""bindings"": []
         }
     ],
     ""controlSchemes"": []
@@ -117,8 +130,7 @@ public class @ActionAssetControls : IInputActionCollection, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Moving = m_Gameplay.FindAction("Moving", throwIfNotFound: true);
         m_Gameplay_Looking = m_Gameplay.FindAction("Looking", throwIfNotFound: true);
-        // UI
-        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_Gameplay_Fire = m_Gameplay.FindAction("Fire", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -170,12 +182,14 @@ public class @ActionAssetControls : IInputActionCollection, IDisposable
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_Moving;
     private readonly InputAction m_Gameplay_Looking;
+    private readonly InputAction m_Gameplay_Fire;
     public struct GameplayActions
     {
         private @ActionAssetControls m_Wrapper;
         public GameplayActions(@ActionAssetControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Moving => m_Wrapper.m_Gameplay_Moving;
         public InputAction @Looking => m_Wrapper.m_Gameplay_Looking;
+        public InputAction @Fire => m_Wrapper.m_Gameplay_Fire;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -191,6 +205,9 @@ public class @ActionAssetControls : IInputActionCollection, IDisposable
                 @Looking.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLooking;
                 @Looking.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLooking;
                 @Looking.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLooking;
+                @Fire.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFire;
+                @Fire.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFire;
+                @Fire.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFire;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -201,41 +218,17 @@ public class @ActionAssetControls : IInputActionCollection, IDisposable
                 @Looking.started += instance.OnLooking;
                 @Looking.performed += instance.OnLooking;
                 @Looking.canceled += instance.OnLooking;
+                @Fire.started += instance.OnFire;
+                @Fire.performed += instance.OnFire;
+                @Fire.canceled += instance.OnFire;
             }
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
-
-    // UI
-    private readonly InputActionMap m_UI;
-    private IUIActions m_UIActionsCallbackInterface;
-    public struct UIActions
-    {
-        private @ActionAssetControls m_Wrapper;
-        public UIActions(@ActionAssetControls wrapper) { m_Wrapper = wrapper; }
-        public InputActionMap Get() { return m_Wrapper.m_UI; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
-        public void SetCallbacks(IUIActions instance)
-        {
-            if (m_Wrapper.m_UIActionsCallbackInterface != null)
-            {
-            }
-            m_Wrapper.m_UIActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-            }
-        }
-    }
-    public UIActions @UI => new UIActions(this);
     public interface IGameplayActions
     {
         void OnMoving(InputAction.CallbackContext context);
         void OnLooking(InputAction.CallbackContext context);
-    }
-    public interface IUIActions
-    {
+        void OnFire(InputAction.CallbackContext context);
     }
 }

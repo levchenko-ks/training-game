@@ -17,15 +17,7 @@ public class PlayerScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 moveDirection = Vector3.right * _horizontal + Vector3.forward * _vertical;
-        Vector3 newPosition = transform.position + moveDirection * moveSpeed * Time.fixedDeltaTime;
-
-        rb.MovePosition(newPosition);
-    }
-
-    private void Update()
-    {
-        transform.LookAt(Target);
+        Movement();
     }
 
     public void OnMoveInput(float horizontal, float vertical)
@@ -33,4 +25,17 @@ public class PlayerScript : MonoBehaviour
         _horizontal = horizontal;
         _vertical = vertical;
     }
+
+    private void Movement()
+    {
+        Vector3 moveDirection = Vector3.right * _horizontal + Vector3.forward * _vertical;
+        Vector3 newPosition = transform.position + moveDirection * moveSpeed * Time.fixedDeltaTime;
+
+        Vector3 lookDirection = Target.position - transform.position;
+        Quaternion newRotation = Quaternion.LookRotation(lookDirection);
+
+        rb.MovePosition(newPosition);
+        rb.MoveRotation(newRotation);
+    }
+
 }

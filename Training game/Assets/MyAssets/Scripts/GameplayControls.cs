@@ -3,14 +3,16 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-[Serializable] public class PlayerInputIvent : UnityEvent<float, float> { }
+[Serializable] public class VectorInputIvent : UnityEvent<float, float> { }
+[Serializable] public class BoolInputIvent : UnityEvent<bool> { }
 
 public class GameplayControls : MonoBehaviour
 {
     ActionAssetControls controls;
 
-    public PlayerInputIvent MoveInputIvent;
-    public PlayerInputIvent LookInputIvent;
+    public VectorInputIvent MoveInputIvent;
+    public VectorInputIvent LookInputIvent;
+    public BoolInputIvent FireInputIvent;
 
     private void Awake()
     {
@@ -23,7 +25,8 @@ public class GameplayControls : MonoBehaviour
         controls.Gameplay.Moving.performed += MoveInput;
         controls.Gameplay.Moving.canceled += MoveInput;
         controls.Gameplay.Looking.performed += LookInput;
-        // controls.Gameplay.Looking.canceled += LookInput;
+        controls.Gameplay.Fire.performed += FireInput;
+        controls.Gameplay.Fire.canceled += FireInput;
     }
 
     private void MoveInput(InputAction.CallbackContext obj)
@@ -36,5 +39,11 @@ public class GameplayControls : MonoBehaviour
     {
         Vector2 lookInput = obj.ReadValue<Vector2>();
         LookInputIvent.Invoke(lookInput.x, lookInput.y);
+    }
+
+    private void FireInput(InputAction.CallbackContext obj)
+    {
+        bool fire = obj.ReadValueAsButton();
+        FireInputIvent.Invoke(fire);
     }
 }

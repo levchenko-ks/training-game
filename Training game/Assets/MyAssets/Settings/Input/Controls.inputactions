@@ -20,6 +20,14 @@
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "7eb61051-5db6-46db-9c6a-2ed609d557bc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -88,14 +96,19 @@
                     "action": "Looking",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d8fa606b-050a-43b0-a6ca-b49ee214787e",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
-        },
-        {
-            "name": "UI",
-            "id": "e399e49a-1933-4fba-a34c-f1bb601dd179",
-            "actions": [],
-            "bindings": []
         }
     ],
     "controlSchemes": []

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SpawnerScript : MonoBehaviour
+public class Spawner : MonoBehaviour
 {
     public GameObject Zombie;
     public GameObject Player;
@@ -24,6 +24,6 @@ public class SpawnerScript : MonoBehaviour
         _spawnPos = Player.transform.position + new Vector3(radiusPos.x, 0f, radiusPos.y);
         _timeToSpawn = Time.time + SpawnInterval;
 
-        Instantiate(Zombie, _spawnPos, Quaternion.identity);
+        Instantiate(Zombie, _spawnPos, Quaternion.identity, transform);
     }
 }

@@ -1,15 +1,18 @@
 using UnityEngine;
 
-public class ShootingScript : MonoBehaviour
+public class Shooting : MonoBehaviour
 {
     public GameObject Projectile;
     public GameObject Projectiles;
+    public ReloadBar ReloadBar;
+    public AmmoCounter AmmoCounter;
 
     public float rateOfFire = 10f; // per minute
     public int maxAmmo = 15;
     public float reloadTime = 3f;
 
     private bool _fire;
+    private bool _reload;
     private float _timeToFire = 0f;
     private int _currentAmmo;
     private Transform _firePoint;
@@ -19,6 +22,14 @@ public class ShootingScript : MonoBehaviour
         _firePoint = transform.Find("FirePoint").GetComponent<Transform>();
 
         _currentAmmo = maxAmmo;
+        AmmoCounter.SetCounter(_currentAmmo);
+
+    }
+
+    private void OnEnable()
+    {
+        ReloadBar.SetReloadTime(reloadTime);
+        ReloadBar.SetCurrentStatus(0f);
 
     }
 
@@ -26,10 +37,21 @@ public class ShootingScript : MonoBehaviour
     {
         if (_fire && Time.time >= _timeToFire)
         {
-            
+
             if (_currentAmmo != 0) { Shoot(); }
             else { Reload(); }
 
+        }
+
+        if (_reload)
+        {
+            ReloadBar.SetCurrentStatus(reloadTime - (_timeToFire - Time.time));
+            if (Time.time >= _timeToFire)
+            {
+                ReloadBar.SetCurrentStatus(0);
+                AmmoCounter.SetCounter(_currentAmmo);
+                _reload = false;
+            }
         }
     }
 
@@ -45,11 +67,12 @@ public class ShootingScript : MonoBehaviour
 
         _timeToFire = Time.time + 60f / rateOfFire;
         _currentAmmo--;
+        AmmoCounter.SetCounter(_currentAmmo);
 
     }
     private void Reload()
     {
-        Debug.Log("Reload");
+        _reload = true;
 
         _timeToFire = Time.time + reloadTime;
         _currentAmmo = maxAmmo;

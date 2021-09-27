@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class CameraScript : MonoBehaviour
+public class CameraControl : MonoBehaviour
 {
     public Transform Player;
     public Transform Target;
     public float smooth = 5f;
 
-    private Camera _cam;
+    private UnityEngine.Camera _cam;
     private float _horizontal;
     private float _vertical;
     private float _height = 12f;
@@ -16,7 +16,7 @@ public class CameraScript : MonoBehaviour
         var startpos = new Vector3(Player.transform.position.x, _height, Player.transform.position.z);
         transform.position = startpos;
 
-        _cam = Camera.main;
+        _cam = UnityEngine.Camera.main;
     }
 
     void Update()

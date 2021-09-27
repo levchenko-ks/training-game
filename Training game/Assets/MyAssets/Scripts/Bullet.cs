@@ -1,28 +1,28 @@
 using UnityEngine;
 
-public class BulletScript : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
 
-    private Rigidbody rb;
+    private Rigidbody _rb;
 
     private float _speed = 30f;
     private float _damage = 20f;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
     {
         var newpos = transform.position + transform.forward * _speed * Time.fixedDeltaTime;
 
-        rb.MovePosition(newpos);
+        _rb.MovePosition(newpos);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        EnemyScript enemy = other.GetComponent<EnemyScript>();
+        Enemy enemy = other.GetComponent<Enemy>();
         if (enemy != null)
         {
             enemy.TakeDamage(_damage);

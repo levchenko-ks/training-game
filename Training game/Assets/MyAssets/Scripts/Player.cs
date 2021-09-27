@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
 {
     public Transform Target;
     public HealthBar HealthBar;
+
     public float moveSpeed = 5.0f;
     public float maxHealth = 100f;
     public float currentHealth = 100f;
@@ -31,17 +32,6 @@ public class Player : MonoBehaviour
         _vertical = vertical;
     }
 
-    public void TakeDamage(float damage)
-    {
-        currentHealth -= damage;
-        HealthBar.SetCurrentHealth(currentHealth);
-
-        if (currentHealth <= 0f)
-        {
-            GameOver();
-        }
-    }
-
     private void Moving()
     {
         Vector3 moveDirection = Vector3.right * _horizontal + Vector3.forward * _vertical;
@@ -52,6 +42,17 @@ public class Player : MonoBehaviour
 
         _rb.MovePosition(newPosition);
         _rb.MoveRotation(newRotation);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        HealthBar.SetCurrentHealth(currentHealth);
+
+        if (currentHealth <= 0f)
+        {
+            GameOver();
+        }
     }
 
     private void GameOver()

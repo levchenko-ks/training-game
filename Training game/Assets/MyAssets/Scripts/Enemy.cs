@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    
+
     public float maxHealth = 100f;
     public float currentHealth = 100f;
     public float moveSpeed = 2f;
@@ -29,6 +29,21 @@ public class Enemy : MonoBehaviour
     {
         Moving();
     }
+    private void OnTriggerStay(Collider other)
+    {
+        DoDamage(other);
+    }
+    private void Moving()
+    {
+        Vector3 moveDirection = _playerPosition.position - transform.position;
+        Vector3 newPosition = transform.position + moveDirection.normalized * moveSpeed * Time.fixedDeltaTime;
+
+        Vector3 lookDirection = _playerPosition.position - transform.position;
+        Quaternion newRotation = Quaternion.LookRotation(lookDirection);
+
+        _rb.MovePosition(newPosition);
+        _rb.MoveRotation(newRotation);
+    }
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
@@ -44,27 +59,13 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void Moving()
-    {
-        Vector3 moveDirection = _playerPosition.position - transform.position;
-        Vector3 newPosition = transform.position + moveDirection.normalized * moveSpeed * Time.fixedDeltaTime;
-
-        Vector3 lookDirection = _playerPosition.position - transform.position;
-        Quaternion newRotation = Quaternion.LookRotation(lookDirection);
-
-        _rb.MovePosition(newPosition);
-        _rb.MoveRotation(newRotation);
-    }
-    private void OnTriggerStay(Collider other)
+    private void DoDamage(Collider other)
     {
         Player player = other.GetComponent<Player>();
-        if (player != null)
+        if (player != null && Time.time >= _timeToAttack)
         {
-            if (Time.time >= _timeToAttack)
-            {
-                _timeToAttack = Time.time + 1f / _attackSpeed;
-                player.TakeDamage(_damage);
-            }
+            _timeToAttack = Time.time + 1f / _attackSpeed;
+            player.TakeDamage(_damage);
         }
     }
 }

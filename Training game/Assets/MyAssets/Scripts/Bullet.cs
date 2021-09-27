@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float _speed = 30f;
-    public float _damage = 20f;
+    public float speed = 30f;
+    public float damage = 20f;
 
     private Rigidbody _rb;
 
@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
+        Moving();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,14 +22,14 @@ public class Bullet : MonoBehaviour
         Enemy enemy = other.GetComponent<Enemy>();
         if (enemy != null)
         {
-            enemy.TakeDamage(_damage);
+            enemy.TakeDamage(damage);
             Destroy(gameObject);
         }
     }
 
-    private void Move()
+    private void Moving()
     {
-        var newpos = transform.position + transform.forward * _speed * Time.fixedDeltaTime;
+        var newpos = transform.position + transform.forward * speed * Time.fixedDeltaTime;
         _rb.MovePosition(newpos);
     }
 }

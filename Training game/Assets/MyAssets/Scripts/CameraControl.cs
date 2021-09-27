@@ -6,7 +6,7 @@ public class CameraControl : MonoBehaviour
     public Transform Target;
     public float smooth = 5f;
 
-    private UnityEngine.Camera _cam;
+    private Camera _cam;
     private float _horizontal;
     private float _vertical;
     private float _height = 12f;
@@ -16,7 +16,7 @@ public class CameraControl : MonoBehaviour
         var startpos = new Vector3(Player.transform.position.x, _height, Player.transform.position.z);
         transform.position = startpos;
 
-        _cam = UnityEngine.Camera.main;
+        _cam = Camera.main;
     }
 
     void Update()

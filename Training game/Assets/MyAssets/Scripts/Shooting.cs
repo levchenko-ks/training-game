@@ -7,17 +7,19 @@ public class Shooting : MonoBehaviour
     public ReloadBar ReloadBar;
     public AmmoCounter AmmoCounter;
 
-    public float rateOfFire = 10f; // per minute
-    public int maxAmmo = 15;
-    public float reloadTime = 3f;
     public int numberOfShot = 1;
+    public int maxAmmo = 15;
+    public float rateOfFire = 10f; // per minute    
+    public float reloadTime = 3f;
     public float sprayAngle = 1f; // per side
+
+    private Transform _firePoint;
 
     private bool _fire;
     private bool _reload;
-    private float _timeToFire = 0f;
     private int _currentAmmo;
-    private Transform _firePoint;
+    private float _timeToFire = 0f;
+
 
     private void Awake()
     {
@@ -39,15 +41,14 @@ public class Shooting : MonoBehaviour
     {
         if (_fire && Time.time >= _timeToFire)
         {
-
             if (_currentAmmo != 0) { Shoot(numberOfShot); }
             else { Reload(); }
-
         }
 
         if (_reload)
         {
             ReloadBar.SetCurrentStatus(reloadTime - (_timeToFire - Time.time));
+
             if (Time.time >= _timeToFire)
             {
                 ReloadBar.SetCurrentStatus(0);
@@ -76,7 +77,6 @@ public class Shooting : MonoBehaviour
         _timeToFire = Time.time + 60f / rateOfFire;
         _currentAmmo--;
         AmmoCounter.SetCounter(_currentAmmo);
-
     }
     private void Reload()
     {

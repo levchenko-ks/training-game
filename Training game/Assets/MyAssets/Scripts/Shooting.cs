@@ -10,6 +10,8 @@ public class Shooting : MonoBehaviour
     public float rateOfFire = 10f; // per minute
     public int maxAmmo = 15;
     public float reloadTime = 3f;
+    public int numberOfShot = 1;
+    public float sprayAngle = 1f; // per side
 
     private bool _fire;
     private bool _reload;
@@ -38,7 +40,7 @@ public class Shooting : MonoBehaviour
         if (_fire && Time.time >= _timeToFire)
         {
 
-            if (_currentAmmo != 0) { Shoot(); }
+            if (_currentAmmo != 0) { Shoot(numberOfShot); }
             else { Reload(); }
 
         }
@@ -60,10 +62,16 @@ public class Shooting : MonoBehaviour
         _fire = fire;
     }
 
-    private void Shoot()
+    private void Shoot(int numberOfShot)
     {
-        GameObject bullet = Instantiate(Projectile, _firePoint.position, _firePoint.rotation, Projectiles.transform);
-        Destroy(bullet, 2f);
+        for (int i = 1; i <= numberOfShot; i++)
+        {
+            var spray = Quaternion.Euler(0f, Random.Range(-sprayAngle, sprayAngle), 0f);
+            Quaternion fireDirection = _firePoint.rotation * spray;
+
+            GameObject bullet = Instantiate(Projectile, _firePoint.position, fireDirection, Projectiles.transform);
+            Destroy(bullet, 2f);
+        }
 
         _timeToFire = Time.time + 60f / rateOfFire;
         _currentAmmo--;

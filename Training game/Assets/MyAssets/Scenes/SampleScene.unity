@@ -1040,6 +1040,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2124744624}
+        m_TargetAssemblyTypeName: Shooting, Assembly-CSharp
+        m_MethodName: OnFireInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1000907081
 Transform:
   m_ObjectHideFlags: 0
@@ -1121,10 +1133,12 @@ MonoBehaviour:
   Projectile: {fileID: 6991141541265590592, guid: c5d49286ef58ba8468e0457a77ae0193, type: 3}
   Projectiles: {fileID: 630982046}
   ReloadBar: {fileID: 1893007169}
-  AmmoCounter: {fileID: 0}
+  AmmoCounter: {fileID: 1999739141}
   rateOfFire: 250
   maxAmmo: 15
   reloadTime: 3
+  numberOfShot: 1
+  sprayAngle: 3
 --- !u!1 &1496058560
 GameObject:
   m_ObjectHideFlags: 0
@@ -1285,6 +1299,10 @@ PrefabInstance:
       propertyPath: HealthBar
       value: 
       objectReference: {fileID: 2097837701}
+    - target: {fileID: 3172371358672409451, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4352375321660151684, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -1311,6 +1329,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5383369860728763839, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7791067003038794068, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1707,6 +1729,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2097837700}
+--- !u!1 &2124744620 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3172371358672409451, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
+  m_PrefabInstance: {fileID: 1743181562}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2124744624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2124744620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d485597ee5e3ff48a4f8555a67ca124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Projectile: {fileID: 3725062538626794365, guid: bd043c628e94c1549a791d14381fb114, type: 3}
+  Projectiles: {fileID: 630982046}
+  ReloadBar: {fileID: 1893007169}
+  AmmoCounter: {fileID: 1999739141}
+  rateOfFire: 100
+  maxAmmo: 8
+  reloadTime: 3
+  numberOfShot: 12
+  sprayAngle: 20
 --- !u!1 &2127594382 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1032128153078440143, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}

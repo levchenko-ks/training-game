@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -56,6 +57,7 @@ public class Player : MonoBehaviour
     private void GameOver()
     {
         Debug.Log("GameOver");
+        SceneManager.LoadScene("SampleScene");
     }
 
 }

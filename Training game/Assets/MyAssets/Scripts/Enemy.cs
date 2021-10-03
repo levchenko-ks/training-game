@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public HealthBar _healthBar;
 
     public float maxHealth = 100f;
     public float currentHealth = 100f;
     public float moveSpeed = 2f;
 
     private Rigidbody _rb;
-    private Transform _playerPosition;
-    private HealthBar _healthBar;
+    private Transform _target;    
 
     private float _damage = 25f;
     private float _attackSpeed = 2f;
@@ -17,33 +17,31 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody>();
-        _playerPosition = GameObject.Find("Player").GetComponent<Transform>();
-        _healthBar = transform.Find("Canvas").Find("Health Bar").GetComponent<HealthBar>();
-
+        _rb = GetComponent<Rigidbody>();        
+        
         _healthBar.SetMaxHealth(maxHealth);
 
     }
 
     private void FixedUpdate()
     {
+        if (_target == null)
+        {
+            return;
+        }
+
         Moving();
     }
     private void OnTriggerStay(Collider other)
     {
         DoDamage(other);
     }
-    private void Moving()
+
+    public void SetTarget(Transform target)
     {
-        Vector3 moveDirection = _playerPosition.position - transform.position;
-        Vector3 newPosition = transform.position + moveDirection.normalized * moveSpeed * Time.fixedDeltaTime;
-
-        Vector3 lookDirection = _playerPosition.position - transform.position;
-        Quaternion newRotation = Quaternion.LookRotation(lookDirection);
-
-        _rb.MovePosition(newPosition);
-        _rb.MoveRotation(newRotation);
+        _target = target;
     }
+
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
@@ -52,6 +50,17 @@ public class Enemy : MonoBehaviour
         {
             Die();
         }
+    }
+    private void Moving()
+    {
+        Vector3 moveDirection = _target.position - transform.position;
+        Vector3 newPosition = transform.position + moveDirection.normalized * moveSpeed * Time.fixedDeltaTime;
+
+        Vector3 lookDirection = _target.position - transform.position;
+        Quaternion newRotation = Quaternion.LookRotation(lookDirection);
+
+        _rb.MovePosition(newPosition);
+        _rb.MoveRotation(newRotation);
     }
 
     private void Die()
@@ -68,4 +77,6 @@ public class Enemy : MonoBehaviour
             player.TakeDamage(_damage);
         }
     }
+
+
 }

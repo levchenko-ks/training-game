@@ -1,19 +1,20 @@
 using UnityEngine;
 
-public class Shooting : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
     public GameObject Projectile;
     public GameObject Projectiles;
     public ReloadBar ReloadBar;
     public AmmoCounter AmmoCounter;
+    public Transform _firePoint;
 
     public int numberOfShot = 1;
     public int maxAmmo = 15;
     public float rateOfFire = 10f; // per minute    
     public float reloadTime = 3f;
     public float sprayAngle = 1f; // per side
-
-    private Transform _firePoint;
+        
+    GameplayControls gameplayControls;
 
     private bool _fire;
     private bool _reload;
@@ -23,7 +24,7 @@ public class Shooting : MonoBehaviour
 
     private void Awake()
     {
-        _firePoint = transform.Find("FirePoint").GetComponent<Transform>();
+       gameplayControls.Fire += OnFire;
 
         _currentAmmo = maxAmmo;
         AmmoCounter.SetCounter(_currentAmmo);
@@ -58,11 +59,15 @@ public class Shooting : MonoBehaviour
         }
     }
 
-    public void OnFireInput(bool fire)
+    public void OnFire()
     {
-        _fire = fire;
+        _fire = true;
     }
 
+    public void SetActive(bool state)
+    {
+        SetActive(state);
+    }
     private void Shoot(int numberOfShot)
     {
         for (int i = 1; i <= numberOfShot; i++)

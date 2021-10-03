@@ -398,7 +398,7 @@ RectTransform:
   - {fileID: 1893007167}
   - {fileID: 1999739140}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -697,7 +697,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
@@ -790,7 +790,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &812549121
 GameObject:
@@ -949,7 +949,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
@@ -965,6 +965,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 34412074}
   Target: {fileID: 1808146909}
+  gameplayControls: {fileID: 1000907080}
   smooth: 5
 --- !u!1 &1000907079
 GameObject:
@@ -995,63 +996,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b05de21b922b964449215f563c78b306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveInputIvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1743181563}
-        m_TargetAssemblyTypeName: PlayerScript, Assembly-CSharp
-        m_MethodName: OnMoveInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  LookInputIvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 963194229}
-        m_TargetAssemblyTypeName: CameraScript, Assembly-CSharp
-        m_MethodName: OnLookInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  FireInputIvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1493675455}
-        m_TargetAssemblyTypeName: ShootingScript, Assembly-CSharp
-        m_MethodName: OnFireInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2124744624}
-        m_TargetAssemblyTypeName: Shooting, Assembly-CSharp
-        m_MethodName: OnFireInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!4 &1000907081
 Transform:
   m_ObjectHideFlags: 0
@@ -1065,6 +1009,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1102348498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1102348499}
+  m_Layer: 0
+  m_Name: Enemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1102348499
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1102348498}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.6815183, y: 1.5818518, z: 0.5734706}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1369893009
 GameObject:
@@ -1096,7 +1070,7 @@ Transform:
   m_Children:
   - {fileID: 186579354}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1369893011
 MonoBehaviour:
@@ -1113,32 +1087,6 @@ MonoBehaviour:
   FloorTile: {fileID: 2758355382335778760, guid: b3ba4eb3a7ac5fa43ae6e44284b3e8d6, type: 3}
   length: 20
   width: 20
---- !u!1 &1493675454 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7791067003038794068, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
-  m_PrefabInstance: {fileID: 1743181562}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1493675455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1493675454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d485597ee5e3ff48a4f8555a67ca124, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Projectile: {fileID: 6991141541265590592, guid: c5d49286ef58ba8468e0457a77ae0193, type: 3}
-  Projectiles: {fileID: 630982046}
-  ReloadBar: {fileID: 1893007169}
-  AmmoCounter: {fileID: 1999739141}
-  rateOfFire: 250
-  maxAmmo: 15
-  reloadTime: 3
-  numberOfShot: 1
-  sprayAngle: 3
 --- !u!1 &1496058560
 GameObject:
   m_ObjectHideFlags: 0
@@ -1203,7 +1151,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1659639436
 GameObject:
@@ -1292,17 +1240,33 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2407161119823021424, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
-      propertyPath: Target
-      value: 
-      objectReference: {fileID: 1808146909}
-    - target: {fileID: 2407161119823021424, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
       propertyPath: HealthBar
       value: 
       objectReference: {fileID: 2097837701}
+    - target: {fileID: 2407161119823021424, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
+      propertyPath: gameplayControls
+      value: 
+      objectReference: {fileID: 1000907080}
     - target: {fileID: 3172371358672409451, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3285910043426400206, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
+      propertyPath: m_Name
+      value: WeaponHolder
+      objectReference: {fileID: 0}
+    - target: {fileID: 3552761431532686264, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
+      propertyPath: ReloadBar
+      value: 
+      objectReference: {fileID: 1893007169}
+    - target: {fileID: 3552761431532686264, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
+      propertyPath: AmmoCounter
+      value: 
+      objectReference: {fileID: 1999739141}
+    - target: {fileID: 3552761431532686264, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
+      propertyPath: Projectiles
+      value: 
+      objectReference: {fileID: 630982046}
     - target: {fileID: 4352375321660151684, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -1313,7 +1277,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5383369860728763839, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5383369860728763839, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1331,23 +1295,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5602594795890701368, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
+      propertyPath: ReloadBar
+      value: 
+      objectReference: {fileID: 1893007169}
+    - target: {fileID: 5602594795890701368, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
+      propertyPath: AmmoCounter
+      value: 
+      objectReference: {fileID: 1999739141}
+    - target: {fileID: 5602594795890701368, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
+      propertyPath: Projectiles
+      value: 
+      objectReference: {fileID: 630982046}
     - target: {fileID: 7791067003038794068, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
---- !u!114 &1743181563 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2407161119823021424, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
-  m_PrefabInstance: {fileID: 1743181562}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2127594382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 234bb36168dd4954e8df256c6e774bca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1808146909 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 539080441470990182, guid: 9245ecdf500c02d42b3e170283b231fe, type: 3}
@@ -1466,7 +1431,7 @@ GameObject:
   - component: {fileID: 1923678913}
   - component: {fileID: 1923678914}
   m_Layer: 0
-  m_Name: Enemies
+  m_Name: Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1484,7 +1449,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1923678914
 MonoBehaviour:
@@ -1498,8 +1463,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed761d025d2adaa448bd9a30f6e77af5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Zombie: {fileID: 2456748712407318239, guid: dc7e45f5f8f700449b1e5ee0e7fda889, type: 3}
+  Zombie: {fileID: -5958383107983291472, guid: dc7e45f5f8f700449b1e5ee0e7fda889, type: 3}
   Player: {fileID: 2127594382}
+  Placeholder: {fileID: 1102348499}
   SpawnInterval: 5
 --- !u!1 &1999739139
 GameObject:
@@ -1729,32 +1695,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2097837700}
---- !u!1 &2124744620 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3172371358672409451, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
-  m_PrefabInstance: {fileID: 1743181562}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2124744624
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2124744620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d485597ee5e3ff48a4f8555a67ca124, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Projectile: {fileID: 3725062538626794365, guid: bd043c628e94c1549a791d14381fb114, type: 3}
-  Projectiles: {fileID: 630982046}
-  ReloadBar: {fileID: 1893007169}
-  AmmoCounter: {fileID: 1999739141}
-  rateOfFire: 100
-  maxAmmo: 8
-  reloadTime: 3
-  numberOfShot: 12
-  sprayAngle: 20
 --- !u!1 &2127594382 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1032128153078440143, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
@@ -1769,7 +1709,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 539080441470990182, guid: 9245ecdf500c02d42b3e170283b231fe, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 539080441470990182, guid: 9245ecdf500c02d42b3e170283b231fe, type: 3}
       propertyPath: m_LocalPosition.x

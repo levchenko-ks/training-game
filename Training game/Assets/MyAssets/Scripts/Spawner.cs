@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject Zombie;
+    public Enemy Zombie;
     public GameObject Player;
+
+    public Transform Placeholder;
 
     public float SpawnInterval = 5f;
 
@@ -24,6 +26,7 @@ public class Spawner : MonoBehaviour
         _spawnPos = Player.transform.position + new Vector3(radiusPos.x, 0f, radiusPos.y);
         _timeToSpawn = Time.time + SpawnInterval;
 
-        Instantiate(Zombie, _spawnPos, Quaternion.identity, transform);
+        var enemy = Instantiate(Zombie, _spawnPos, Quaternion.identity, Placeholder);
+        enemy.SetTarget(Player.transform);
     }
 }

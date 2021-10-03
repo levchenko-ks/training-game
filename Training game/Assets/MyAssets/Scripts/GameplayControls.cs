@@ -1,49 +1,52 @@
 using System;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
-[Serializable] public class VectorInputIvent : UnityEvent<float, float> { }
-[Serializable] public class BoolInputIvent : UnityEvent<bool> { }
 
 public class GameplayControls : MonoBehaviour
 {
-    ActionAssetControls controls;
+    public event Action Fire;
+    public event Action<Vector2> Move;
+    public event Action<Vector2> Look;
+    public event Action<int> SelectWeapon;
 
-    public VectorInputIvent MoveInputIvent;
-    public VectorInputIvent LookInputIvent;
-    public BoolInputIvent FireInputIvent;
-
-    private void Awake()
+    private void Update()
     {
-        controls = new ActionAssetControls();
+        OnFireInput();
+        OnMoveInput();
+        OnLookInput();
+        OnWeaponChoiceInput();
     }
 
-    private void OnEnable()
+    private void OnFireInput()
     {
-        controls.Gameplay.Enable(); // Enable Gameplay Action Map
-        controls.Gameplay.Moving.performed += MoveInput;
-        controls.Gameplay.Moving.canceled += MoveInput;
-        controls.Gameplay.Looking.performed += LookInput;
-        controls.Gameplay.Fire.performed += FireInput;
-        controls.Gameplay.Fire.canceled += FireInput;
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Fire();
+        }
     }
 
-    private void MoveInput(InputAction.CallbackContext obj)
+    private void OnMoveInput()
     {
-        Vector2 moveInput = obj.ReadValue<Vector2>();
-        MoveInputIvent.Invoke(moveInput.x, moveInput.y);
+        Vector2 moveVector = Vector2.zero;
+        moveVector.x = Input.GetAxis("Horizontal");
+        moveVector.y = Input.GetAxis("Vertical");
+
+        Move(moveVector.normalized);
+
     }
 
-    private void LookInput(InputAction.CallbackContext obj)
+    private void OnLookInput()
     {
-        Vector2 lookInput = obj.ReadValue<Vector2>();
-        LookInputIvent.Invoke(lookInput.x, lookInput.y);
+        Look(Input.mousePosition);
     }
 
-    private void FireInput(InputAction.CallbackContext obj)
+    private void OnWeaponChoiceInput()
     {
-        bool fire = obj.ReadValueAsButton();
-        FireInputIvent.Invoke(fire);
+        if (Input.GetKeyDown(KeyCode.Alpha1)) { SelectWeapon(1); }
+        if (Input.GetKeyDown(KeyCode.Alpha2)) { SelectWeapon(2); }
+        if (Input.GetKeyDown(KeyCode.Alpha3)) { SelectWeapon(3); }
+        if (Input.GetKeyDown(KeyCode.Alpha4)) { SelectWeapon(4); }
+        if (Input.GetKeyDown(KeyCode.Alpha5)) { SelectWeapon(5); }
+        if (Input.GetKeyDown(KeyCode.Alpha6)) { SelectWeapon(6); }
     }
 }

@@ -77,12 +77,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 234bb36168dd4954e8df256c6e774bca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 539080441470990182, guid: 9245ecdf500c02d42b3e170283b231fe, type: 3}
+  Target: {fileID: 0}
   HealthBar: {fileID: 0}
   gameplayControls: {fileID: 0}
   WeaponHolder: {fileID: 3500523214242765135}
-  AK74: {fileID: 6726080434096030810, guid: ee329c3cd08e58645834d20702d7f6c6, type: 3}
-  Benelli: {fileID: 7044343295541666873, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
+  AK74: {fileID: 0}
+  Bennelli_M4: {fileID: 0}
   moveSpeed: 5
   maxHealth: 100
   currentHealth: 100

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 
-public class GameplayControls : MonoBehaviour
+public class InputControls : MonoBehaviour
 {
     public event Action Fire;
     public event Action<Vector2> Move;

@@ -8,7 +8,7 @@ public class Billboard : MonoBehaviour
 
     private void Awake()
     {
-        _cam = GameObject.Find("Main Camera").GetComponent<UnityEngine.Camera>();
+        _cam = UnityEngine.GameObject.Find("Main Camera").GetComponent<UnityEngine.Camera>();
     }
     void LateUpdate()
     {

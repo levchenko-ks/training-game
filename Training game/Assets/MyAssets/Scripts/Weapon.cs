@@ -14,7 +14,7 @@ public class Weapon : MonoBehaviour
     public float reloadTime = 3f;
     public float sprayAngle = 1f; // per side
         
-    GameplayControls gameplayControls;
+    InputControls gameplayControls;
 
     private bool _fire;
     private bool _reload;
@@ -64,10 +64,6 @@ public class Weapon : MonoBehaviour
         _fire = true;
     }
 
-    public void SetActive(bool state)
-    {
-        SetActive(state);
-    }
     private void Shoot(int numberOfShot)
     {
         for (int i = 1; i <= numberOfShot; i++)
@@ -75,7 +71,7 @@ public class Weapon : MonoBehaviour
             var spray = Quaternion.Euler(0f, Random.Range(-sprayAngle, sprayAngle), 0f);
             Quaternion fireDirection = _firePoint.rotation * spray;
 
-            GameObject bullet = Instantiate(Projectile, _firePoint.position, fireDirection, Projectiles.transform);
+            UnityEngine.GameObject bullet = Instantiate(Projectile, _firePoint.position, fireDirection, Projectiles.transform);
             Destroy(bullet, 2f);
         }
 

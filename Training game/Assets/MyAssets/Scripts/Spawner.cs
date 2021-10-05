@@ -3,7 +3,7 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     public Enemy Zombie;
-    public GameObject Player;
+    public UnityEngine.GameObject Player;
 
     public Transform Placeholder;
 

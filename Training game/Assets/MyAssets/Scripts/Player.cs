@@ -4,36 +4,28 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
-    public Transform Target;
-    public HealthBar HealthBar;
-    public GameplayControls gameplayControls;
-    public Transform WeaponHolder;
-
-    // Temporary
-    public Weapon AK74;
-    public Weapon Benelli;
-    // Temporary
-
     public float moveSpeed = 5.0f;
     public float maxHealth = 100f;
     public float currentHealth = 100f;
 
     private Rigidbody _rb;
+    private Transform _target;
+    private HealthBar _healthBar;
+    private InputControls _gameplayControls;
+    private Transform _weaponHolder;
 
     private float _horizontal;
     private float _vertical;
-    private List<Weapon> _weaponList;
+    private List<GameObject> _weaponList;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        HealthBar.SetMaxHealth(maxHealth);
+        _weaponList = new List<GameObject>();
+        _healthBar.SetMaxHealth(maxHealth);
 
-        AddWeapon(AK74);
-        AddWeapon(Benelli);
-
-        gameplayControls.Move += OnMove;
-        gameplayControls.SelectWeapon += OnSelectWeapon;
+        _gameplayControls.Move += OnMove;
+        _gameplayControls.SelectWeapon += OnSelectWeapon;
     }
 
     private void FixedUpdate()
@@ -41,23 +33,28 @@ public class Player : MonoBehaviour
         Moving();
     }
 
-    public void AddWeapon(Weapon Weapon)
+    public void AddWeapon(GameObject Weapon)
     {
-        _weaponList.Add(Weapon);
-
-        var weapon = Instantiate(Weapon, transform.position, Quaternion.identity, WeaponHolder);
+        var weapon = Instantiate(Weapon, transform.position, Quaternion.identity, _weaponHolder);
         weapon.SetActive(false);
+        _weaponList.Add(weapon);
+        Debug.Log("Set");
     }
 
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        HealthBar.SetCurrentHealth(currentHealth);
+        _healthBar.SetCurrentHealth(currentHealth);
 
         if (currentHealth <= 0f)
         {
             GameOver();
         }
+    }
+
+    public void SetTarget(Transform target)
+    {
+
     }
 
     private void OnMove(Vector2 obj)
@@ -67,15 +64,15 @@ public class Player : MonoBehaviour
     }
 
     private void OnSelectWeapon(int index)
-    {
+    {        
         if (_weaponList.Count < index)
         {
             return;
         }
-
-        for (int i = 1; i < _weaponList.Count; i++)
+        
+        for (int i = 0; i < _weaponList.Count; i++)
         {
-            if (i == index)
+            if (i + 1 == index) // +1, because count from 0
             {
                 _weaponList[i].SetActive(true);
             }
@@ -91,7 +88,7 @@ public class Player : MonoBehaviour
         Vector3 moveDirection = Vector3.right * _horizontal + Vector3.forward * _vertical;
         Vector3 newPosition = transform.position + moveDirection * moveSpeed * Time.fixedDeltaTime;
 
-        Vector3 lookDirection = Target.position - transform.position;
+        Vector3 lookDirection = _target.position - transform.position;
         Quaternion newRotation = Quaternion.LookRotation(lookDirection);
 
         _rb.MovePosition(newPosition);

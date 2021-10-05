@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnvironmentScript : MonoBehaviour
 {
-    public GameObject FloorTile;
+    public UnityEngine.GameObject FloorTile;
     public int length = 3; // Real size x2
     public int width = 3; // Real size x2
 

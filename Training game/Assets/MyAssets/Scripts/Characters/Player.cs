@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
+    public Transform weaponHolder;
+
     public float moveSpeed = 5.0f;
     public float maxHealth = 100f;
     public float currentHealth = 100f;
@@ -12,20 +14,36 @@ public class Player : MonoBehaviour
     private Transform _target;
     private HealthBar _healthBar;
     private InputControls _gameplayControls;
-    private Transform _weaponHolder;
 
     private float _horizontal;
     private float _vertical;
     private List<GameObject> _weaponList;
 
+    public Transform Target { get => _target; set => _target = value; }
+    public HealthBar HealthBar
+    {
+        get => _healthBar;
+        set
+        {
+            _healthBar = value;
+            _healthBar.SetMaxHealth(maxHealth);
+        }
+    }
+    public InputControls InputControls
+    {
+        get => _gameplayControls;
+        set
+        {
+            _gameplayControls = value;
+            _gameplayControls.Move += OnMove;
+            _gameplayControls.SelectWeapon += OnSelectWeapon;
+        }
+    }
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _weaponList = new List<GameObject>();
-        _healthBar.SetMaxHealth(maxHealth);
-
-        _gameplayControls.Move += OnMove;
-        _gameplayControls.SelectWeapon += OnSelectWeapon;
     }
 
     private void FixedUpdate()
@@ -35,10 +53,12 @@ public class Player : MonoBehaviour
 
     public void AddWeapon(GameObject Weapon)
     {
-        var weapon = Instantiate(Weapon, transform.position, Quaternion.identity, _weaponHolder);
-        weapon.SetActive(false);
-        _weaponList.Add(weapon);
-        Debug.Log("Set");
+        _weaponList.Add(Weapon);
+    }
+
+    public void GetReady()
+    {
+        OnSelectWeapon(1);
     }
 
     public void TakeDamage(float damage)
@@ -52,11 +72,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void SetTarget(Transform target)
-    {
-
-    }
-
     private void OnMove(Vector2 obj)
     {
         _horizontal = obj.x;
@@ -64,12 +79,12 @@ public class Player : MonoBehaviour
     }
 
     private void OnSelectWeapon(int index)
-    {        
+    {
         if (_weaponList.Count < index)
         {
             return;
         }
-        
+
         for (int i = 0; i < _weaponList.Count; i++)
         {
             if (i + 1 == index) // +1, because count from 0
@@ -98,7 +113,7 @@ public class Player : MonoBehaviour
     private void GameOver()
     {
         Debug.Log("GameOver");
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Level");
     }
 
 }

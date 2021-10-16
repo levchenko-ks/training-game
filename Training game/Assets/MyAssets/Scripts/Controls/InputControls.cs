@@ -11,21 +11,21 @@ public class InputControls : MonoBehaviour
 
     private void Update()
     {
-        OnFireInput();
-        OnMoveInput();
-        OnLookInput();
-        OnWeaponChoiceInput();
+        CheckFireInput();
+        CheckMoveInput();
+        CheckLookInput();
+        CheckWeaponChoiceInput();
     }
 
-    private void OnFireInput()
+    private void CheckFireInput()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Fire();
+            Fire();            
         }
     }
 
-    private void OnMoveInput()
+    private void CheckMoveInput()
     {
         Vector2 moveVector = Vector2.zero;
         moveVector.x = Input.GetAxis("Horizontal");
@@ -35,12 +35,12 @@ public class InputControls : MonoBehaviour
 
     }
 
-    private void OnLookInput()
+    private void CheckLookInput()
     {
         Look(Input.mousePosition);
     }
 
-    private void OnWeaponChoiceInput()
+    private void CheckWeaponChoiceInput()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1)) { SelectWeapon(1); }
         if (Input.GetKeyDown(KeyCode.Alpha2)) { SelectWeapon(2); }

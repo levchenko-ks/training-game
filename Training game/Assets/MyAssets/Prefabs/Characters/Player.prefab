@@ -77,12 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 234bb36168dd4954e8df256c6e774bca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
-  HealthBar: {fileID: 0}
-  gameplayControls: {fileID: 0}
-  WeaponHolder: {fileID: 3500523214242765135}
-  AK74: {fileID: 0}
-  Bennelli_M4: {fileID: 0}
+  weaponHolder: {fileID: 3500523214242765135}
   moveSpeed: 5
   maxHealth: 100
   currentHealth: 100

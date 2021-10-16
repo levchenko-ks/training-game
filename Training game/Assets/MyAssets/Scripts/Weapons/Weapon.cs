@@ -3,9 +3,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public GameObject Projectile;
-    public GameObject Projectiles;
-    public ReloadBar ReloadBar;
-    public AmmoCounter AmmoCounter;
+
     public Transform _firePoint;
 
     public int numberOfShot = 1;
@@ -13,28 +11,52 @@ public class Weapon : MonoBehaviour
     public float rateOfFire = 10f; // per minute    
     public float reloadTime = 3f;
     public float sprayAngle = 1f; // per side
-        
-    InputControls gameplayControls;
+
+    private InputControls _gameplayControls;
+    private Transform _projectileHolder;
+    private ReloadBar _reloadBar;
+    private AmmoCounter _ammoCounter;
 
     private bool _fire;
     private bool _reload;
     private int _currentAmmo;
     private float _timeToFire = 0f;
 
+    public InputControls InputControls
+    {
+        get => _gameplayControls;
+        set
+        {
+            _gameplayControls = value;
+            _gameplayControls.Fire += OnFire;
+        }
+
+    }
+    public Transform ProjectileHolder { get => _projectileHolder; set => _projectileHolder = value; }
+    public ReloadBar ReloadBar { get => _reloadBar; set => _reloadBar = value; }
+    public AmmoCounter AmmoCounter
+    {
+        get => _ammoCounter;
+        set
+        {
+            _ammoCounter = value;
+            _ammoCounter.SetCounter(_currentAmmo);
+        }
+    }
 
     private void Awake()
     {
-       gameplayControls.Fire += OnFire;
-
         _currentAmmo = maxAmmo;
-        AmmoCounter.SetCounter(_currentAmmo);
-
     }
 
     private void OnEnable()
     {
-        ReloadBar.SetReloadTime(reloadTime);
-        ReloadBar.SetCurrentStatus(0f);
+        if (_reloadBar == null)
+        {
+            return;
+        }
+        _reloadBar.SetReloadTime(reloadTime);
+        _reloadBar.SetCurrentStatus(0f);
 
     }
 
@@ -44,16 +66,18 @@ public class Weapon : MonoBehaviour
         {
             if (_currentAmmo != 0) { Shoot(numberOfShot); }
             else { Reload(); }
+
+            _fire = false;
         }
 
         if (_reload)
         {
-            ReloadBar.SetCurrentStatus(reloadTime - (_timeToFire - Time.time));
+            _reloadBar.SetCurrentStatus(reloadTime - (_timeToFire - Time.time));
 
             if (Time.time >= _timeToFire)
             {
-                ReloadBar.SetCurrentStatus(0);
-                AmmoCounter.SetCounter(_currentAmmo);
+                _reloadBar.SetCurrentStatus(0);
+                _ammoCounter.SetCounter(_currentAmmo);
                 _reload = false;
             }
         }
@@ -71,13 +95,13 @@ public class Weapon : MonoBehaviour
             var spray = Quaternion.Euler(0f, Random.Range(-sprayAngle, sprayAngle), 0f);
             Quaternion fireDirection = _firePoint.rotation * spray;
 
-            UnityEngine.GameObject bullet = Instantiate(Projectile, _firePoint.position, fireDirection, Projectiles.transform);
+            GameObject bullet = Instantiate(Projectile, _firePoint.position, fireDirection, _projectileHolder);
             Destroy(bullet, 2f);
         }
 
         _timeToFire = Time.time + 60f / rateOfFire;
         _currentAmmo--;
-        AmmoCounter.SetCounter(_currentAmmo);
+        _ammoCounter.SetCounter(_currentAmmo);
     }
     private void Reload()
     {

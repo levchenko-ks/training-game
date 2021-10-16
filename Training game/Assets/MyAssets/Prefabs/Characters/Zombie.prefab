@@ -554,7 +554,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3aaf4ac17a128e41bf9a2220d8120ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBar: {fileID: 453026155804594678}
+  HealthBar: {fileID: 453026155804594678}
+  Billboard: {fileID: 7352727214297210208}
   maxHealth: 100
   currentHealth: 100
   moveSpeed: 1.5

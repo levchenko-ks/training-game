@@ -2,25 +2,37 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public HealthBar _healthBar;
+    public HealthBar HealthBar;
+    public Billboard Billboard;
 
     public float maxHealth = 100f;
     public float currentHealth = 100f;
     public float moveSpeed = 2f;
 
     private Rigidbody _rb;
-    private Transform _target;    
+    private Transform _target;
+    private Transform _cam;
 
     private float _damage = 25f;
     private float _attackSpeed = 2f;
     private float _timeToAttack = 0f;
 
+    public Transform Target { get => _target; set => _target = value; }
+    public Transform Cam
+    {
+        get => _cam;
+        set
+        {
+            _cam = value;
+            Billboard.Cam = _cam;
+        }
+    }
+
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody>();        
-        
-        _healthBar.SetMaxHealth(maxHealth);
+        _rb = GetComponent<Rigidbody>();
 
+        HealthBar.SetMaxHealth(maxHealth);
     }
 
     private void FixedUpdate()
@@ -37,15 +49,10 @@ public class Enemy : MonoBehaviour
         DoDamage(other);
     }
 
-    public void SetTarget(Transform target)
-    {
-        _target = target;
-    }
-
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        _healthBar.SetCurrentHealth(currentHealth);
+        HealthBar.SetCurrentHealth(currentHealth);
         if (currentHealth <= 0f)
         {
             Die();
@@ -77,6 +84,4 @@ public class Enemy : MonoBehaviour
             player.TakeDamage(_damage);
         }
     }
-
-
 }

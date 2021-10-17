@@ -176,7 +176,7 @@ MonoBehaviour:
   Environment: {fileID: 8354309728836681438, guid: caa2625c031cbfc4da2369cb4a776278, type: 3}
   FloorTile: {fileID: 2758355382335778760, guid: b3ba4eb3a7ac5fa43ae6e44284b3e8d6, type: 3}
   CanvasFHD: {fileID: 2836648296152146084, guid: 1d244070063d4804aa6cb7039944789d, type: 3}
-  GameHUD: {fileID: 7346848582662498876, guid: b613a2a71a9dfce42a3510e5b065eb22, type: 3}
+  UIController: {fileID: 6982043726367378851, guid: 09316317d7982d14ab243f19582ac7ef, type: 3}
 --- !u!1 &1496058560
 GameObject:
   m_ObjectHideFlags: 0

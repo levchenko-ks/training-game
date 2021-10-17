@@ -166,3 +166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d227c70aa220034c8ff2e050b140b8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SplashScreenPref: {fileID: 0}
+  MainMenuPref: {fileID: 0}
+  GameHUDPref: {fileID: 0}

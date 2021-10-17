@@ -238,7 +238,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8284095393762295466}
-  - component: {fileID: 7346848582662498876}
+  - component: {fileID: 1991547827346810878}
   m_Layer: 0
   m_Name: GameHUD
   m_TagString: Untagged
@@ -268,7 +268,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7346848582662498876
+--- !u!114 &1991547827346810878
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -277,12 +277,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1986778626549676524}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaf37ce5659a65f48bc1762299c8d6ea, type: 3}
+  m_Script: {fileID: 11500000, guid: a835ae5e11a3c3b418cdaeb94cc94607, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealthBar: {fileID: 4298512465428929537}
-  ReloadBar: {fileID: 680912686921249863}
-  AmmoCounter: {fileID: 5493801209615610793}
+  healthBar: {fileID: 1900689950738516248}
+  reloadBar: {fileID: 6221331475312945575}
+  AmmoCounter: {fileID: 5453806956912714982}
 --- !u!1 &2832568310420886281
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,7 +557,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6043197929071206047}
   - component: {fileID: 6221331475312945575}
-  - component: {fileID: 680912686921249863}
   m_Layer: 5
   m_Name: Reload Bar
   m_TagString: Untagged
@@ -636,19 +635,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &680912686921249863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6066228746350737067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23e183fa523b3f44c964e07332422c9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  reloadBar: {fileID: 6221331475312945575}
 --- !u!1 &6199140286870690031
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,7 +645,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3579407166635399471}
   - component: {fileID: 1900689950738516248}
-  - component: {fileID: 4298512465428929537}
   m_Layer: 5
   m_Name: Health Bar
   m_TagString: Untagged
@@ -739,19 +724,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4298512465428929537
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6199140286870690031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6daf5f9971b9c347bdd8781c9c7bca7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 1900689950738516248}
 --- !u!1 &8651907929649361942
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,7 +733,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1749894439976144281}
-  - component: {fileID: 5493801209615610793}
   m_Layer: 5
   m_Name: Ammo Counter
   m_TagString: Untagged
@@ -789,19 +760,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 0}
---- !u!114 &5493801209615610793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8651907929649361942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee3e9b0263d18d14cadabc48aea88e56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Counter: {fileID: 5453806956912714982}
 --- !u!1 &8733534665260123869
 GameObject:
   m_ObjectHideFlags: 0

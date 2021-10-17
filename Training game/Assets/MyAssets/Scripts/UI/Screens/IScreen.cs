@@ -1,12 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ISplashScreenView
+public interface IScreen 
 {
-    event Action Clicked;
-
     void Show();
     void Hide();
 }

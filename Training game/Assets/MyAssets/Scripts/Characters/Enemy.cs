@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
 
-        HealthBar.SetMaxHealth(maxHealth);
+        HealthBar.SetMaxHP(maxHealth);        
     }
 
     private void FixedUpdate()
@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        HealthBar.SetCurrentHealth(currentHealth);
+        HealthBar.SetHP(currentHealth);
         if (currentHealth <= 0f)
         {
             Die();

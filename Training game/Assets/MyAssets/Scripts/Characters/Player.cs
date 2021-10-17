@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 
     private Rigidbody _rb;
     private Transform _target;
-    private HealthBar _healthBar;
+    private GameHUD _gameHUD;
     private InputControls _gameplayControls;
 
     private float _horizontal;
@@ -20,15 +20,18 @@ public class Player : MonoBehaviour
     private List<GameObject> _weaponList;
 
     public Transform Target { get => _target; set => _target = value; }
-    public HealthBar HealthBar
+    
+    public GameHUD GameHUD
     {
-        get => _healthBar;
+        get => _gameHUD;
         set
         {
-            _healthBar = value;
-            _healthBar.SetMaxHealth(maxHealth);
+            _gameHUD = value;
+            _gameHUD.SetMaxHP(maxHealth);
         }
     }
+    
+
     public InputControls InputControls
     {
         get => _gameplayControls;
@@ -64,7 +67,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
-        _healthBar.SetCurrentHealth(currentHealth);
+        _gameHUD.SetHP(currentHealth);
 
         if (currentHealth <= 0f)
         {

@@ -554,7 +554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3aaf4ac17a128e41bf9a2220d8120ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HealthBar: {fileID: 453026155804594678}
+  HealthBar: {fileID: 5873977934448059774}
   Billboard: {fileID: 7352727214297210208}
   maxHealth: 100
   currentHealth: 100
@@ -717,7 +717,7 @@ GameObject:
   - component: {fileID: 5622236952372262847}
   - component: {fileID: 320579924420785227}
   m_Layer: 5
-  m_Name: Fill Right
+  m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -825,7 +825,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7996201735315804798}
   - component: {fileID: 5082857374969987888}
-  - component: {fileID: 453026155804594678}
+  - component: {fileID: 5873977934448059774}
   m_Layer: 5
   m_Name: Health Bar
   m_TagString: Untagged
@@ -904,7 +904,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &453026155804594678
+--- !u!114 &5873977934448059774
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -913,7 +913,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6571283243339153678}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6daf5f9971b9c347bdd8781c9c7bca7, type: 3}
+  m_Script: {fileID: 11500000, guid: 648da071bc4c4914093cdddfd709d602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 5082857374969987888}

@@ -4,18 +4,18 @@ using UnityEngine.UI;
 
 public class SplashScreenView : MonoBehaviour, ISplashScreenView
 {
-    public event Action Cliked;
+    public event Action Clicked;
 
     public Button StartButton;
 
     private void Awake()
     {
-        StartButton.onClick.AddListener(OnButtonClicked);
+        StartButton.onClick.AddListener(OnStartClicked);
     }
 
-    private void OnButtonClicked()
+    private void OnStartClicked()
     {
-        Cliked();
+        Clicked();
     }
 
     public void Hide()

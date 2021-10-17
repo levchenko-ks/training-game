@@ -12,8 +12,11 @@ public class LevelController : MonoBehaviour
     public Light DirectionalLight;
     public Spawner Spawner;
     public Environment Environment;
-    public GameObject FloorTile;    
-    
+    public GameObject FloorTile;
+
+    public Canvas CanvasFHD;
+    public UIController UIController;
+
 
     private Player _player;
 
@@ -23,14 +26,15 @@ public class LevelController : MonoBehaviour
     private Transform _target;
     private CameraControl _mainCamera;
     private Light _directionalLight;
+
+    private Canvas _canvasFHD;
+    private UIController _UIController;
+
     private Spawner _spawner;
     private Environment _environment;
-        
     private InputControls _inputControls;
 
-    private HealthBar _healthBar;
-    private ReloadBar _reloadBar;
-    private AmmoCounter _ammoCounter;
+    private GameHUD _gameHUD;
     private Transform _weaponHolder;
     private Transform _projectileHolder;
     private Transform _enemyHolder;
@@ -45,6 +49,7 @@ public class LevelController : MonoBehaviour
 
     private void SceneInstantiate()
     {
+        // Main Instantiate
         Vector3 playerPosition = Vector3.up;
         Vector3 targetPosition = playerPosition + Vector3.forward;
 
@@ -53,35 +58,43 @@ public class LevelController : MonoBehaviour
 
         _mainCamera = Instantiate(MainCamera);
         _directionalLight = Instantiate(DirectionalLight);
-        _spawner = Instantiate(Spawner);
 
+        // UI Instantiate
+        _canvasFHD = Instantiate(CanvasFHD);
+        _UIController = Instantiate(UIController);
+        _UIController.CanvasFHD = _canvasFHD;
+        _UIController.CreateGameHUD();
+        _gameHUD = _UIController.GameHUD;
+
+
+        //Control Instantiate
         var inputControlsObject = new GameObject("InputControls");
         inputControlsObject.AddComponent<InputControls>();
         _inputControls = inputControlsObject.GetComponent<InputControls>();
 
+        //Environment Instantiate
         var environmentObject = new GameObject("Environment");
         environmentObject.AddComponent<Environment>();
         _environment = environmentObject.GetComponent<Environment>();
         _environment.FloorTile = FloorTile;
         _environment.CreatePlane();
+        _spawner = Instantiate(Spawner);
 
+        //Holders Instantiate
         _weaponHolder = _player.weaponHolder.transform;
         _projectileHolder = new GameObject("ProjectileHolder").transform;
         _enemyHolder = new GameObject("EnemyHolder").transform;
 
+        //Weapon Instantiate
         _weapon_1 = Instantiate(Weapon_1, _player.transform.position, Quaternion.identity, _weaponHolder);
         _weapon_2 = Instantiate(Weapon_2, _player.transform.position, Quaternion.identity, _weaponHolder);
     }
 
     private void SetDependency()
     {
-        _healthBar = _gameHUD.HealthBar;
-        _reloadBar = _gameHUD.ReloadBar;
-        _ammoCounter = _gameHUD.AmmoCounter;
-
         _player.Target = _target;
-        _player.HealthBar = _healthBar;
-        _player.InputControls = _inputControls;
+        _player.GameHUD = _gameHUD;
+        _player.InputControls = _inputControls;        
 
         SetWeapon(_weapon_1);
         SetWeapon(_weapon_2);
@@ -101,8 +114,7 @@ public class LevelController : MonoBehaviour
         _player.AddWeapon(Weapon);
 
         var weapon = Weapon.GetComponent<Weapon>();
-        weapon.ReloadBar = _reloadBar;
-        weapon.AmmoCounter = _ammoCounter;
+        weapon.GameHUD = _gameHUD;
         weapon.ProjectileHolder = _projectileHolder;
         weapon.InputControls = _inputControls;
     }

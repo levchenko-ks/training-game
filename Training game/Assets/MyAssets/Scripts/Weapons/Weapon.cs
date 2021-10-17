@@ -14,8 +14,7 @@ public class Weapon : MonoBehaviour
 
     private InputControls _gameplayControls;
     private Transform _projectileHolder;
-    private ReloadBar _reloadBar;
-    private AmmoCounter _ammoCounter;
+    private GameHUD _gameHUD;
 
     private bool _fire;
     private bool _reload;
@@ -33,16 +32,9 @@ public class Weapon : MonoBehaviour
 
     }
     public Transform ProjectileHolder { get => _projectileHolder; set => _projectileHolder = value; }
-    public ReloadBar ReloadBar { get => _reloadBar; set => _reloadBar = value; }
-    public AmmoCounter AmmoCounter
-    {
-        get => _ammoCounter;
-        set
-        {
-            _ammoCounter = value;
-            _ammoCounter.SetCounter(_currentAmmo);
-        }
-    }
+
+    public GameHUD GameHUD { get => _gameHUD; set => _gameHUD = value; }
+
 
     private void Awake()
     {
@@ -51,12 +43,12 @@ public class Weapon : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_reloadBar == null)
+        if (_gameHUD == null)
         {
             return;
         }
-        _reloadBar.SetReloadTime(reloadTime);
-        _reloadBar.SetCurrentStatus(0f);
+        _gameHUD.SetReloadTime(reloadTime);
+        _gameHUD.SetReloadStatus(0f);
 
     }
 
@@ -72,12 +64,12 @@ public class Weapon : MonoBehaviour
 
         if (_reload)
         {
-            _reloadBar.SetCurrentStatus(reloadTime - (_timeToFire - Time.time));
+            _gameHUD.SetReloadStatus(reloadTime - (_timeToFire - Time.time));
 
             if (Time.time >= _timeToFire)
             {
-                _reloadBar.SetCurrentStatus(0);
-                _ammoCounter.SetCounter(_currentAmmo);
+                _gameHUD.SetReloadStatus(0);
+                _gameHUD.SetAmmo(_currentAmmo);
                 _reload = false;
             }
         }
@@ -101,7 +93,7 @@ public class Weapon : MonoBehaviour
 
         _timeToFire = Time.time + 60f / rateOfFire;
         _currentAmmo--;
-        _ammoCounter.SetCounter(_currentAmmo);
+        _gameHUD.SetAmmo(_currentAmmo);
     }
     private void Reload()
     {

@@ -2,12 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SplashScreen : MonoBehaviour, ISplashScreen
+public class SplashScreen : MonoBehaviour, ISplashScreen, IScreen
 {
-    private ISplashScreenView _viewPrefab;
+    private Canvas _canvasFHD;
+    public SplashScreenView _viewPrefab;
     private ISplashScreenView View;
 
-    public ISplashScreenView ViewPrefab { set => _viewPrefab = value; }
+    public Canvas CanvasFHD
+    {
+        set
+        {
+            _canvasFHD = value;
+            View = Instantiate(_viewPrefab, _canvasFHD.transform);
+            View.Clicked += OnSplashClicked;
+        }
+    }
+
+    private void OnSplashClicked()
+    {
+        Hide();
+    }
 
     public void Hide()
     {

@@ -25,7 +25,6 @@ public class LevelController : MonoBehaviour
 
     private Transform _target;
     private CameraControl _mainCamera;
-    private Light _directionalLight;
 
     private Canvas _canvasFHD;
     private UIController _UIController;
@@ -34,7 +33,7 @@ public class LevelController : MonoBehaviour
     private Environment _environment;
     private InputControls _inputControls;
 
-    private GameHUD _gameHUD;
+    private IGameHUD _gameHUD;
     private Transform _weaponHolder;
     private Transform _projectileHolder;
     private Transform _enemyHolder;
@@ -57,7 +56,7 @@ public class LevelController : MonoBehaviour
         _target = Instantiate(Target, targetPosition, Quaternion.identity);
 
         _mainCamera = Instantiate(MainCamera);
-        _directionalLight = Instantiate(DirectionalLight);
+        Instantiate(DirectionalLight);
 
         // UI Instantiate
         _canvasFHD = Instantiate(CanvasFHD);

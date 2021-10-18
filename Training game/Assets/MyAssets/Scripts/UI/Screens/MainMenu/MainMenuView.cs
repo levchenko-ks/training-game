@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,22 +30,22 @@ public class MainMenuView : MonoBehaviour, IMainMenuView
 
     public void OnContinueClicked()
     {
-        throw new NotImplementedException();
+        ContinueClicked();
     }
 
     public void OnExitClicked()
     {
-        throw new NotImplementedException();
+        ExitClicked();
     }
 
     public void OnNewGameClicked()
     {
-        throw new NotImplementedException();
+        NewGameClicked();
     }
 
     public void OnSettingsClicked()
     {
-        throw new NotImplementedException();
+        SettingsClicked();
     }
 
     public void Show()

@@ -46,3 +46,5 @@ MonoBehaviour:
   SplashScreenPref: {fileID: 2301675482005720695, guid: 3e40ee644a5b1274484ad0458de84c96, type: 3}
   MainMenuPref: {fileID: 2039114654767349579, guid: 8c8b8bb1d1e7808499a82e66478c5a02, type: 3}
   GameHUDPref: {fileID: 2364373960311222614, guid: d7cf5745d3b1e7e4991cc065f646e34f, type: 3}
+  PauseScreenPref: {fileID: 2404973728539583658, guid: 830b0828ee1a1bf45aa2231f70fe5a3d, type: 3}
+  GameOverScreenPref: {fileID: 127125141101028730, guid: 69fa38706b3c65640aa51a7e30bea8cc, type: 3}

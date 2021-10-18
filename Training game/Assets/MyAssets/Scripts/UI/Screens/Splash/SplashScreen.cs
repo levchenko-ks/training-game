@@ -1,11 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class SplashScreen : MonoBehaviour, ISplashScreen, IScreen
 {
-    private Canvas _canvasFHD;
+    public event Action ViewHided;
+
     public SplashScreenView _viewPrefab;
+
+    private Canvas _canvasFHD;
     private ISplashScreenView View;
 
     public Canvas CanvasFHD
@@ -14,11 +16,12 @@ public class SplashScreen : MonoBehaviour, ISplashScreen, IScreen
         {
             _canvasFHD = value;
             View = Instantiate(_viewPrefab, _canvasFHD.transform);
-            View.Clicked += OnSplashClicked;
+            Hide();
+            View.Clicked += OnStartClicked;
         }
     }
 
-    private void OnSplashClicked()
+    private void OnStartClicked()
     {
         Hide();
     }
@@ -26,10 +29,8 @@ public class SplashScreen : MonoBehaviour, ISplashScreen, IScreen
     public void Hide()
     {
         View.Hide();
+        ViewHided?.Invoke();
     }
 
-    public void Show()
-    {
-        View.Show();
-    }
+    public void Show() => View.Show();
 }

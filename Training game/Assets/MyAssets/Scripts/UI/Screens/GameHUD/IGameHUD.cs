@@ -1,11 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public interface IGameHUD
 {
-    //void Show();
-    //void Hide();
     void SetMaxHP(float amount);
     void SetHP(float amount);
     void SetReloadTime(float amount);

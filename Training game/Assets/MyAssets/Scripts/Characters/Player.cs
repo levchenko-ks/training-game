@@ -1,9 +1,11 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
+using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public Action PlayerDied;
+
     public Transform weaponHolder;
 
     public float moveSpeed = 5.0f;
@@ -12,7 +14,7 @@ public class Player : MonoBehaviour
 
     private Rigidbody _rb;
     private Transform _target;
-    private GameHUD _gameHUD;
+    private IGameHUD _gameHUD;
     private InputControls _gameplayControls;
 
     private float _horizontal;
@@ -21,7 +23,7 @@ public class Player : MonoBehaviour
 
     public Transform Target { get => _target; set => _target = value; }
     
-    public GameHUD GameHUD
+    public IGameHUD GameHUD
     {
         get => _gameHUD;
         set
@@ -115,8 +117,8 @@ public class Player : MonoBehaviour
 
     private void GameOver()
     {
-        Debug.Log("GameOver");
-        SceneManager.LoadScene("Level");
+        Debug.Log("Player Died");
+        PlayerDied();
     }
 
 }

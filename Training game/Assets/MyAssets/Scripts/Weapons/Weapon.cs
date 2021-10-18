@@ -14,7 +14,7 @@ public class Weapon : MonoBehaviour
 
     private InputControls _gameplayControls;
     private Transform _projectileHolder;
-    private GameHUD _gameHUD;
+    private IGameHUD _gameHUD;
 
     private bool _fire;
     private bool _reload;
@@ -33,7 +33,7 @@ public class Weapon : MonoBehaviour
     }
     public Transform ProjectileHolder { get => _projectileHolder; set => _projectileHolder = value; }
 
-    public GameHUD GameHUD { get => _gameHUD; set => _gameHUD = value; }
+    public IGameHUD GameHUD { get => _gameHUD; set => _gameHUD = value; }
 
 
     private void Awake()

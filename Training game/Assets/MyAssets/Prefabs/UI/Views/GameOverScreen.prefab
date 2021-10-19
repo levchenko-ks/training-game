@@ -416,7 +416,7 @@ GameObject:
   - component: {fileID: 2077993486801688802}
   - component: {fileID: 7923154691030219535}
   m_Layer: 0
-  m_Name: Resume
+  m_Name: Restart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -440,7 +440,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 100}
+  m_SizeDelta: {x: 350, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7178889549938355443
 CanvasRenderer:
@@ -602,7 +602,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RESUME
+  m_Text: RESTART
 --- !u!1 &8907635034856866424
 GameObject:
   m_ObjectHideFlags: 0

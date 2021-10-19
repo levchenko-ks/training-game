@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameOverScreen : MonoBehaviour, IScreen
 {
@@ -16,6 +17,7 @@ public class GameOverScreen : MonoBehaviour, IScreen
         {
             _canvasFHD = value;
             View = Instantiate(_viewPrefab, _canvasFHD.transform);
+            Hide();
             View.MainMenuClicked += OnMainMenuClicked;
             View.RestartClicked += OnRestartCliked;
         }
@@ -23,12 +25,14 @@ public class GameOverScreen : MonoBehaviour, IScreen
 
     private void OnRestartCliked()
     {
-        throw new NotImplementedException();
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Level");
     }
 
     private void OnMainMenuClicked()
     {
-        throw new NotImplementedException();
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void Hide()
@@ -38,6 +42,7 @@ public class GameOverScreen : MonoBehaviour, IScreen
 
     public void Show()
     {
+        Time.timeScale = 0f;
         View.Show();
     }
 }

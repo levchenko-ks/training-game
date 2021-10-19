@@ -99,10 +99,10 @@ public class Weapon : MonoBehaviour
 
     private void Firing()
     {
-        if (_currentAmmo != 0) { Shoot(numberOfShot); }
-        else { Reload(); }
-
         _isFire = false;
+
+        if (_currentAmmo != 0) { Shoot(numberOfShot); }
+        else { Reload(); }        
     }
 
     private void Reloading()

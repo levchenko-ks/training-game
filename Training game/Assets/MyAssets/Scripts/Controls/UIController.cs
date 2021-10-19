@@ -25,7 +25,7 @@ public class UIController : MonoBehaviour
     public IScreen MainMenu { get => _mainMenu; }
     public IGameHUD GameHUD { get => _gameHUD; }
     public IScreen PauseScreen { get => _pauseScreen; }
-    public IScreen GameOver { get => _gameOverScreen; }
+    public IScreen GameOverScreen { get => _gameOverScreen; }
 
     private void Awake()
     {

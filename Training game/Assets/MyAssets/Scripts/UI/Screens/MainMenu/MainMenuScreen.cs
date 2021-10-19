@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,7 +25,7 @@ public class MainMenuScreen : MonoBehaviour, IScreen
 
     private void OnExitClicked()
     {
-        throw new System.NotImplementedException();
+        EditorApplication.ExitPlaymode();
     }
 
     private void OnSettingsClicked()

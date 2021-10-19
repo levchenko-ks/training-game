@@ -71,6 +71,7 @@ public class LevelController : MonoBehaviour
         _UIController.CreateGameHUD();
         _gameHUD = _UIController.GameHUD;
         _UIController.CreatePauseScreen();
+        _UIController.CreateGameOverScreen();
 
         //Environment Instantiate
         var environmentObject = new GameObject("Environment");
@@ -94,7 +95,8 @@ public class LevelController : MonoBehaviour
     {
         _player.Target = _target;
         _player.GameHUD = _gameHUD;
-        _player.InputControls = _inputControls;        
+        _player.InputControls = _inputControls;
+        _player.PlayerDied += OnPlayerDied;
 
         SetWeapon(_weapon_1);
         SetWeapon(_weapon_2);
@@ -108,6 +110,11 @@ public class LevelController : MonoBehaviour
         _mainCamera.GameplayControls = _inputControls;
     }
 
+    private void OnPlayerDied()
+    {
+        _UIController.Show(_UIController.GameOverScreen);
+    }
+
     private void SetWeapon(Weapon Weapon)
     {
         Weapon.gameObject.SetActive(false);
@@ -118,4 +125,5 @@ public class LevelController : MonoBehaviour
         weapon.ProjectileHolder = _projectileHolder;
         weapon.InputControls = _inputControls;
     }
+
 }

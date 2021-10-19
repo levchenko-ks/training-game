@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public Action PlayerDied;
+    public event Action PlayerDied;
 
     public Transform weaponHolder;
 

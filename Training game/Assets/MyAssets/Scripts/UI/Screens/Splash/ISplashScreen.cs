@@ -1,6 +1,6 @@
 using System;
 
-public interface ISplashScreen
+public interface ISplashScreen: IScreen
 {
     event Action ViewHided;
 }

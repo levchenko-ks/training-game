@@ -16,8 +16,8 @@ public class Weapon : MonoBehaviour
     private Transform _projectileHolder;
     private IGameHUD _gameHUD;
 
-    private bool _fire;
-    private bool _reload;
+    private bool _isFire;
+    private bool _isReload;
     private int _currentAmmo;
     private float _timeToFire = 0f;
 
@@ -43,41 +43,37 @@ public class Weapon : MonoBehaviour
 
     private void OnEnable()
     {
+        _isFire = false;
+
         if (_gameHUD == null)
         {
             return;
         }
-        _gameHUD.SetReloadTime(reloadTime);
-        _gameHUD.SetReloadStatus(0f);
 
+        _gameHUD.SetReloadTime(reloadTime);
+        _gameHUD.SetMaxAmmo(maxAmmo);
+        _gameHUD.SetAmmo(_currentAmmo);
+        _gameHUD.SetReloadStatus(0f);  
+        
+        if(_isReload) { Reload(); }
     }
 
     private void FixedUpdate()
     {
-        if (_fire && Time.time >= _timeToFire)
+        if (_isFire && Time.time >= _timeToFire && !_isReload)
         {
-            if (_currentAmmo != 0) { Shoot(numberOfShot); }
-            else { Reload(); }
-
-            _fire = false;
+            Firing();
         }
 
-        if (_reload)
+        if (_isReload)
         {
-            _gameHUD.SetReloadStatus(reloadTime - (_timeToFire - Time.time));
-
-            if (Time.time >= _timeToFire)
-            {
-                _gameHUD.SetReloadStatus(0);
-                _gameHUD.SetAmmo(_currentAmmo);
-                _reload = false;
-            }
+            Reloading();
         }
     }
 
     public void OnFire()
     {
-        _fire = true;
+        _isFire = true;
     }
 
     private void Shoot(int numberOfShot)
@@ -97,9 +93,29 @@ public class Weapon : MonoBehaviour
     }
     private void Reload()
     {
-        _reload = true;
-
+        _isReload = true;
         _timeToFire = Time.time + reloadTime;
-        _currentAmmo = maxAmmo;
     }
+
+    private void Firing()
+    {
+        if (_currentAmmo != 0) { Shoot(numberOfShot); }
+        else { Reload(); }
+
+        _isFire = false;
+    }
+
+    private void Reloading()
+    {
+        _gameHUD.SetReloadStatus(reloadTime - (_timeToFire - Time.time));
+
+        if (Time.time >= _timeToFire)
+        {
+            _gameHUD.SetReloadStatus(0f);
+            _currentAmmo = maxAmmo;
+            _gameHUD.SetAmmo(_currentAmmo);
+            _isReload = false;
+        }
+    }
+
 }

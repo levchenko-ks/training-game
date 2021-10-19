@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class SplashScreen : MonoBehaviour, ISplashScreen, IScreen
+public class SplashScreen : MonoBehaviour, ISplashScreen
 {
     public event Action ViewHided;
 

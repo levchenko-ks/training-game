@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class PauseScreen : MonoBehaviour, IScreen
+public class PauseScreen : MonoBehaviour, IPauseScreen
 {
+    public static bool IsPaused;
     public PauseScreenView _viewPrefab;
 
     private Canvas _canvasFHD;
+    private InputControls _inputControls;
     private IPauseScreenView View;
 
     public Canvas CanvasFHD
@@ -15,19 +16,24 @@ public class PauseScreen : MonoBehaviour, IScreen
         {
             _canvasFHD = value;
             View = Instantiate(_viewPrefab, _canvasFHD.transform);
+            View.Hide();
             View.MainMenuClicked += OnMainMenuClicked;
             View.ResumeClicked += OnResumeCliked;
         }
     }
 
-    private void OnResumeCliked()
+    public InputControls InputControls
     {
-        throw new System.NotImplementedException();
+        set
+        {
+            _inputControls = value;
+            _inputControls.Pause += Pause;
+        }
     }
 
-    private void OnMainMenuClicked()
+    private void Awake()
     {
-        throw new System.NotImplementedException();
+        IsPaused = false;
     }
 
     public void Hide()
@@ -39,4 +45,31 @@ public class PauseScreen : MonoBehaviour, IScreen
     {
         View.Show();
     }
+
+    private void Pause()
+    {
+        IsPaused = !IsPaused;
+        if (IsPaused)
+        {
+            Time.timeScale = 0f;
+            View.Show();
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            View.Hide();
+        }
+    }
+
+    private void OnResumeCliked()
+    {
+        Pause();
+    }
+
+    private void OnMainMenuClicked()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+
 }

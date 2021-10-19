@@ -1,51 +1,50 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
     public SplashScreen SplashScreenPref;
-    public MainMenu MainMenuPref;
+    public MainMenuScreen MainMenuPref;
     public GameHUD GameHUDPref;
     public PauseScreen PauseScreenPref;
     public GameOverScreen GameOverScreenPref;
 
     private Canvas _canvasFHD;
-    private List<GameObject> _screenList;
+    private InputControls _inputControls;
+    private List<IScreen> _screenList;
 
-    private SplashScreen _splashScreen;
-    private MainMenu _mainMenu;
-    private GameHUD _gameHUD;
-    private PauseScreen _pauseScreen;
-    private GameOverScreen _gameOverScreen;
+    private ISplashScreen _splashScreen;
+    private IScreen _mainMenu;
+    private IGameHUD _gameHUD;
+    private IPauseScreen _pauseScreen;
+    private IScreen _gameOverScreen;    
 
     public Canvas CanvasFHD { set => _canvasFHD = value; }
-    public SplashScreen SplashScreen { get => _splashScreen; }
-    public MainMenu MainMenu { get => _mainMenu; }
-    public GameHUD GameHUD { get => _gameHUD; }
-    public PauseScreen PauseScreen { get => _pauseScreen; }
-    public GameOverScreen GameOver { get => _gameOverScreen; }
+    public InputControls InputControls {set => _inputControls = value; }
+    public ISplashScreen SplashScreen { get => _splashScreen; }
+    public IScreen MainMenu { get => _mainMenu; }
+    public IGameHUD GameHUD { get => _gameHUD; }
+    public IScreen PauseScreen { get => _pauseScreen; }
+    public IScreen GameOver { get => _gameOverScreen; }
 
     private void Awake()
     {
-        _screenList = new List<GameObject>();
+        _screenList = new List<IScreen>();        
     }
 
     public void CreateSplashScreen()
     {
         _splashScreen = Instantiate(SplashScreenPref);
-        _screenList.Add(_splashScreen.gameObject);
+        _screenList.Add(_splashScreen);
 
         SetCanvas(_splashScreen);
-        _splashScreen.GetComponent<ISplashScreen>().ViewHided += OnSplashScreenHide;
-        // _splashScreen.ViewHided += OnSplashScreenHide;
+        _splashScreen.ViewHided += OnSplashScreenHide;        
     }
 
     public void CreateMainMenu()
     {
         _mainMenu = Instantiate(MainMenuPref);
-        _screenList.Add(_mainMenu.gameObject);
+        _screenList.Add(_mainMenu);
 
         SetCanvas(_mainMenu);
     }
@@ -53,7 +52,7 @@ public class UIController : MonoBehaviour
     public void CreateGameHUD()
     {
         _gameHUD = Instantiate(GameHUDPref);
-        _screenList.Add(_gameHUD.gameObject);
+        _screenList.Add(_gameHUD);
 
         SetCanvas(_gameHUD);
     }
@@ -61,15 +60,16 @@ public class UIController : MonoBehaviour
     public void CreatePauseScreen()
     {
         _pauseScreen = Instantiate(PauseScreenPref);
-        _screenList.Add(_pauseScreen.gameObject);
+        _screenList.Add(_pauseScreen);
 
         SetCanvas(_pauseScreen);
+        _pauseScreen.InputControls = _inputControls;
     }
 
     public void CreateGameOverScreen()
     {
         _gameOverScreen = Instantiate(GameOverScreenPref);
-        _screenList.Add(_gameOverScreen.gameObject);
+        _screenList.Add(_gameOverScreen);
 
         SetCanvas(_gameOverScreen);
     }
@@ -86,9 +86,9 @@ public class UIController : MonoBehaviour
 
     public void HideAll()
     {
-        foreach (GameObject element in _screenList)
+        foreach (IScreen element in _screenList)
         {
-            element.GetComponent<IScreen>().Hide();
+            element.Hide();
         }
     }
     private void SetCanvas(IScreen screen)

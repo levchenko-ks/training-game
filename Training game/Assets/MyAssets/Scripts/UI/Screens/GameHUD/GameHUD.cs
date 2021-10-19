@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameHUD : MonoBehaviour, IGameHUD, IScreen
+public class GameHUD : MonoBehaviour, IGameHUD
 {
     public GameHUDView _viewPrefab;
 
@@ -18,7 +18,7 @@ public class GameHUD : MonoBehaviour, IGameHUD, IScreen
 
     public void Hide() => View.Hide();
 
-    public void Show() => View.Show();  
+    public void Show() => View.Show();
 
     public void SetAmmo(int count) => View.SetAmmo(count);
 
@@ -32,7 +32,9 @@ public class GameHUD : MonoBehaviour, IGameHUD, IScreen
 
     public void SetReloadTime(float amount) => View.SetReloadTime(amount);
 
-    public void SetWeaponIcon(int count) => View.SetWeaponIcon(count);
+    public void SetWeaponIcon(int index) => View.ShowWeaponIcon(index);
 
+    public void ShowWeaponIcon(int index) => View.ShowWeaponIcon(index);
 
+    public void HideWeaponIcon(int index) => View.HideWeaponIcon(index);
 }

@@ -1,4 +1,4 @@
-public interface IGameHUD
+public interface IGameHUD: IScreen
 {
     void SetMaxHP(float amount);
     void SetHP(float amount);
@@ -6,5 +6,6 @@ public interface IGameHUD
     void SetReloadStatus(float amount);
     void SetMaxAmmo(float amount);
     void SetAmmo(int count);
-    void SetWeaponIcon(int count);
+    void ShowWeaponIcon(int index);
+    void HideWeaponIcon(int index);
 }

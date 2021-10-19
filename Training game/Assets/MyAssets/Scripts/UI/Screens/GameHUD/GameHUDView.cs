@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +7,10 @@ public class GameHUDView : MonoBehaviour, IGameHUDView
     public Slider healthBar;
     public Slider reloadBar;
     public Text AmmoCounter;
-   
+    public Text MaxAmmo;
+
+    public List<Image> WeaponImages;
+
 
     public void Hide()
     {
@@ -47,11 +51,16 @@ public class GameHUDView : MonoBehaviour, IGameHUDView
 
     public void SetMaxAmmo(float amount)
     {
-        throw new System.NotImplementedException();
+        MaxAmmo.text = amount.ToString();
     }
 
-    public void SetWeaponIcon(int count)
+    public void ShowWeaponIcon(int index)
     {
-        throw new System.NotImplementedException();
+        WeaponImages[index].enabled = true;
+    }
+
+    public void HideWeaponIcon(int index)
+    {
+        WeaponImages[index].enabled = false;
     }
 }

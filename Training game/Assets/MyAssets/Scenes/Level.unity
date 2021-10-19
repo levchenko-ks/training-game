@@ -167,8 +167,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 2407161119823021424, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
-  Weapon_1: {fileID: 8147413249601430496, guid: 0e589f0de3f465246bdd1875ca50447d, type: 3}
-  Weapon_2: {fileID: 8947999611255525273, guid: c7fee30597aedeb4ea03351c19bc97e1, type: 3}
+  Weapon_1: {fileID: 6560026907627232227, guid: 0e589f0de3f465246bdd1875ca50447d, type: 3}
+  Weapon_2: {fileID: 3888338163936653546, guid: c7fee30597aedeb4ea03351c19bc97e1, type: 3}
   Target: {fileID: 539080441470990182, guid: 9245ecdf500c02d42b3e170283b231fe, type: 3}
   MainCamera: {fileID: 7344370552636875559, guid: 589827dcf0b7fe34599590e2c3162a89, type: 3}
   DirectionalLight: {fileID: 7310833423056122537, guid: 29860b207f561b54e965db7c924347e5, type: 3}

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour, IScreen
+public class MainMenuScreen : MonoBehaviour, IScreen
 {
     public MainMenuView _viewPrefab;
 

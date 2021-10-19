@@ -8,6 +8,8 @@ public class MainMenuControls : MonoBehaviour
     private Canvas _canvasFHD;
     private UIController _UIController;
 
+    private static bool IsFirstStart = true;
+
     private void Start()
     {
         _canvasFHD = Instantiate(CanvasFHD);
@@ -17,6 +19,14 @@ public class MainMenuControls : MonoBehaviour
         _UIController.CreateSplashScreen();
         _UIController.CreateMainMenu();
 
-        _UIController.Show(_UIController.SplashScreen);
+        if (IsFirstStart)
+        {
+            _UIController.Show(_UIController.SplashScreen);
+            IsFirstStart = false;
+        }
+        else
+        {
+            _UIController.Show(_UIController.MainMenu);
+        }
     }
 }

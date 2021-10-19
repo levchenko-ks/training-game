@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
 
     private float _horizontal;
     private float _vertical;
-    private List<GameObject> _weaponList;
+    private List<Weapon> _weaponList;
 
     public Transform Target { get => _target; set => _target = value; }
     
@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        _weaponList = new List<GameObject>();
+        _weaponList = new List<Weapon>();
     }
 
     private void FixedUpdate()
@@ -56,14 +56,14 @@ public class Player : MonoBehaviour
         Moving();
     }
 
-    public void AddWeapon(GameObject Weapon)
+    public void AddWeapon(Weapon Weapon)
     {
         _weaponList.Add(Weapon);
     }
 
     public void GetReady()
     {
-        OnSelectWeapon(1);
+        OnSelectWeapon(0);
     }
 
     public void TakeDamage(float damage)
@@ -85,20 +85,22 @@ public class Player : MonoBehaviour
 
     private void OnSelectWeapon(int index)
     {
-        if (_weaponList.Count < index)
+        if (_weaponList.Count <= index)
         {
             return;
         }
 
         for (int i = 0; i < _weaponList.Count; i++)
         {
-            if (i + 1 == index) // +1, because count from 0
+            if (i == index)
             {
-                _weaponList[i].SetActive(true);
+                _weaponList[i].gameObject.SetActive(true);
+                _gameHUD.ShowWeaponIcon(i);
             }
             else
             {
-                _weaponList[i].SetActive(false);
+                _weaponList[i].gameObject.SetActive(false);
+                _gameHUD.HideWeaponIcon(i);
             }
         }
     }

@@ -8,6 +8,7 @@ public class InputControls : MonoBehaviour
     public event Action<Vector2> Move;
     public event Action<Vector2> Look;
     public event Action<int> SelectWeapon;
+    public event Action Pause;
 
     private void Update()
     {
@@ -15,11 +16,20 @@ public class InputControls : MonoBehaviour
         CheckMoveInput();
         CheckLookInput();
         CheckWeaponChoiceInput();
+        CheckPauseInput();
+    }
+
+    private void CheckPauseInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause();
+        }
     }
 
     private void CheckFireInput()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0))
         {
             Fire();            
         }
@@ -42,11 +52,11 @@ public class InputControls : MonoBehaviour
 
     private void CheckWeaponChoiceInput()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) { SelectWeapon(1); }
-        if (Input.GetKeyDown(KeyCode.Alpha2)) { SelectWeapon(2); }
-        if (Input.GetKeyDown(KeyCode.Alpha3)) { SelectWeapon(3); }
-        if (Input.GetKeyDown(KeyCode.Alpha4)) { SelectWeapon(4); }
-        if (Input.GetKeyDown(KeyCode.Alpha5)) { SelectWeapon(5); }
-        if (Input.GetKeyDown(KeyCode.Alpha6)) { SelectWeapon(6); }
+        if (Input.GetKeyDown(KeyCode.Alpha1)) { SelectWeapon(0); }
+        if (Input.GetKeyDown(KeyCode.Alpha2)) { SelectWeapon(1); }
+        if (Input.GetKeyDown(KeyCode.Alpha3)) { SelectWeapon(2); }
+        if (Input.GetKeyDown(KeyCode.Alpha4)) { SelectWeapon(3); }
+        if (Input.GetKeyDown(KeyCode.Alpha5)) { SelectWeapon(4); }
+        if (Input.GetKeyDown(KeyCode.Alpha6)) { SelectWeapon(5); }
     }
 }

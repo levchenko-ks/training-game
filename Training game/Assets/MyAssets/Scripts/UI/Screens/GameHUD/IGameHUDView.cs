@@ -8,5 +8,6 @@ public interface IGameHUDView
     void SetReloadStatus(float amount);
     void SetMaxAmmo(float amount);
     void SetAmmo(int count);
-    void SetWeaponIcon(int count);
+    void ShowWeaponIcon(int index);
+    void HideWeaponIcon(int index);
 }

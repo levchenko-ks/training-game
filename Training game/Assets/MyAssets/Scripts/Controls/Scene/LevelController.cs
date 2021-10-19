@@ -4,8 +4,8 @@ public class LevelController : MonoBehaviour
 {
     public Player Player;
 
-    public GameObject Weapon_1;
-    public GameObject Weapon_2;
+    public Weapon Weapon_1;
+    public Weapon Weapon_2;
 
     public Transform Target;
     public CameraControl MainCamera;
@@ -20,8 +20,8 @@ public class LevelController : MonoBehaviour
 
     private Player _player;
 
-    private GameObject _weapon_1;
-    private GameObject _weapon_2;
+    private Weapon _weapon_1;
+    private Weapon _weapon_2;
 
     private Transform _target;
     private CameraControl _mainCamera;
@@ -58,18 +58,19 @@ public class LevelController : MonoBehaviour
         _mainCamera = Instantiate(MainCamera);
         Instantiate(DirectionalLight);
 
-        // UI Instantiate
-        _canvasFHD = Instantiate(CanvasFHD);
-        _UIController = Instantiate(UIController);
-        _UIController.CanvasFHD = _canvasFHD;
-        _UIController.CreateGameHUD();
-        _gameHUD = _UIController.GameHUD;
-
-
         //Control Instantiate
         var inputControlsObject = new GameObject("InputControls");
         inputControlsObject.AddComponent<InputControls>();
         _inputControls = inputControlsObject.GetComponent<InputControls>();
+
+        // UI Instantiate
+        _canvasFHD = Instantiate(CanvasFHD);
+        _UIController = Instantiate(UIController);
+        _UIController.CanvasFHD = _canvasFHD;
+        _UIController.InputControls = _inputControls;
+        _UIController.CreateGameHUD();
+        _gameHUD = _UIController.GameHUD;
+        _UIController.CreatePauseScreen();
 
         //Environment Instantiate
         var environmentObject = new GameObject("Environment");
@@ -107,9 +108,9 @@ public class LevelController : MonoBehaviour
         _mainCamera.GameplayControls = _inputControls;
     }
 
-    private void SetWeapon(GameObject Weapon)
+    private void SetWeapon(Weapon Weapon)
     {
-        Weapon.SetActive(false);
+        Weapon.gameObject.SetActive(false);
         _player.AddWeapon(Weapon);
 
         var weapon = Weapon.GetComponent<Weapon>();

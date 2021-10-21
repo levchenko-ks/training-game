@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 5718636680193983393}
   - component: {fileID: 4889814827567339067}
   - component: {fileID: 2407161119823021424}
+  - component: {fileID: 2769306372912653989}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -175,6 +176,23 @@ MonoBehaviour:
   moveSpeed: 5
   maxHealth: 100
   currentHealth: 100
+--- !u!114 &2769306372912653989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032128153078440143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d76a257ed15a96e40997e9cc8ea4c2ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartHealth: 5
+  StartStamina: 5
+  StartMoveSpeed: 5
+  StartReloadSpeed: 5
+  StartAccuracy: 5
 --- !u!1 &5285541059790334032
 GameObject:
   m_ObjectHideFlags: 0

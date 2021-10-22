@@ -37,4 +37,9 @@ public class GameHUD : MonoBehaviour, IGameHUD
     public void ShowWeaponIcon(int index) => View.ShowWeaponIcon(index);
 
     public void HideWeaponIcon(int index) => View.HideWeaponIcon(index);
+
+    public void SetCharacteristic(CharacteristicsNames name, float count)
+    {
+        View.SetCharacteristic(name, count);
+    }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface ICharacteristicControl
 {
+    public List<Characteristic> CharacteristicsList { get; }
     public Characteristic GetCharacteristic(CharacteristicsNames Name);
     public void AddCharacteristic(CharacteristicsNames Name, float BaseValue);
     public void RemoveCharacteristic(CharacteristicsNames Name);

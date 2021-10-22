@@ -7,37 +7,38 @@ public class Player : MonoBehaviour
     public event Action PlayerDied;
 
     public Transform weaponHolder;
-    public ICharacteristicControl playerCharacteristic;    
+    public PlayerCharacteristics playerCharacteristic;
 
     private Rigidbody _rb;
     private Transform _target;
     private IGameHUD _gameHUD;
     private InputControls _gameplayControls;
+    private ICharacteristicControl _playerCharacteristic;
 
     private float _maxHealth;
     private float _moveSpeed;
     private float _maxStamina;
     private float _reloadSpeed;
     private float _accuracy;
-    
+
     private float _currentHealth;
     private float _stamina;
     private float _horizontal;
     private float _vertical;
     private List<Weapon> _weaponList;
+    private List<Characteristic> _characteristicsList;
 
     public Transform Target { set => _target = value; }
-    
+
     public IGameHUD GameHUD
     {
         get => _gameHUD;
         set
         {
             _gameHUD = value;
-            _gameHUD.SetMaxHP(_maxHealth);
         }
     }
-    
+
 
     public InputControls InputControls
     {
@@ -54,6 +55,8 @@ public class Player : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _weaponList = new List<Weapon>();
+        _playerCharacteristic = playerCharacteristic;
+        _characteristicsList = _playerCharacteristic.CharacteristicsList;
     }
 
     private void FixedUpdate()
@@ -69,7 +72,17 @@ public class Player : MonoBehaviour
     public void GetReady()
     {
         CalculateMyCharacteristic();
+        _currentHealth = _maxHealth;
+        UpdateHUD();
         OnSelectWeapon(0);
+    }
+
+    public void CollectBonus(CharacteristicsNames name, Modifier modifier)
+    {
+        _playerCharacteristic.AddModifier(name, modifier);
+        CalculateMyCharacteristic();
+        UpdateHUD();
+        Debug.Log("CollectBonus");
     }
 
     public void TakeDamage(float damage)
@@ -81,6 +94,12 @@ public class Player : MonoBehaviour
         {
             GameOver();
         }
+    }
+
+    public void TakeHeal(float heal)
+    {
+        _currentHealth = Mathf.Clamp(_currentHealth + heal, 0f, _maxHealth);
+        UpdateHUD();
     }
 
     private void OnMove(Vector2 obj)
@@ -125,10 +144,21 @@ public class Player : MonoBehaviour
 
     private void CalculateMyCharacteristic()
     {
-        _maxHealth = playerCharacteristic.CalculateAmount(CharacteristicsNames.Health);
-        _moveSpeed = playerCharacteristic.CalculateAmount(CharacteristicsNames.MoveSpeed);
-        _maxStamina = playerCharacteristic.CalculateAmount(CharacteristicsNames.Stamina);
-        _accuracy = playerCharacteristic.CalculateAmount(CharacteristicsNames.Accuracy);
+        _maxHealth = _playerCharacteristic.CalculateAmount(CharacteristicsNames.Health);
+        _moveSpeed = _playerCharacteristic.CalculateAmount(CharacteristicsNames.MoveSpeed);
+        _maxStamina = _playerCharacteristic.CalculateAmount(CharacteristicsNames.Stamina);
+        _accuracy = _playerCharacteristic.CalculateAmount(CharacteristicsNames.Accuracy);
+    }
+
+    private void UpdateHUD()
+    {
+        _gameHUD.SetMaxHP(_maxHealth);
+        _gameHUD.SetHP(_currentHealth);
+        foreach (Characteristic characteristic in _characteristicsList)
+        {
+            _gameHUD.SetCharacteristic(characteristic.Name, characteristic.Value);
+        }
+
     }
 
     private void GameOver()

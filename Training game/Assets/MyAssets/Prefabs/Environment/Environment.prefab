@@ -140,6 +140,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cc6c318d741a9a48935c0a8c167c6ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FloorTile: {fileID: 2758355382335778760, guid: b3ba4eb3a7ac5fa43ae6e44284b3e8d6, type: 3}
   length: 20
   width: 20
+  FloorTile: {fileID: 2758355382335778760, guid: b3ba4eb3a7ac5fa43ae6e44284b3e8d6, type: 3}
+  HP_Cube: {fileID: 4786103745742499574, guid: 736e4416816231340b645c424c3b154b, type: 3}
+  MS_Sphere: {fileID: 4052864175541134054, guid: af16a9023b0907544a53f926dc54031b, type: 3}
+  Heal_Cube: {fileID: 1390247022, guid: b8e9cef1727fffd479b318afdd27feef, type: 3}

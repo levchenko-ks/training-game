@@ -173,9 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponHolder: {fileID: 3500523214242765135}
-  moveSpeed: 5
-  maxHealth: 100
-  currentHealth: 100
+  playerCharacteristic: {fileID: 2769306372912653989}
 --- !u!114 &2769306372912653989
 MonoBehaviour:
   m_ObjectHideFlags: 0

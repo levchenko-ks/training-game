@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,12 @@ public class GameHUDView : MonoBehaviour, IGameHUDView
     public Slider reloadBar;
     public Text AmmoCounter;
     public Text MaxAmmo;
+
+    public Text HP;
+    public Text ST;
+    public Text RS;
+    public Text MS;
+    public Text AC;
 
     public List<Image> WeaponImages;
 
@@ -62,5 +69,28 @@ public class GameHUDView : MonoBehaviour, IGameHUDView
     public void HideWeaponIcon(int index)
     {
         WeaponImages[index].enabled = false;
+    }
+
+    public void SetCharacteristic(CharacteristicsNames name, float count)
+    {
+        switch (name)
+        {
+            case CharacteristicsNames.Accuracy:
+                AC.text = count.ToString();
+                return;
+            case CharacteristicsNames.Health:
+                HP.text = count.ToString();
+                return;
+            case CharacteristicsNames.MoveSpeed:
+                MS.text = count.ToString();
+                return;
+            case CharacteristicsNames.ReloadSpeed:
+                RS.text = count.ToString();
+                return;
+            case CharacteristicsNames.Stamina:
+                ST.text = count.ToString();
+                return;
+            default: throw new Exception("Characteristic does not exist");
+        }
     }
 }

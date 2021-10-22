@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MainMenuControls : MonoBehaviour
+public class MainMenu : MonoBehaviour
 {
     public Canvas CanvasFHD;
     public UIController UIController;

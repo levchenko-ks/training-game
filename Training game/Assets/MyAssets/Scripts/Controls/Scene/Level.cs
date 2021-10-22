@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LevelController : MonoBehaviour
+public class Level : MonoBehaviour
 {
     public Player Player;
 
@@ -11,8 +11,8 @@ public class LevelController : MonoBehaviour
     public CameraControl MainCamera;
     public Light DirectionalLight;
     public Spawner Spawner;
+
     public Environment Environment;
-    public GameObject FloorTile;
 
     public Canvas CanvasFHD;
     public UIController UIController;
@@ -31,7 +31,7 @@ public class LevelController : MonoBehaviour
 
     private Spawner _spawner;
     private Environment _environment;
-    private InputControls _inputControls;
+    private InputControls _inputControls;    
 
     private IGameHUD _gameHUD;
     private Transform _weaponHolder;
@@ -61,7 +61,7 @@ public class LevelController : MonoBehaviour
         //Control Instantiate
         var inputControlsObject = new GameObject("InputControls");
         inputControlsObject.AddComponent<InputControls>();
-        _inputControls = inputControlsObject.GetComponent<InputControls>();
+        _inputControls = inputControlsObject.GetComponent<InputControls>();        
 
         // UI Instantiate
         _canvasFHD = Instantiate(CanvasFHD);
@@ -74,11 +74,9 @@ public class LevelController : MonoBehaviour
         _UIController.CreateGameOverScreen();
 
         //Environment Instantiate
-        var environmentObject = new GameObject("Environment");
-        environmentObject.AddComponent<Environment>();
-        _environment = environmentObject.GetComponent<Environment>();
-        _environment.FloorTile = FloorTile;
+        _environment = Instantiate(Environment);
         _environment.CreatePlane();
+        _environment.CreateBonuses();
         _spawner = Instantiate(Spawner);
 
         //Holders Instantiate

@@ -4,16 +4,18 @@ public class Enemy : MonoBehaviour
 {
     public HealthBar HealthBar;
     public Billboard Billboard;
-
-    public float maxHealth = 100f;
-    public float currentHealth = 100f;
-    public float moveSpeed = 2f;
+    public EnemyCharacteristic EnemyCharacteristic;
 
     private Rigidbody _rb;
     private Transform _target;
     private Transform _cam;
+    private ICharacteristicControl _enemyCharacteristic;
 
-    private float _damage = 25f;
+    private float _maxHealth;
+    private float _currentHealth;
+    private float _moveSpeed;
+    private float _meleeDamage;
+
     private float _attackSpeed = 2f;
     private float _timeToAttack = 0f;
 
@@ -31,8 +33,15 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        _enemyCharacteristic = EnemyCharacteristic;
+    }
 
-        HealthBar.SetMaxHP(maxHealth);        
+    private void Start()
+    {
+        CalculateMyCharacteristic();
+        HealthBar.SetMaxHP(_maxHealth);
+        _currentHealth = _maxHealth;
+        HealthBar.SetHP(_currentHealth);
     }
 
     private void FixedUpdate()
@@ -51,9 +60,9 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage;
-        HealthBar.SetHP(currentHealth);
-        if (currentHealth <= 0f)
+        _currentHealth -= damage;
+        HealthBar.SetHP(_currentHealth);
+        if (_currentHealth <= 0f)
         {
             Die();
         }
@@ -61,8 +70,8 @@ public class Enemy : MonoBehaviour
     private void Moving()
     {
         Vector3 moveDirection = _target.position - transform.position;
-        Vector3 newPosition = transform.position + moveDirection.normalized * moveSpeed * Time.fixedDeltaTime;
-
+        Vector3 newPosition = transform.position + moveDirection.normalized * _moveSpeed * Time.fixedDeltaTime;
+        
         Vector3 lookDirection = _target.position - transform.position;
         Quaternion newRotation = Quaternion.LookRotation(lookDirection);
 
@@ -81,7 +90,14 @@ public class Enemy : MonoBehaviour
         if (player != null && Time.time >= _timeToAttack)
         {
             _timeToAttack = Time.time + 1f / _attackSpeed;
-            player.TakeDamage(_damage);
+            player.TakeDamage(_meleeDamage);
         }
+    }
+
+    private void CalculateMyCharacteristic()
+    {
+        _maxHealth = _enemyCharacteristic.CalculateAmount(CharacteristicsNames.Health);
+        _moveSpeed = _enemyCharacteristic.CalculateAmount(CharacteristicsNames.MoveSpeed);
+        _meleeDamage = _enemyCharacteristic.CalculateAmount(CharacteristicsNames.MeleeDamage);        
     }
 }

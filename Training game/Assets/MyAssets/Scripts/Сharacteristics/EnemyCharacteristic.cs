@@ -1,7 +1,7 @@
 public class EnemyCharacteristic : CharacteristicControl, ICharacteristicControl
 {
     public float StartHealth = 5f;    
-    public float StartMoveSpeed = 5f;    
+    public float StartMoveSpeed = 2f;    
     public float StartMeleeDamage = 5f;
 
 

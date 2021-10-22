@@ -4,11 +4,10 @@ public class Spawner : MonoBehaviour
 {
     public Enemy Zombie;
 
-    public Player _player;
-    public Transform _placeholder;
-
     public float SpawnInterval = 5f;
 
+    private Player _player;
+    private Transform _placeholder;
     private Vector3 _spawnPos;
     private float _timeToSpawn = 0f;
     private Transform _cam;

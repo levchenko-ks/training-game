@@ -9,6 +9,7 @@ public class GameHUDView : MonoBehaviour, IGameHUDView
     public Slider reloadBar;
     public Text AmmoCounter;
     public Text MaxAmmo;
+    public Text Score;
 
     public Text HP;
     public Text ST;
@@ -92,5 +93,10 @@ public class GameHUDView : MonoBehaviour, IGameHUDView
                 return;
             default: throw new Exception("Characteristic does not exist");
         }
+    }
+
+    public void SetScore(float score)
+    {
+        Score.text = score.ToString();
     }
 }

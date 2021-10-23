@@ -11,10 +11,12 @@ public class Spawner : MonoBehaviour
     private Vector3 _spawnPos;
     private float _timeToSpawn = 0f;
     private Transform _cam;
+    private ILevelScore _levelScore;
 
     public Player Player { get => _player; set => _player = value; }
     public Transform Placeholder { get => _placeholder; set => _placeholder = value; }
     public Transform Cam { get => _cam; set => _cam = value; }
+    public ILevelScore LevelScore { set => _levelScore = value; }
 
     void Update()
     {
@@ -33,5 +35,8 @@ public class Spawner : MonoBehaviour
         var enemy = Instantiate(Zombie, _spawnPos, Quaternion.identity, _placeholder);
         enemy.Target = _player.transform;
         enemy.Cam = _cam;
+
+        var container = enemy.gameObject.GetComponent<ScoreContainer>();        
+        _levelScore.AddScoreContainer(container);
     }
 }

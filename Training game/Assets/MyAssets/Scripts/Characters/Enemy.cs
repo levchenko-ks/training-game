@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     private Rigidbody _rb;
     private Transform _target;
     private Transform _cam;
-    private ICharacteristicControl _enemyCharacteristic;
+    private ICharacteristicControl _enemyCharacteristic;    
 
     private float _maxHealth;
     private float _currentHealth;
@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
             Billboard.Cam = _cam;
         }
     }
-
+    
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();

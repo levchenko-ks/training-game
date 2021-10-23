@@ -11,8 +11,8 @@ public class Level : MonoBehaviour
     public CameraControl MainCamera;
     public Light DirectionalLight;
     public Spawner Spawner;
-
     public Environment Environment;
+    public LevelScore LevelScore;
 
     public Canvas CanvasFHD;
     public UIController UIController;
@@ -31,7 +31,8 @@ public class Level : MonoBehaviour
 
     private Spawner _spawner;
     private Environment _environment;
-    private InputControls _inputControls;    
+    private InputControls _inputControls;
+    private ILevelScore _levelScore;
 
     private IGameHUD _gameHUD;
     private Transform _weaponHolder;
@@ -61,7 +62,8 @@ public class Level : MonoBehaviour
         //Control Instantiate
         var inputControlsObject = new GameObject("InputControls");
         inputControlsObject.AddComponent<InputControls>();
-        _inputControls = inputControlsObject.GetComponent<InputControls>();        
+        _inputControls = inputControlsObject.GetComponent<InputControls>();
+        _levelScore = Instantiate(LevelScore);
 
         // UI Instantiate
         _canvasFHD = Instantiate(CanvasFHD);
@@ -102,6 +104,8 @@ public class Level : MonoBehaviour
         _spawner.Player = _player;
         _spawner.Placeholder = _enemyHolder;
         _spawner.Cam = _mainCamera.transform;
+        _spawner.LevelScore = _levelScore;
+        _levelScore.GameHUD = _gameHUD;
 
         _mainCamera.Player = _player.transform;
         _mainCamera.Target = _target;

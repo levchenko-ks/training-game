@@ -11,4 +11,5 @@ public interface IGameHUDView
     void ShowWeaponIcon(int index);
     void HideWeaponIcon(int index);
     void SetCharacteristic(CharacteristicsNames name, float count);
+    void SetScore(float score);
 }

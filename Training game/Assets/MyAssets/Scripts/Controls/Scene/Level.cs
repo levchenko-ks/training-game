@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Level : MonoBehaviour
 {
@@ -45,6 +46,11 @@ public class Level : MonoBehaviour
         SetDependency();
 
         _player.GetReady();
+    }
+
+    private void Update()
+    {
+        CheckWinning();
     }
 
     private void SceneInstantiate()
@@ -128,4 +134,13 @@ public class Level : MonoBehaviour
         weapon.InputControls = _inputControls;
     }
 
+    private void CheckWinning()
+    {
+        var score = PlayerPrefs.GetFloat(SavesKeys.Score.ToString(), 0f);
+
+        if (score > 400f)
+        {
+            SceneManager.LoadScene("HUB");
+        }
+    }
 }

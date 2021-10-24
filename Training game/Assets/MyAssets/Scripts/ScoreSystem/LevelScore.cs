@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LevelScore : MonoBehaviour, ILevelScore
 {
-    private float _currentScore = 0f;
+    private float _currentScore;
     private IGameHUD _gameHUD;
 
     public float CurrentScore { get => _currentScore; }
@@ -13,6 +13,11 @@ public class LevelScore : MonoBehaviour, ILevelScore
             _gameHUD = value;
             _gameHUD.SetScore(_currentScore);
         }
+    }
+
+    private void Awake()
+    {
+        _currentScore = PlayerPrefs.GetFloat(SavesKeys.Score.ToString(), 0f);        
     }
 
     public void AddScore(ScoreGainers name)
@@ -27,6 +32,7 @@ public class LevelScore : MonoBehaviour, ILevelScore
                 break;
         }
         _gameHUD.SetScore(_currentScore);
+        PlayerPrefs.SetFloat(SavesKeys.Score.ToString(), _currentScore);
     }
 
     public void AddScoreContainer(ScoreContainer container)

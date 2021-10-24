@@ -48,3 +48,4 @@ MonoBehaviour:
   GameHUDPref: {fileID: 2364373960311222614, guid: d7cf5745d3b1e7e4991cc065f646e34f, type: 3}
   PauseScreenPref: {fileID: 2404973728539583658, guid: 830b0828ee1a1bf45aa2231f70fe5a3d, type: 3}
   GameOverScreenPref: {fileID: 127125141101028730, guid: 69fa38706b3c65640aa51a7e30bea8cc, type: 3}
+  HUBScreenPref: {fileID: 6858692418531484534, guid: 6729211d1ccd74c43b924efae9c90bd6, type: 3}

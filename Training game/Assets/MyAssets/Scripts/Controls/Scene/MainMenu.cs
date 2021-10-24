@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    public Canvas CanvasFHD;
-    public UIController UIController;
+    public Canvas CanvasFHDPref;
+    public UIController UIControllerPref;
 
     private Canvas _canvasFHD;
     private UIController _UIController;
@@ -12,8 +12,8 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        _canvasFHD = Instantiate(CanvasFHD);
-        _UIController = Instantiate(UIController);
+        _canvasFHD = Instantiate(CanvasFHDPref);
+        _UIController = Instantiate(UIControllerPref);
         _UIController.CanvasFHD = _canvasFHD;
 
         _UIController.CreateSplashScreen();

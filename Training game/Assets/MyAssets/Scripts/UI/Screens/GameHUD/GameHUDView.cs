@@ -97,6 +97,6 @@ public class GameHUDView : MonoBehaviour, IGameHUDView
 
     public void SetScore(float score)
     {
-        Score.text = score.ToString();
+        if (Score) { Score.text = score.ToString(); }        
     }
 }

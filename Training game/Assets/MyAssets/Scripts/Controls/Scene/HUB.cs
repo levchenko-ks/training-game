@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HUB : MonoBehaviour
@@ -10,7 +8,7 @@ public class HUB : MonoBehaviour
     private Canvas _canvasFHD;
     private UIController _UIController;
 
-    private void Start()
+    private void Awake()
     {
         _canvasFHD = Instantiate(CanvasFHD);
         _UIController = Instantiate(UIController);

@@ -6,7 +6,13 @@ public class CharacteristicControl : MonoBehaviour, ICharacteristicControl
 {
     private readonly List<Characteristic> _characteristicsList = new List<Characteristic>();
 
-    public List<Characteristic> CharacteristicsList { get => _characteristicsList; }
+    public List<Characteristic> CharacteristicsList
+    {
+        get
+        {
+            return _characteristicsList;
+        }
+    }
 
     public void AddCharacteristic(CharacteristicsNames Name, float BaseValue)
     {
@@ -28,7 +34,7 @@ public class CharacteristicControl : MonoBehaviour, ICharacteristicControl
             case CharacteristicsNames.Stamina: return CalculateStamina(characteristic.Value);
             default: throw new Exception("Characteristic does not exist");
         }
-    }  
+    }
 
     public Characteristic GetCharacteristic(CharacteristicsNames Name)
     {

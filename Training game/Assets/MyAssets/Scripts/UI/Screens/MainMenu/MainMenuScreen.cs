@@ -50,6 +50,8 @@ public class MainMenuScreen : MonoBehaviour, IScreen
 
     private void ClearProgress()
     {
+        PlayerPrefs.SetInt(SavesKeys.Level.ToString(), 1);
+
         PlayerPrefs.DeleteKey(SavesKeys.Score.ToString());
         PlayerPrefs.DeleteKey(SavesKeys.Health.ToString());
         PlayerPrefs.DeleteKey(SavesKeys.Stamina.ToString());

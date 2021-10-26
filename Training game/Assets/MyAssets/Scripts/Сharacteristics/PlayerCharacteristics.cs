@@ -2,12 +2,6 @@ using UnityEngine;
 
 public class PlayerCharacteristics : CharacteristicControl, ICharacteristicControl
 {
-    public float StartHealth;
-    public float StartStamina;
-    public float StartMoveSpeed;
-    public float StartReloadSpeed;
-    public float StartAccuracy;
-
     private void Awake()
     {
         SetupCharacteristic(CharacteristicsNames.Health);
@@ -15,25 +9,21 @@ public class PlayerCharacteristics : CharacteristicControl, ICharacteristicContr
         SetupCharacteristic(CharacteristicsNames.MoveSpeed);
         SetupCharacteristic(CharacteristicsNames.ReloadSpeed);
         SetupCharacteristic(CharacteristicsNames.Accuracy);
-
-
-        AddCharacteristic(CharacteristicsNames.Health, StartHealth);
-        AddCharacteristic(CharacteristicsNames.Stamina, StartStamina);
-        AddCharacteristic(CharacteristicsNames.MoveSpeed, StartMoveSpeed);
-        AddCharacteristic(CharacteristicsNames.ReloadSpeed, StartReloadSpeed);
-        AddCharacteristic(CharacteristicsNames.Accuracy, StartAccuracy);
     }
 
     private void SetupCharacteristic(CharacteristicsNames name)
     {
+        var StartChar = 5f;
+
         if (PlayerPrefs.HasKey(name.ToString()))
         {
-            StartHealth = PlayerPrefs.GetFloat(name.ToString());
+            StartChar = PlayerPrefs.GetFloat(name.ToString());            
         }
         else
-        {
-            StartHealth = 5f;
-            PlayerPrefs.SetFloat(name.ToString(), StartHealth);
+        {            
+            PlayerPrefs.SetFloat(name.ToString(), StartChar);           
         }
+
+        AddCharacteristic(name, StartChar);
     }
 }

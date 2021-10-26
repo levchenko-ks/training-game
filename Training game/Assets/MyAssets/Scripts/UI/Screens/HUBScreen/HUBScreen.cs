@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HUBScreen : MonoBehaviour, IHUBScreen
 {
@@ -16,13 +17,15 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
             _canvasFHD = value;
             View = Instantiate(_viewPrefab, _canvasFHD.transform);
             Hide();
-            View.UpgradeHPCliked += OnUpgradeHPCliked;
-            View.UpgradeSTCliked += OnUpgradeSTCliked;
-            View.UpgradeRSCliked += OnUpgradeRSCliked;
-            View.UpgradeMSCliked += OnUpgradeMSCliked;
-            View.UpgradeACCliked += OnUpgradeACCliked;
+            View.UpgradeHPClicked += OnUpgradeHPCliked;
+            View.UpgradeSTClicked += OnUpgradeSTCliked;
+            View.UpgradeRSClicked += OnUpgradeRSCliked;
+            View.UpgradeMSClicked += OnUpgradeMSCliked;
+            View.UpgradeACClicked += OnUpgradeACCliked;
+            View.NextLevelClicked += OnNextLevelClicked;
         }
     }
+
 
     private void Awake()
     {
@@ -36,10 +39,12 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
     private void Start()
     {
         var score = PlayerPrefs.GetFloat(SavesKeys.Score.ToString());
+        var level = PlayerPrefs.GetInt(SavesKeys.Level.ToString());
 
         SetScoreCounter(score);
-        CheckButtons(score);
+        CheckButtons(score);        
 
+        // Update counters
         var HP = PlayerPrefs.GetFloat(SavesKeys.Health.ToString());
         var ST = PlayerPrefs.GetFloat(SavesKeys.Stamina.ToString());
         var RS = PlayerPrefs.GetFloat(SavesKeys.ReloadSpeed.ToString());
@@ -51,6 +56,8 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
         SetCounter(CharacteristicsNames.ReloadSpeed, RS);
         SetCounter(CharacteristicsNames.MoveSpeed, MS);
         SetCounter(CharacteristicsNames.Accuracy, AC);
+        SetNextLevelCounter(level);
+        CheckUprgadePrices();
     }
 
     public void Hide() => View.Hide();
@@ -66,6 +73,8 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
     public void Show() => View.Show();
 
     public void ShowUpgradeButton(CharacteristicsNames name) => View.ShowUpgradeButton(name);
+
+    public void SetNextLevelCounter(int counter) => View.SetNextLevelCounter(counter);
 
     private float CalculatePrice(CharacteristicsNames name)
     {
@@ -102,6 +111,10 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
     {
         var name = CharacteristicsNames.Health;
         UpgradeCharacteristic(name);
+    }
+    private void OnNextLevelClicked()
+    {
+        SceneManager.LoadScene("Level");
     }
 
     private void UpgradeCharacteristic(CharacteristicsNames name)
@@ -140,4 +153,14 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
             CheckButtonPrice(name, score);
         }
     }
+
+    private void CheckUprgadePrices()
+    {
+        foreach (CharacteristicsNames name in _characteristicsList)
+        {
+            var price = CalculatePrice(name);
+            SetUpgradePrice(name, price);
+        }
+    }
+    
 }

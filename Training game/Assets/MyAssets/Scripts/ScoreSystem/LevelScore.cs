@@ -3,9 +3,11 @@ using UnityEngine;
 public class LevelScore : MonoBehaviour, ILevelScore
 {
     private float _currentScore;
+    private int _enemyKilled = 0;
     private IGameHUD _gameHUD;
 
     public float CurrentScore { get => _currentScore; }
+    public int EnemyKilled { get => _enemyKilled; }
     public IGameHUD GameHUD
     {
         set
@@ -26,6 +28,7 @@ public class LevelScore : MonoBehaviour, ILevelScore
         {
             case ScoreGainers.Zombie:
                 _currentScore += 100f;
+                _enemyKilled++;
                 break;
             case ScoreGainers.Score_Capsule:
                 _currentScore += 500;

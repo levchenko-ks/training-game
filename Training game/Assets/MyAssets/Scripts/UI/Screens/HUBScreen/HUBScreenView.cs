@@ -4,11 +4,12 @@ using UnityEngine.UI;
 
 public class HUBScreenView : MonoBehaviour, IHUBScreenView
 {
-    public event Action UpgradeHPCliked;
-    public event Action UpgradeSTCliked;
-    public event Action UpgradeRSCliked;
-    public event Action UpgradeMSCliked;
-    public event Action UpgradeACCliked;
+    public event Action UpgradeHPClicked;
+    public event Action UpgradeSTClicked;
+    public event Action UpgradeRSClicked;
+    public event Action UpgradeMSClicked;
+    public event Action UpgradeACClicked;
+    public event Action NextLevelClicked;
 
     public Text Score;
     public Text HP;
@@ -22,11 +23,13 @@ public class HUBScreenView : MonoBehaviour, IHUBScreenView
     public Button UpgradeRS;
     public Button UpgradeMS;
     public Button UpgradeAC;
+    public Button NextLevel;
     public Text PriceHP;
     public Text PriceST;
     public Text PriceRS;
     public Text PriceMS;
     public Text PriceAC;
+    public Text LevelCounter;
 
     private void Awake()
     {
@@ -34,7 +37,8 @@ public class HUBScreenView : MonoBehaviour, IHUBScreenView
         UpgradeST.onClick.AddListener(OnUpgradeSTClicked);
         UpgradeRS.onClick.AddListener(OnUpgradeRSClicked);
         UpgradeMS.onClick.AddListener(OnUpgradeMSClicked);
-        UpgradeAC.onClick.AddListener(OnUpgradeACClicked);        
+        UpgradeAC.onClick.AddListener(OnUpgradeACClicked);
+        NextLevel.onClick.AddListener(OnNextLevelClicked);
     }
 
     public void Hide()
@@ -135,22 +139,22 @@ public class HUBScreenView : MonoBehaviour, IHUBScreenView
         }
     }
 
-    public void OnUpgradeHPClicked()
+    public void OnUpgradeHPClicked() => UpgradeHPClicked();
+
+    public void OnUpgradeSTClicked() => UpgradeSTClicked();
+
+    public void OnUpgradeRSClicked() => UpgradeRSClicked();
+
+    public void OnUpgradeMSClicked() => UpgradeMSClicked();
+
+    public void OnUpgradeACClicked() => UpgradeACClicked();
+
+    public void SetScoreCounter(float score) => Score.text = score.ToString();
+
+    public void OnNextLevelClicked() => NextLevelClicked();
+
+    public void SetNextLevelCounter(int counter)
     {
-        UpgradeHPCliked();
-        Debug.Log("HP Clicked");
-    }
-
-    public void OnUpgradeSTClicked() => UpgradeSTCliked();
-
-    public void OnUpgradeRSClicked() => UpgradeRSCliked();
-
-    public void OnUpgradeMSClicked() => UpgradeMSCliked();
-
-    public void OnUpgradeACClicked() => UpgradeACCliked();
-
-    public void SetScoreCounter(float score)
-    {
-        Score.text = score.ToString();
+        LevelCounter.text = "Go to next level: " + counter.ToString();
     }
 }

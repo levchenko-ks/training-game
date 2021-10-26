@@ -40,6 +40,7 @@ public class Level : MonoBehaviour
     private Transform _projectileHolder;
     private Transform _enemyHolder;
 
+
     private void Start()
     {
         SceneInstantiate();
@@ -136,10 +137,12 @@ public class Level : MonoBehaviour
 
     private void CheckWinning()
     {
-        var score = PlayerPrefs.GetFloat(SavesKeys.Score.ToString(), 0f);
-
-        if (score > 400f)
+        if (_levelScore.EnemyKilled == _spawner.EnemyToSpawn)
         {
+            var level = PlayerPrefs.GetInt(SavesKeys.Level.ToString());
+            level++;
+            PlayerPrefs.SetInt(SavesKeys.Level.ToString(), level);
+
             SceneManager.LoadScene("HUB");
         }
     }

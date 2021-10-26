@@ -39,7 +39,6 @@ public class Player : MonoBehaviour
         }
     }
 
-
     public InputControls InputControls
     {
         get => _gameplayControls;
@@ -51,12 +50,21 @@ public class Player : MonoBehaviour
         }
     }
 
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _weaponList = new List<Weapon>();
         _playerCharacteristic = playerCharacteristic;
         _characteristicsList = _playerCharacteristic.CharacteristicsList;
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            Debug.Log(PlayerPrefs.GetFloat(SavesKeys.Health.ToString()));
+        }
     }
 
     private void FixedUpdate()
@@ -145,7 +153,7 @@ public class Player : MonoBehaviour
     private void CalculateMyCharacteristic()
     {
         _maxHealth = _playerCharacteristic.CalculateAmount(CharacteristicsNames.Health);
-        _moveSpeed = _playerCharacteristic.CalculateAmount(CharacteristicsNames.MoveSpeed);
+        _moveSpeed = _playerCharacteristic.CalculateAmount(CharacteristicsNames.MoveSpeed);        
         _maxStamina = _playerCharacteristic.CalculateAmount(CharacteristicsNames.Stamina);
         _accuracy = _playerCharacteristic.CalculateAmount(CharacteristicsNames.Accuracy);
     }
@@ -157,8 +165,7 @@ public class Player : MonoBehaviour
         foreach (Characteristic characteristic in _characteristicsList)
         {
             _gameHUD.SetCharacteristic(characteristic.Name, characteristic.Value);
-        }
-
+        }        
     }
 
     private void GameOver()

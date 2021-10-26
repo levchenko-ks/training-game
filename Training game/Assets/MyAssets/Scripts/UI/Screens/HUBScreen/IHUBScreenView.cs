@@ -2,11 +2,12 @@ using System;
 
 public interface IHUBScreenView
 {
-    event Action UpgradeHPCliked;
-    event Action UpgradeSTCliked;
-    event Action UpgradeRSCliked;
-    event Action UpgradeMSCliked;
-    event Action UpgradeACCliked;
+    event Action UpgradeHPClicked;
+    event Action UpgradeSTClicked;
+    event Action UpgradeRSClicked;
+    event Action UpgradeMSClicked;
+    event Action UpgradeACClicked;
+    event Action NextLevelClicked;
 
     void Show();
     void Hide();
@@ -19,5 +20,7 @@ public interface IHUBScreenView
     void OnUpgradeSTClicked();
     void OnUpgradeRSClicked();
     void OnUpgradeMSClicked();
-    void OnUpgradeACClicked();    
+    void OnUpgradeACClicked();
+    void OnNextLevelClicked();
+    void SetNextLevelCounter(int counter);
 }

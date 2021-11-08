@@ -4,7 +4,7 @@ public interface IGameHUD: IScreen
     void SetHP(float amount);
     void SetReloadTime(float amount);
     void SetReloadStatus(float amount);
-    void SetMaxAmmo(float amount);
+    void SetMaxAmmo(int amount);
     void SetAmmo(int count);
     void ShowWeaponIcon(int index);
     void HideWeaponIcon(int index);

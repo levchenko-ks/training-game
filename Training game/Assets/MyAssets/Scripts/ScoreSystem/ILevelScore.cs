@@ -1,7 +1,10 @@
+using System;
+
 public interface ILevelScore
 {
-    public int EnemyKilled { get; }
-    IGameHUD GameHUD { set; }
+    event Action<float> ScoreChanged;
+    event Action<int> EnemyKilled;
+       
     void AddScore(ScoreGainers name);
     void AddScoreContainer(ScoreContainer container);
 }

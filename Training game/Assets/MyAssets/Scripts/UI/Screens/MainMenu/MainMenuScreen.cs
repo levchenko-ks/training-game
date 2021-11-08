@@ -1,28 +1,34 @@
-  using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuScreen : MonoBehaviour, IScreen
 {
-    public MainMenuView _viewPrefab;
-
+    private IResourcesManager _resourcesManager;
+    private ISaveService _saveService;
     private Canvas _canvasFHD;
     private IMainMenuView View;
 
-    public Canvas CanvasFHD
+    private void Awake()
     {
-        set
-        {
-            _canvasFHD = value;
-            View = Instantiate(_viewPrefab, _canvasFHD.transform);
-            Hide();
-            View.ContinueClicked += OnContinueClicked;
-            View.NewGameClicked += OnNewGameClicked;
-            View.SettingsClicked += OnSettingsClicked;
-            View.ExitClicked += OnExitClicked;
-        }
+        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
+        _saveService = ServiceLocator.GetSaveServiceStatic();
+        _canvasFHD = ServiceLocator.GetCanvasStatic();
+
+        View = _resourcesManager.GetInstance<UIViews, MainMenuView>(UIViews.MainMenuScreen);
+        View.SetCanvas(_canvasFHD);
+        View.ContinueClicked += OnContinueClicked;
+        View.NewGameClicked += OnNewGameClicked;
+        View.SettingsClicked += OnSettingsClicked;
+        View.ExitClicked += OnExitClicked;
+
+        Hide();
     }
 
+    private void Start()
+    {
+        Hide();
+    }
     private void OnExitClicked()
     {
         EditorApplication.ExitPlaymode();
@@ -35,29 +41,16 @@ public class MainMenuScreen : MonoBehaviour, IScreen
 
     private void OnNewGameClicked()
     {
-        ClearProgress();
+        _saveService.ClearProgress();        
         SceneManager.LoadScene("Level");
     }
 
     private void OnContinueClicked()
-    {
+    {        
         SceneManager.LoadScene("Level");
     }
 
     public void Hide() => View.Hide();
 
     public void Show() => View.Show();
-
-    private void ClearProgress()
-    {
-        PlayerPrefs.SetInt(SavesKeys.Level.ToString(), 1);
-
-        PlayerPrefs.DeleteKey(SavesKeys.Score.ToString());
-        PlayerPrefs.DeleteKey(SavesKeys.Health.ToString());
-        PlayerPrefs.DeleteKey(SavesKeys.Stamina.ToString());
-        PlayerPrefs.DeleteKey(SavesKeys.ReloadSpeed.ToString());
-        PlayerPrefs.DeleteKey(SavesKeys.MoveSpeed.ToString());
-        PlayerPrefs.DeleteKey(SavesKeys.Accuracy.ToString());        
-    }
-    
 }

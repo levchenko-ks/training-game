@@ -16,6 +16,11 @@ public class PauseScreenView : MonoBehaviour, IPauseScreenView
         MainMenuButton.onClick.AddListener(OnMainMenuClicked);
     }
 
+    public void SetCanvas(Canvas canvas)
+    {
+        transform.SetParent(canvas.transform, false);
+    }
+
     public void Hide()
     {
         gameObject.SetActive(false);

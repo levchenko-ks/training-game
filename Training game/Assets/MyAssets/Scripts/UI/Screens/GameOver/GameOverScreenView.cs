@@ -35,4 +35,9 @@ public class GameOverScreenView : MonoBehaviour, IGameOverScreenView
     {
         gameObject.SetActive(true);
     }
+
+    public void SetCanvas(Canvas canvas)
+    {
+        transform.SetParent(canvas.transform, false);
+    }
 }

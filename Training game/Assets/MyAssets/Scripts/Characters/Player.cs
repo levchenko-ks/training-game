@@ -5,14 +5,17 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public event Action PlayerDied;
+    public event Action<float> CurrentHPChanged;
+    public event Action<float> MaxHPChanged;
+    public event Action<CharacteristicsNames, float> CharacteristicChanged;
+    public event Action<Weapon> WeaponAdded;
 
     public Transform weaponHolder;
-    public PlayerCharacteristics playerCharacteristic;
 
     private Rigidbody _rb;
     private Transform _target;
-    private IGameHUD _gameHUD;
-    private InputControls _gameplayControls;
+    private IInputManager _inputManager;
+    private IResourcesManager _resourcesManager;
     private ICharacteristicControl _playerCharacteristic;
 
     private float _maxHealth;
@@ -28,43 +31,29 @@ public class Player : MonoBehaviour
     private List<Weapon> _weaponList;
     private List<Characteristic> _characteristicsList;
 
-    public Transform Target { set => _target = value; }
-
-    public IGameHUD GameHUD
-    {
-        get => _gameHUD;
-        set
-        {
-            _gameHUD = value;
-        }
-    }
-
-    public InputControls InputControls
-    {
-        get => _gameplayControls;
-        set
-        {
-            _gameplayControls = value;
-            _gameplayControls.Move += OnMove;
-            _gameplayControls.SelectWeapon += OnSelectWeapon;
-        }
-    }
-
 
     private void Awake()
     {
+        _inputManager = ServiceLocator.GetInputManagerStatic();
+        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
+
         _rb = GetComponent<Rigidbody>();
+        _playerCharacteristic = GetComponent<PlayerCharacteristics>();
+        _target = _resourcesManager.GetInstance<Characters, Target>(Characters.Target).transform;
         _weaponList = new List<Weapon>();
-        _playerCharacteristic = playerCharacteristic;
-        _characteristicsList = _playerCharacteristic.CharacteristicsList;
+
+        _inputManager.Move += OnMove;
+        _inputManager.AlphaSelect += SelectWeapon;
+
+        _characteristicsList = _playerCharacteristic.CharacteristicsList;        
     }
 
-    private void Update()
+    private void Start()
     {
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            Debug.Log(PlayerPrefs.GetFloat(SavesKeys.Health.ToString()));
-        }
+        CalculateMyCharacteristic();
+        _currentHealth = _maxHealth;
+        UpdateHUD();
+        SelectWeapon(0);
     }
 
     private void FixedUpdate()
@@ -72,17 +61,12 @@ public class Player : MonoBehaviour
         Moving();
     }
 
-    public void AddWeapon(Weapon Weapon)
+    public void AddWeapon(Weapons weapon)
     {
-        _weaponList.Add(Weapon);
-    }
+        var weaponInstance = _resourcesManager.GetInstance<Weapons, Weapon>(weapon);
 
-    public void GetReady()
-    {
-        CalculateMyCharacteristic();
-        _currentHealth = _maxHealth;
-        UpdateHUD();
-        OnSelectWeapon(0);
+        _weaponList.Add(weaponInstance);
+        WeaponAdded?.Invoke(weaponInstance);
     }
 
     public void CollectBonus(CharacteristicsNames name, Modifier modifier)
@@ -96,7 +80,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(float damage)
     {
         _currentHealth -= damage;
-        _gameHUD.SetHP(_currentHealth);
+        CurrentHPChanged?.Invoke(_currentHealth);
 
         if (_currentHealth <= 0f)
         {
@@ -116,24 +100,32 @@ public class Player : MonoBehaviour
         _vertical = obj.y;
     }
 
-    private void OnSelectWeapon(int index)
+    private void SelectWeapon(int index)
     {
-        if (_weaponList.Count <= index)
+        bool weaponExist = false;
+
+        foreach (Weapon weapon in _weaponList)
+        {            
+            if (weapon.WeaponIndex == index)
+            {
+                weaponExist = true;
+            }            
+        }
+
+        if (weaponExist == false)
         {
             return;
         }
 
-        for (int i = 0; i < _weaponList.Count; i++)
+        foreach (Weapon weapon in _weaponList)
         {
-            if (i == index)
+            if (weapon.WeaponIndex == index)
             {
-                _weaponList[i].gameObject.SetActive(true);
-                _gameHUD.ShowWeaponIcon(i);
+                weapon.gameObject.SetActive(true);
             }
             else
             {
-                _weaponList[i].gameObject.SetActive(false);
-                _gameHUD.HideWeaponIcon(i);
+                weapon.gameObject.SetActive(false);
             }
         }
     }
@@ -153,19 +145,19 @@ public class Player : MonoBehaviour
     private void CalculateMyCharacteristic()
     {
         _maxHealth = _playerCharacteristic.CalculateAmount(CharacteristicsNames.Health);
-        _moveSpeed = _playerCharacteristic.CalculateAmount(CharacteristicsNames.MoveSpeed);        
+        _moveSpeed = _playerCharacteristic.CalculateAmount(CharacteristicsNames.MoveSpeed);
         _maxStamina = _playerCharacteristic.CalculateAmount(CharacteristicsNames.Stamina);
         _accuracy = _playerCharacteristic.CalculateAmount(CharacteristicsNames.Accuracy);
     }
 
     private void UpdateHUD()
     {
-        _gameHUD.SetMaxHP(_maxHealth);
-        _gameHUD.SetHP(_currentHealth);
+        MaxHPChanged?.Invoke(_maxHealth);
+        CurrentHPChanged?.Invoke(_currentHealth);
         foreach (Characteristic characteristic in _characteristicsList)
         {
-            _gameHUD.SetCharacteristic(characteristic.Name, characteristic.Value);
-        }        
+            CharacteristicChanged?.Invoke(characteristic.Name, characteristic.Value);
+        }
     }
 
     private void GameOver()
@@ -173,5 +165,4 @@ public class Player : MonoBehaviour
         Debug.Log("Player Died");
         PlayerDied();
     }
-
 }

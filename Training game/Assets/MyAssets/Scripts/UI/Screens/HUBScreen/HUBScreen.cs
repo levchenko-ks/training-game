@@ -4,58 +4,59 @@ using UnityEngine.SceneManagement;
 
 public class HUBScreen : MonoBehaviour, IHUBScreen
 {
-    public HUBScreenView _viewPrefab;
+    private IResourcesManager _resourcesManager;
+    private ISaveService _saveService;
 
     private Canvas _canvasFHD;
     private IHUBScreenView View;
-    private readonly List<CharacteristicsNames> _characteristicsList = new List<CharacteristicsNames>();
-
-    public Canvas CanvasFHD
-    {
-        set
-        {
-            _canvasFHD = value;
-            View = Instantiate(_viewPrefab, _canvasFHD.transform);
-            Hide();
-            View.UpgradeHPClicked += OnUpgradeHPCliked;
-            View.UpgradeSTClicked += OnUpgradeSTCliked;
-            View.UpgradeRSClicked += OnUpgradeRSCliked;
-            View.UpgradeMSClicked += OnUpgradeMSCliked;
-            View.UpgradeACClicked += OnUpgradeACCliked;
-            View.NextLevelClicked += OnNextLevelClicked;
-        }
-    }
+    private readonly List<SavesKeys> _characteristicsList = new List<SavesKeys>();
 
 
     private void Awake()
     {
-        _characteristicsList.Add(CharacteristicsNames.Health);
-        _characteristicsList.Add(CharacteristicsNames.Stamina);
-        _characteristicsList.Add(CharacteristicsNames.ReloadSpeed);
-        _characteristicsList.Add(CharacteristicsNames.MoveSpeed);
-        _characteristicsList.Add(CharacteristicsNames.Accuracy);
+        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
+        _saveService = ServiceLocator.GetSaveServiceStatic();
+        _canvasFHD = ServiceLocator.GetCanvasStatic();
+
+        View = _resourcesManager.GetInstance<UIViews, HUBScreenView>(UIViews.HUBScreen);
+        View.SetCanvas(_canvasFHD);
+
+        View.UpgradeHPClicked += OnUpgradeHPCliked;
+        View.UpgradeSTClicked += OnUpgradeSTCliked;
+        View.UpgradeRSClicked += OnUpgradeRSCliked;
+        View.UpgradeMSClicked += OnUpgradeMSCliked;
+        View.UpgradeACClicked += OnUpgradeACCliked;
+        View.NextLevelClicked += OnNextLevelClicked;
+
+        _characteristicsList.Add(SavesKeys.Health);
+        _characteristicsList.Add(SavesKeys.Stamina);
+        _characteristicsList.Add(SavesKeys.ReloadSpeed);
+        _characteristicsList.Add(SavesKeys.MoveSpeed);
+        _characteristicsList.Add(SavesKeys.Accuracy);
+
+        Hide();
     }
 
     private void Start()
     {
-        var score = PlayerPrefs.GetFloat(SavesKeys.Score.ToString());
-        var level = PlayerPrefs.GetInt(SavesKeys.Level.ToString());
+        var score = _saveService.GetFloat(SavesKeys.Score);
+        var level = _saveService.GetInt(SavesKeys.Level);
 
         SetScoreCounter(score);
-        CheckButtons(score);        
+        CheckButtons(score);
 
         // Update counters
-        var HP = PlayerPrefs.GetFloat(SavesKeys.Health.ToString());
-        var ST = PlayerPrefs.GetFloat(SavesKeys.Stamina.ToString());
-        var RS = PlayerPrefs.GetFloat(SavesKeys.ReloadSpeed.ToString());
-        var MS = PlayerPrefs.GetFloat(SavesKeys.MoveSpeed.ToString());
-        var AC = PlayerPrefs.GetFloat(SavesKeys.ReloadSpeed.ToString());
+        var HP = _saveService.GetFloat(SavesKeys.Health);
+        var ST = _saveService.GetFloat(SavesKeys.Stamina);
+        var RS = _saveService.GetFloat(SavesKeys.ReloadSpeed);
+        var MS = _saveService.GetFloat(SavesKeys.MoveSpeed);
+        var AC = _saveService.GetFloat(SavesKeys.ReloadSpeed);
 
-        SetCounter(CharacteristicsNames.Health, HP);
-        SetCounter(CharacteristicsNames.Stamina, ST);
-        SetCounter(CharacteristicsNames.ReloadSpeed, RS);
-        SetCounter(CharacteristicsNames.MoveSpeed, MS);
-        SetCounter(CharacteristicsNames.Accuracy, AC);
+        SetCounter(SavesKeys.Health, HP);
+        SetCounter(SavesKeys.Stamina, ST);
+        SetCounter(SavesKeys.ReloadSpeed, RS);
+        SetCounter(SavesKeys.MoveSpeed, MS);
+        SetCounter(SavesKeys.Accuracy, AC);
         SetNextLevelCounter(level);
         CheckUprgadePrices();
     }
@@ -64,52 +65,52 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
 
     public void SetScoreCounter(float score) => View.SetScoreCounter(score);
 
-    public void HideUpgradeButton(CharacteristicsNames name) => View.HideUpgradeButton(name);
+    public void HideUpgradeButton(SavesKeys name) => View.HideUpgradeButton(name);
 
-    public void SetCounter(CharacteristicsNames name, float value) => View.SetCounter(name, value);
+    public void SetCounter(SavesKeys name, float value) => View.SetCounter(name, value);
 
-    public void SetUpgradePrice(CharacteristicsNames name, float value) => View.SetUpgradePrice(name, value);
+    public void SetUpgradePrice(SavesKeys name, float value) => View.SetUpgradePrice(name, value);
 
     public void Show() => View.Show();
 
-    public void ShowUpgradeButton(CharacteristicsNames name) => View.ShowUpgradeButton(name);
+    public void ShowUpgradeButton(SavesKeys name) => View.ShowUpgradeButton(name);
 
     public void SetNextLevelCounter(int counter) => View.SetNextLevelCounter(counter);
 
-    private float CalculatePrice(CharacteristicsNames name)
+    private float CalculatePrice(SavesKeys name)
     {
-        float value = PlayerPrefs.GetFloat(name.ToString());
+        float value = _saveService.GetFloat(name);
         float price = (value - 4f) * 100f;
         return price;
     }
 
     private void OnUpgradeACCliked()
     {
-        var name = CharacteristicsNames.Accuracy;
+        var name = SavesKeys.Accuracy;
         UpgradeCharacteristic(name);
     }
 
     private void OnUpgradeMSCliked()
     {
-        var name = CharacteristicsNames.MoveSpeed;
+        var name = SavesKeys.MoveSpeed;
         UpgradeCharacteristic(name);
     }
 
     private void OnUpgradeRSCliked()
     {
-        var name = CharacteristicsNames.ReloadSpeed;
+        var name = SavesKeys.ReloadSpeed;
         UpgradeCharacteristic(name);
     }
 
     private void OnUpgradeSTCliked()
     {
-        var name = CharacteristicsNames.Stamina;
+        var name = SavesKeys.Stamina;
         UpgradeCharacteristic(name);
     }
 
     private void OnUpgradeHPCliked()
     {
-        var name = CharacteristicsNames.Health;
+        var name = SavesKeys.Health;
         UpgradeCharacteristic(name);
     }
     private void OnNextLevelClicked()
@@ -117,25 +118,25 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
         SceneManager.LoadScene("Level");
     }
 
-    private void UpgradeCharacteristic(CharacteristicsNames name)
+    private void UpgradeCharacteristic(SavesKeys name)
     {
-        var value = PlayerPrefs.GetFloat(name.ToString());
-        var score = PlayerPrefs.GetFloat(SavesKeys.Score.ToString());
+        var value = _saveService.GetFloat(name);
+        var score = _saveService.GetFloat(SavesKeys.Score);
         score -= CalculatePrice(name);
         value++;
-        PlayerPrefs.SetFloat(name.ToString(), value);
+        _saveService.SetFloat(name, value);
         var newprice = CalculatePrice(name);
 
-        PlayerPrefs.SetFloat(name.ToString(), value);
-        PlayerPrefs.SetFloat(SavesKeys.Score.ToString(), score);
+        _saveService.SetFloat(name, value);
+        _saveService.SetFloat(SavesKeys.Score, score);
         SetCounter(name, value);
         SetScoreCounter(score);
         SetUpgradePrice(name, newprice);
         CheckButtons(score);
     }
 
-    private void CheckButtonPrice(CharacteristicsNames name, float score)
-    {        
+    private void CheckButtonPrice(SavesKeys name, float score)
+    {
         if (CalculatePrice(name) > score)
         {
             HideUpgradeButton(name);
@@ -143,12 +144,12 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
         else
         {
             ShowUpgradeButton(name);
-        }        
+        }
     }
 
     private void CheckButtons(float score)
     {
-        foreach (CharacteristicsNames name in _characteristicsList)
+        foreach (SavesKeys name in _characteristicsList)
         {
             CheckButtonPrice(name, score);
         }
@@ -156,11 +157,11 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
 
     private void CheckUprgadePrices()
     {
-        foreach (CharacteristicsNames name in _characteristicsList)
+        foreach (SavesKeys name in _characteristicsList)
         {
             var price = CalculatePrice(name);
             SetUpgradePrice(name, price);
         }
     }
-    
+
 }

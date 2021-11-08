@@ -1,31 +1,45 @@
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
-{      
-    public Enemy Zombie;
-    public float SpawnInterval = 5f;
+{
+    private IResourcesManager _resourcesManager;
+    private ISaveService _saveService;
+    private ILevelScore _levelScore;
 
     private Player _player;
-    private Transform _placeholder;
-    private Vector3 _spawnPos;
-    private float _timeToSpawn = 2f;
+    private Enemy _zombiePref;
     private Transform _cam;
-    private ILevelScore _levelScore;
+
+    private float _spawnInterval = 5f;
+    private float _timeToSpawn = 2f;
+    private Transform _placeholder;     
+    
     private int _levelCount;
     private int _enemysToSpawn;
-    private int _enemysLeft;
-
-    public Player Player { get => _player; set => _player = value; }
-    public Transform Placeholder { get => _placeholder; set => _placeholder = value; }
-    public Transform Cam { get => _cam; set => _cam = value; }
-    public ILevelScore LevelScore { set => _levelScore = value; }
-    public int EnemyToSpawn { get => _enemysToSpawn; }
+    private int _enemysLeft;         
+    
 
     private void Awake()
     {
-        _levelCount = PlayerPrefs.GetInt(SavesKeys.Level.ToString());
+        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
+
+        _levelScore = ServiceLocator.GetLevelScoreStatic();
+        _player = ServiceLocator.GetPlayerStatic();
+        _cam = ServiceLocator.GetCameraStatic().GetComponent<Transform>();
+        _zombiePref = _resourcesManager.GetPrefab<Characters, Enemy>(Characters.Zombie);
+
+       _levelCount = _saveService.GetInt(SavesKeys.Level);
         SetEnemyCounter();
-        //SetEnemyCharacteristics();
+
+        // TODO: Implement dependency between levelCount and EnemyCharacteristics
+        // SetEnemyCharacteristics();
+    }
+
+    private void Start()
+    {
+        var name = gameObject.name.ToString() + "Placeholder";
+        _placeholder = new GameObject(name).transform;
+        
     }
 
     void Update()
@@ -35,7 +49,7 @@ public class Spawner : MonoBehaviour
             return;
         }
 
-        if(Time.time >= _timeToSpawn)
+        if (Time.time >= _timeToSpawn)
         {
             Spawn();
         }
@@ -44,15 +58,15 @@ public class Spawner : MonoBehaviour
     private void Spawn()
     {
         Vector2 radiusPos = Random.insideUnitCircle * 20;
-        _spawnPos = _player.transform.position + new Vector3(radiusPos.x, 0f, radiusPos.y);
-        _timeToSpawn = Time.time + SpawnInterval;
+        var _spawnPos = _player.transform.position + new Vector3(radiusPos.x, 0f, radiusPos.y);
+        _timeToSpawn = Time.time + _spawnInterval;
         _enemysLeft--;
 
-        var enemy = Instantiate(Zombie, _spawnPos, Quaternion.identity, _placeholder);
+        var enemy = Instantiate(_zombiePref, _spawnPos, Quaternion.identity, _placeholder);
         enemy.Target = _player.transform;
         enemy.Cam = _cam;
 
-        var container = enemy.gameObject.GetComponent<ScoreContainer>();        
+        var container = enemy.gameObject.GetComponent<ScoreContainer>();
         _levelScore.AddScoreContainer(container);
     }
 
@@ -64,6 +78,6 @@ public class Spawner : MonoBehaviour
 
     private void SetEnemyCharacteristics()
     {
-        
+
     }
 }

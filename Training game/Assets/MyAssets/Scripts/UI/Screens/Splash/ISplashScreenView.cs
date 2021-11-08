@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public interface ISplashScreenView
 {
@@ -6,4 +7,5 @@ public interface ISplashScreenView
 
     void Show();
     void Hide();
+    void SetCanvas(Canvas canvas);
 }

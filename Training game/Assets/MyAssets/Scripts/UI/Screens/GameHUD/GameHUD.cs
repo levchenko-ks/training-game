@@ -2,18 +2,45 @@ using UnityEngine;
 
 public class GameHUD : MonoBehaviour, IGameHUD
 {
-    public GameHUDView _viewPrefab;
+    private IResourcesManager _resourcesManager;
 
+    private Player _player;
     private Canvas _canvasFHD;
     private IGameHUDView View;
+    private readonly int _numberOfWeapons = 6;
 
-    public Canvas CanvasFHD
+
+    private void Awake()
     {
-        set
-        {
-            _canvasFHD = value;
-            View = Instantiate(_viewPrefab, _canvasFHD.transform);
-        }
+        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
+        _player = ServiceLocator.GetPlayerStatic();
+        _canvasFHD = ServiceLocator.GetCanvasStatic();
+
+        View = _resourcesManager.GetInstance<UIViews, GameHUDView>(UIViews.GameHUD);
+        View.SetCanvas(_canvasFHD);
+        Hide();
+
+        _player.MaxHPChanged += SetMaxHP;
+        _player.CurrentHPChanged += SetHP;
+        _player.CharacteristicChanged += SetCharacteristic;
+        _player.WeaponAdded += WeaponRegister;
+    }
+
+    private void Start()
+    {
+        Hide();
+
+        for (int i = 0; i < _numberOfWeapons; i++)
+        { HideWeaponIcon(i); }            
+    }
+
+    private void WeaponRegister(Weapon weapon)
+    {
+        weapon.CurrentAmmoChanged += SetAmmo;
+        weapon.MaxAmmoChanged += SetMaxAmmo;
+        weapon.ReloadStatusChanged += SetReloadStatus;
+        weapon.ReloadTimeChanged += SetReloadTime;
+        weapon.WeaponIconStatus += SetWeaponIcon;
     }
 
     public void Hide() => View.Hide();
@@ -24,7 +51,7 @@ public class GameHUD : MonoBehaviour, IGameHUD
 
     public void SetHP(float amount) => View.SetHP(amount);
 
-    public void SetMaxAmmo(float amount) => View.SetMaxAmmo(amount);
+    public void SetMaxAmmo(int amount) => View.SetMaxAmmo(amount);
 
     public void SetMaxHP(float amount) => View.SetMaxHP(amount);
 
@@ -32,7 +59,20 @@ public class GameHUD : MonoBehaviour, IGameHUD
 
     public void SetReloadTime(float amount) => View.SetReloadTime(amount);
 
-    public void SetWeaponIcon(int index) => View.ShowWeaponIcon(index);
+    public void SetWeaponIcon(int index)
+    {
+        for (int i = 0; i < _numberOfWeapons; i++)
+        {
+            if (i == index)
+            {
+                View.ShowWeaponIcon(index);
+            }
+            else
+            {
+                View.HideWeaponIcon(index);
+            }
+        }
+    }
 
     public void ShowWeaponIcon(int index) => View.ShowWeaponIcon(index);
 

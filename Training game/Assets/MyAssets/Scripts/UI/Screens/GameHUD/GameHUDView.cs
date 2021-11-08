@@ -19,6 +19,10 @@ public class GameHUDView : MonoBehaviour, IGameHUDView
 
     public List<Image> WeaponImages;
 
+    public void SetCanvas(Canvas canvas)
+    {
+        transform.SetParent(canvas.transform, false);
+    }
 
     public void Hide()
     {

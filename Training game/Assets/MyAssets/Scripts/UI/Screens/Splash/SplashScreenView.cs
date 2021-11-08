@@ -12,6 +12,10 @@ public class SplashScreenView : MonoBehaviour, ISplashScreenView
     {
         StartButton.onClick.AddListener(OnStartClicked);
     }
+    public void SetCanvas(Canvas canvas)
+    {
+        transform.SetParent(canvas.transform, false);
+    }
 
     private void OnStartClicked()
     {

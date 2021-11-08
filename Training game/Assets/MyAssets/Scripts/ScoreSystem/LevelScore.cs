@@ -1,25 +1,27 @@
+using System;
 using UnityEngine;
 
 public class LevelScore : MonoBehaviour, ILevelScore
 {
+    public event Action<float> ScoreChanged;
+    public event Action<int> EnemyKilled;
+    
+    private ISaveService _saveService;
+    
     private float _currentScore;
-    private int _enemyKilled = 0;
-    private IGameHUD _gameHUD;
+    private int _enemyKillsCounter = 0;
 
-    public float CurrentScore { get => _currentScore; }
-    public int EnemyKilled { get => _enemyKilled; }
-    public IGameHUD GameHUD
-    {
-        set
-        {
-            _gameHUD = value;
-            _gameHUD.SetScore(_currentScore);
-        }
-    }
+    private float ZombieScore = 100f;
+    private float CapsuleScore = 500f;
+
+
+
 
     private void Awake()
     {
-        _currentScore = PlayerPrefs.GetFloat(SavesKeys.Score.ToString(), 0f);        
+        _saveService = ServiceLocator.GetSaveServiceStatic();
+
+        _currentScore = _saveService.GetFloat(SavesKeys.Score);        
     }
 
     public void AddScore(ScoreGainers name)
@@ -27,15 +29,17 @@ public class LevelScore : MonoBehaviour, ILevelScore
         switch (name)
         {
             case ScoreGainers.Zombie:
-                _currentScore += 100f;
-                _enemyKilled++;
+                _currentScore += ZombieScore;
+                _enemyKillsCounter++;
+                EnemyKilled?.Invoke(_enemyKillsCounter);
                 break;
             case ScoreGainers.Score_Capsule:
-                _currentScore += 500;
+                _currentScore += CapsuleScore;
                 break;
         }
-        _gameHUD.SetScore(_currentScore);
-        PlayerPrefs.SetFloat(SavesKeys.Score.ToString(), _currentScore);
+
+        ScoreChanged?.Invoke(_currentScore);
+        _saveService.SetFloat(SavesKeys.Score, _currentScore);
     }
 
     public void AddScoreContainer(ScoreContainer container)

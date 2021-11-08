@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public interface IGameHUDView 
 {
     void Show();
@@ -12,4 +14,5 @@ public interface IGameHUDView
     void HideWeaponIcon(int index);
     void SetCharacteristic(CharacteristicsNames name, float count);
     void SetScore(float score);
+    void SetCanvas(Canvas canvas);
 }

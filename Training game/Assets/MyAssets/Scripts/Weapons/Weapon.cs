@@ -1,70 +1,66 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Weapon : MonoBehaviour
 {
-    public GameObject Projectile;
+    public event Action<float> ReloadTimeChanged;
+    public event Action<float> ReloadStatusChanged;
+    public event Action<int> MaxAmmoChanged;
+    public event Action<int> CurrentAmmoChanged;
+    public event Action<int> WeaponIconStatus;
 
     public Transform _firePoint;
 
-    public int numberOfShot = 1;
-    public int maxAmmo = 15;
-    public float rateOfFire = 10f; // per minute    
-    public float reloadTime = 3f;
-    public float sprayAngle = 1f; // per side
+    protected ICharacteristicControl _weaponCharacteristic;
+    protected IResourcesManager _resourcesManager;
+    protected Projectile _projectilePref;
 
-    private InputControls _gameplayControls;
+    protected int weaponIndex;
+    protected int numberOfShot;
+    protected int maxAmmo;
+    protected float rateOfFire; // per minute    
+    protected float reloadTime;
+    protected float sprayAngle; // per side    
+
+    private IInputManager _inputManager;        
     private Transform _projectileHolder;
-    private IGameHUD _gameHUD;
 
-    private bool _isFire;
     private bool _isReload;
     private int _currentAmmo;
     private float _timeToFire = 0f;
 
-    public InputControls InputControls
-    {
-        get => _gameplayControls;
-        set
-        {
-            _gameplayControls = value;
-            _gameplayControls.Fire += OnFire;
-        }
-
-    }
-    public Transform ProjectileHolder { get => _projectileHolder; set => _projectileHolder = value; }
-
-    public IGameHUD GameHUD { get => _gameHUD; set => _gameHUD = value; }
-
+    public Transform ProjectileHolder { set => _projectileHolder = value; }
+    public int WeaponIndex { get => weaponIndex; }
 
     private void Awake()
     {
+        _inputManager = ServiceLocator.GetInputManagerStatic();
+        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
+        _weaponCharacteristic = ServiceLocator.GetPlayerStatic().GetComponent<PlayerCharacteristics>();
+
+        SetupProperties();
+
         _currentAmmo = maxAmmo;
+        _inputManager.LeftClick += OnFire;
     }
 
     private void OnEnable()
     {
-        _isFire = false;
+        ReloadTimeChanged?.Invoke(reloadTime);
+        ReloadStatusChanged?.Invoke(0f);
+        MaxAmmoChanged?.Invoke(maxAmmo);
+        CurrentAmmoChanged?.Invoke(_currentAmmo);
+        WeaponIconStatus?.Invoke(weaponIndex);
 
-        if (_gameHUD == null)
+        if (_isReload)
         {
-            return;
+            Reload();
         }
-
-        _gameHUD.SetReloadTime(reloadTime);
-        _gameHUD.SetMaxAmmo(maxAmmo);
-        _gameHUD.SetAmmo(_currentAmmo);
-        _gameHUD.SetReloadStatus(0f);  
-        
-        if(_isReload) { Reload(); }
     }
 
     private void FixedUpdate()
     {
-        if (_isFire && Time.time >= _timeToFire && !_isReload)
-        {
-            Firing();
-        }
-
         if (_isReload)
         {
             Reloading();
@@ -73,7 +69,11 @@ public class Weapon : MonoBehaviour
 
     public void OnFire()
     {
-        _isFire = true;
+        if (Time.time >= _timeToFire && !_isReload)
+        {
+            if (_currentAmmo != 0) { Shoot(numberOfShot); }
+            else { Reload(); }
+        }
     }
 
     private void Shoot(int numberOfShot)
@@ -83,13 +83,12 @@ public class Weapon : MonoBehaviour
             var spray = Quaternion.Euler(0f, Random.Range(-sprayAngle, sprayAngle), 0f);
             Quaternion fireDirection = _firePoint.rotation * spray;
 
-            GameObject bullet = Instantiate(Projectile, _firePoint.position, fireDirection, _projectileHolder);
-            Destroy(bullet, 2f);
+            Instantiate(_projectilePref, _firePoint.position, fireDirection, _projectileHolder);            
         }
 
         _timeToFire = Time.time + 60f / rateOfFire;
         _currentAmmo--;
-        _gameHUD.SetAmmo(_currentAmmo);
+        CurrentAmmoChanged?.Invoke(_currentAmmo);
     }
     private void Reload()
     {
@@ -97,25 +96,23 @@ public class Weapon : MonoBehaviour
         _timeToFire = Time.time + reloadTime;
     }
 
-    private void Firing()
-    {
-        _isFire = false;
-
-        if (_currentAmmo != 0) { Shoot(numberOfShot); }
-        else { Reload(); }        
-    }
-
     private void Reloading()
     {
-        _gameHUD.SetReloadStatus(reloadTime - (_timeToFire - Time.time));
+        var status = reloadTime - (_timeToFire - Time.time);
+        ReloadStatusChanged?.Invoke(status);
 
         if (Time.time >= _timeToFire)
         {
-            _gameHUD.SetReloadStatus(0f);
+            ReloadStatusChanged?.Invoke(0f);
             _currentAmmo = maxAmmo;
-            _gameHUD.SetAmmo(_currentAmmo);
+            CurrentAmmoChanged?.Invoke(_currentAmmo);
             _isReload = false;
         }
     }
 
+    virtual public void SetupProperties()
+    {
+        // Override for each weapon
+        return;
+    }
 }

@@ -40,10 +40,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2010361637592525275}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed761d025d2adaa448bd9a30f6e77af5, type: 3}
+  m_Script: {fileID: 11500000, guid: c714e33495c362b469436f798eb47903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Zombie: {fileID: -5958383107983291472, guid: dc7e45f5f8f700449b1e5ee0e7fda889, type: 3}
-  _player: {fileID: 0}
-  _placeholder: {fileID: 0}
-  SpawnInterval: 5

@@ -6,7 +6,7 @@ public class ServiceLocator : MonoBehaviour, IServiceLocator
     private static IResourcesManager _resourcesManager;
     private static IStateService _stateService;
     private static ISaveService _saveService;
-    private static IInputManager _inputControls;
+    private static IInputManager _inputManager;
     private static ISoundManager _soundManager;
     private static IObjectPooler _objectPooler;
     // private static IUnitRepository _unitRepository;
@@ -21,7 +21,7 @@ public class ServiceLocator : MonoBehaviour, IServiceLocator
 
     private void Awake()
     {
-        _inputControls = null;
+        _inputManager = null;
         _objectPooler = null;
 
         Player = null;
@@ -65,13 +65,13 @@ public class ServiceLocator : MonoBehaviour, IServiceLocator
 
     public static IInputManager GetInputManagerStatic()
     {
-        if (_inputControls == null)
+        if (_inputManager == null)
         {
             var go = new GameObject(Services.InputManager.ToString());
-            _inputControls = go.AddComponent<InputManager>();
+            _inputManager = go.AddComponent<InputManager>();
         }
 
-        return _inputControls;
+        return _inputManager;
     }
 
     public static ISoundManager GetSoundManagerStatic()

@@ -78,7 +78,6 @@ public class Player : MonoBehaviour
         _playerCharacteristic.AddModifier(name, modifier);
         CalculateMyCharacteristic();
         UpdateHUD();
-        Debug.Log("CollectBonus");
     }
 
     public void TakeDamage(float damage)

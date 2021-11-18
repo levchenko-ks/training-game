@@ -163,20 +163,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000907079}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b44b78d1f7ca6be43a5eb62eb53b4ce9, type: 3}
+  m_Script: {fileID: 11500000, guid: b905a27d4c5db994a8994ef9dbc0913d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 2407161119823021424, guid: 3939efd7dfa4398428651f7e7aa8c506, type: 3}
-  Weapon_1: {fileID: 6560026907627232227, guid: 0e589f0de3f465246bdd1875ca50447d, type: 3}
-  Weapon_2: {fileID: 3888338163936653546, guid: c7fee30597aedeb4ea03351c19bc97e1, type: 3}
-  Target: {fileID: 539080441470990182, guid: 9245ecdf500c02d42b3e170283b231fe, type: 3}
-  MainCamera: {fileID: 7344370552636875559, guid: 589827dcf0b7fe34599590e2c3162a89, type: 3}
-  DirectionalLight: {fileID: 7310833423056122537, guid: 29860b207f561b54e965db7c924347e5, type: 3}
-  Spawner: {fileID: 2010361637592525273, guid: 64318b19fc635104b8a90d8c8fd3f893, type: 3}
-  Environment: {fileID: 8354309728836681438, guid: caa2625c031cbfc4da2369cb4a776278, type: 3}
-  LevelScore: {fileID: 6634851598126024794, guid: e76f07a66d5d38245bcf6a490de51357, type: 3}
-  CanvasFHD: {fileID: 2836648296152146084, guid: 1d244070063d4804aa6cb7039944789d, type: 3}
-  UIController: {fileID: 6982043726367378851, guid: 09316317d7982d14ab243f19582ac7ef, type: 3}
 --- !u!1 &1496058560
 GameObject:
   m_ObjectHideFlags: 0

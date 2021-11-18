@@ -23,6 +23,11 @@ public class MainMenuView : MonoBehaviour, IMainMenuView
         ExitButton.onClick.AddListener(OnExitClicked);
     }
 
+    public void SetCanvas(Canvas canvas)
+    {
+        transform.SetParent(canvas.transform, false);
+    }
+
     public void Hide()
     {
         gameObject.SetActive(false);

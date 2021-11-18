@@ -1,26 +1,24 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameOverScreen : MonoBehaviour, IScreen
 {
-    public GameOverScreenView _viewPrefab;
+    private IResourcesManager _resourcesManager;    
 
     private Canvas _canvasFHD;
     private IGameOverScreenView View;
 
-    public Canvas CanvasFHD
+    private void Awake()
     {
-        set
-        {
-            _canvasFHD = value;
-            View = Instantiate(_viewPrefab, _canvasFHD.transform);
-            Hide();
-            View.MainMenuClicked += OnMainMenuClicked;
-            View.RestartClicked += OnRestartCliked;
-        }
+        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();        
+        _canvasFHD = ServiceLocator.GetCanvasStatic();
+
+        View = _resourcesManager.GetInstance<UIViews, GameOverScreenView>(UIViews.GameOverScreen);
+        View.SetCanvas(_canvasFHD);
+        Hide();
+
+        View.MainMenuClicked += OnMainMenuClicked;
+        View.RestartClicked += OnRestartCliked;
     }
 
     private void OnRestartCliked()

@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public interface IMainMenuView
 {
@@ -13,4 +14,6 @@ public interface IMainMenuView
     void OnContinueClicked();
     void OnSettingsClicked();
     void OnExitClicked();
+    void SetCanvas(Canvas canvas);
+
 }

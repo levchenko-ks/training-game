@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public interface IGameOverScreenView
 {
@@ -9,4 +10,5 @@ public interface IGameOverScreenView
     void Show();
     void OnRestartClicked();
     void OnMainMenuClicked();
+    void SetCanvas(Canvas canvas);
 }

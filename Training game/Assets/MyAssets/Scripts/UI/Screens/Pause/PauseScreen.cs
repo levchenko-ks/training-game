@@ -1,39 +1,33 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseScreen : MonoBehaviour, IPauseScreen
+public class PauseScreen : MonoBehaviour, IScreen
 {
-    public static bool IsPaused;
-    public PauseScreenView _viewPrefab;
-
+    private IResourcesManager _resourcesManager;
+    private IInputManager _inputManager;
+    private IStateService _stateService;
     private Canvas _canvasFHD;
-    private InputControls _inputControls;
     private IPauseScreenView View;
-
-    public Canvas CanvasFHD
-    {
-        set
-        {
-            _canvasFHD = value;
-            View = Instantiate(_viewPrefab, _canvasFHD.transform);
-            View.Hide();
-            View.MainMenuClicked += OnMainMenuClicked;
-            View.ResumeClicked += OnResumeCliked;
-        }
-    }
-
-    public InputControls InputControls
-    {
-        set
-        {
-            _inputControls = value;
-            _inputControls.Pause += Pause;
-        }
-    }
 
     private void Awake()
     {
-        IsPaused = false;
+        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
+        _inputManager = ServiceLocator.GetInputManagerStatic();
+        _stateService = ServiceLocator.GetStateServiceStatic();
+        _canvasFHD = ServiceLocator.GetCanvasStatic();
+
+        View = _resourcesManager.GetInstance<UIViews, PauseScreenView>(UIViews.PauseScreen);
+        View.SetCanvas(_canvasFHD);
+        View.MainMenuClicked += OnMainMenuClicked;
+        View.ResumeClicked += OnResumeCliked;
+
+        _inputManager.Pause += Pause;
+    }
+
+    private void Start()
+    {
+        _stateService.GamePaused = false;
+        Hide();
     }
 
     public void Hide()
@@ -48,8 +42,8 @@ public class PauseScreen : MonoBehaviour, IPauseScreen
 
     private void Pause()
     {
-        IsPaused = !IsPaused;
-        if (IsPaused)
+        _stateService.GamePaused = !_stateService.GamePaused;
+        if (_stateService.GamePaused)
         {
             Time.timeScale = 0f;
             View.Show();

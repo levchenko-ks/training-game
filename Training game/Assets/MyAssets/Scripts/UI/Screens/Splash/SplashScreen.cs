@@ -1,35 +1,42 @@
-using System;
 using UnityEngine;
 
-public class SplashScreen : MonoBehaviour, ISplashScreen
+public class SplashScreen : MonoBehaviour, IScreen
 {
-    public event Action ViewHided;
-
-    public SplashScreenView _viewPrefab;
-
+    private IResourcesManager _resourcesManager;
     private Canvas _canvasFHD;
     private ISplashScreenView View;
 
-    public Canvas CanvasFHD
+    private IScreen _mainMenuScreen;
+
+    private void Awake()
     {
-        set
-        {
-            _canvasFHD = value;
-            View = Instantiate(_viewPrefab, _canvasFHD.transform);
-            Hide();
-            View.Clicked += OnStartClicked;
-        }
+        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
+        _canvasFHD = ServiceLocator.GetCanvasStatic();
+
+        View = _resourcesManager.GetInstance<UIViews, SplashScreenView>(UIViews.SplashScreen);
+        View.SetCanvas(_canvasFHD);
+        View.Clicked += OnStartClicked;
+
+        Hide();
+    }
+
+    private void Start()
+    {
+        var MMgo = new GameObject(UIViews.MainMenuScreen.ToString(), typeof(MainMenuScreen));
+        _mainMenuScreen = MMgo.GetComponent<MainMenuScreen>();
     }
 
     private void OnStartClicked()
     {
         Hide();
+
+        var MMgo = new GameObject(UIViews.MainMenuScreen.ToString(), typeof(MainMenuScreen));
+        _mainMenuScreen.Show();            
     }
 
     public void Hide()
     {
         View.Hide();
-        ViewHided?.Invoke();
     }
 
     public void Show() => View.Show();

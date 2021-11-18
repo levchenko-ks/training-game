@@ -12,4 +12,5 @@ public interface IPauseScreenView
     void Show();
     void OnResumeClicked();
     void OnMainMenuClicked();
+    void SetCanvas(Canvas canvas);
 }

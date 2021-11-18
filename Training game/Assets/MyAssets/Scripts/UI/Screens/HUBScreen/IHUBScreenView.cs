@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public interface IHUBScreenView
 {
@@ -12,10 +13,10 @@ public interface IHUBScreenView
     void Show();
     void Hide();
     void SetScoreCounter(float score);
-    void SetCounter(CharacteristicsNames name, float value);
-    void SetUpgradePrice(CharacteristicsNames name, float value);
-    void HideUpgradeButton(CharacteristicsNames name);
-    void ShowUpgradeButton(CharacteristicsNames name);
+    void SetCounter(SavesKeys name, float value);
+    void SetUpgradePrice(SavesKeys name, float value);
+    void HideUpgradeButton(SavesKeys name);
+    void ShowUpgradeButton(SavesKeys name);
     void OnUpgradeHPClicked();
     void OnUpgradeSTClicked();
     void OnUpgradeRSClicked();
@@ -23,4 +24,5 @@ public interface IHUBScreenView
     void OnUpgradeACClicked();
     void OnNextLevelClicked();
     void SetNextLevelCounter(int counter);
+    void SetCanvas(Canvas canvas);
 }

@@ -46,67 +46,72 @@ public class HUBScreenView : MonoBehaviour, IHUBScreenView
         gameObject.SetActive(false);
     }
 
-    public void HideUpgradeButton(CharacteristicsNames name)
+    public void SetCanvas(Canvas canvas)
+    {
+        transform.SetParent(canvas.transform, false);
+    }
+
+    public void HideUpgradeButton(SavesKeys name)
     {
         switch (name)
         {
-            case CharacteristicsNames.Health:
+            case SavesKeys.Health:
                 UpgradeHP.interactable = false;
                 break;
-            case CharacteristicsNames.Stamina:
+            case SavesKeys.Stamina:
                 UpgradeST.interactable = false;
                 break;
-            case CharacteristicsNames.ReloadSpeed:
+            case SavesKeys.ReloadSpeed:
                 UpgradeRS.interactable = false;
                 break;
-            case CharacteristicsNames.MoveSpeed:
+            case SavesKeys.MoveSpeed:
                 UpgradeMS.interactable = false;
                 break;
-            case CharacteristicsNames.Accuracy:
+            case SavesKeys.Accuracy:
                 UpgradeAC.interactable = false;
                 break;
         }
     }
 
-    public void SetCounter(CharacteristicsNames name, float value)
+    public void SetCounter(SavesKeys name, float value)
     {
         switch (name)
         {
-            case CharacteristicsNames.Health:
+            case SavesKeys.Health:
                 HP.text = value.ToString();
                 break;
-            case CharacteristicsNames.Stamina:
+            case SavesKeys.Stamina:
                 ST.text = value.ToString();
                 break;
-            case CharacteristicsNames.ReloadSpeed:
+            case SavesKeys.ReloadSpeed:
                 RS.text = value.ToString();
                 break;
-            case CharacteristicsNames.MoveSpeed:
+            case SavesKeys.MoveSpeed:
                 MS.text = value.ToString();
                 break;
-            case CharacteristicsNames.Accuracy:
+            case SavesKeys.Accuracy:
                 AC.text = value.ToString();
                 break;
         }
     }
 
-    public void SetUpgradePrice(CharacteristicsNames name, float value)
+    public void SetUpgradePrice(SavesKeys name, float value)
     {
         switch (name)
         {
-            case CharacteristicsNames.Health:
+            case SavesKeys.Health:
                 PriceHP.text = "Upgrade: " + value.ToString();
                 break;
-            case CharacteristicsNames.Stamina:
+            case SavesKeys.Stamina:
                 PriceST.text = "Upgrade: " + value.ToString();
                 break;
-            case CharacteristicsNames.ReloadSpeed:
+            case SavesKeys.ReloadSpeed:
                 PriceRS.text = "Upgrade: " + value.ToString();
                 break;
-            case CharacteristicsNames.MoveSpeed:
+            case SavesKeys.MoveSpeed:
                 PriceMS.text = "Upgrade: " + value.ToString();
                 break;
-            case CharacteristicsNames.Accuracy:
+            case SavesKeys.Accuracy:
                 PriceAC.text = "Upgrade: " + value.ToString();
                 break;
         }
@@ -117,23 +122,23 @@ public class HUBScreenView : MonoBehaviour, IHUBScreenView
         gameObject.SetActive(true);
     }
 
-    public void ShowUpgradeButton(CharacteristicsNames name)
+    public void ShowUpgradeButton(SavesKeys name)
     {
         switch (name)
         {
-            case CharacteristicsNames.Health:
+            case SavesKeys.Health:
                 UpgradeHP.interactable = true;
                 break;
-            case CharacteristicsNames.Stamina:
+            case SavesKeys.Stamina:
                 UpgradeST.interactable = true;
                 break;
-            case CharacteristicsNames.ReloadSpeed:
+            case SavesKeys.ReloadSpeed:
                 UpgradeRS.interactable = true;
                 break;
-            case CharacteristicsNames.MoveSpeed:
+            case SavesKeys.MoveSpeed:
                 UpgradeMS.interactable = true;
                 break;
-            case CharacteristicsNames.Accuracy:
+            case SavesKeys.Accuracy:
                 UpgradeAC.interactable = true;
                 break;
         }

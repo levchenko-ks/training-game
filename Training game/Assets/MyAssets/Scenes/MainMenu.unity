@@ -166,8 +166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2d2653784273d4aa50cf7dd2d58daf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanvasFHDPref: {fileID: 2836648296152146084, guid: 1d244070063d4804aa6cb7039944789d, type: 3}
-  UIControllerPref: {fileID: 6982043726367378851, guid: 09316317d7982d14ab243f19582ac7ef, type: 3}
 --- !u!1 &1787777471
 GameObject:
   m_ObjectHideFlags: 0

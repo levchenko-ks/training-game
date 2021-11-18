@@ -19,7 +19,7 @@ public class MainMenu : MonoBehaviour
             var SSgo = new GameObject(UIViews.SplashScreen.ToString(), typeof(SplashScreen));
             SSgo.GetComponent<SplashScreen>().Show();
 
-            _soundManager.PlaySound(Sounds.MainTheme);
+            _soundManager.PlayMusic(Sounds.MainTheme);
 
             _stateService.SessionStarted = true;
         }

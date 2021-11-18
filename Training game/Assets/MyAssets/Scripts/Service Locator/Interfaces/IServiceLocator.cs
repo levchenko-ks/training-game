@@ -6,8 +6,7 @@ public interface IServiceLocator
     IStateService GetStateService();
     ISaveService GetSaveService();
     IInputManager GetInputManager();
-    ISoundManager GetSoundManager();
-    IObjectPooler GetObjectPooler();
+    ISoundManager GetSoundManager();    
     Player GetPlayer();
     CameraControl GetCamera();
     Canvas GetCanvas();

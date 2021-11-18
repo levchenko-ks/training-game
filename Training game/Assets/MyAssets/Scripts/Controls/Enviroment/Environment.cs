@@ -4,6 +4,8 @@ public class Environment : MonoBehaviour
 {
     private IResourcesManager _resourcesManager;
 
+    private Transform _bonusHolder;
+
     private GameObject _floorTilePref;
     private EnvModifier _HP_CubePref;
     private EnvModifier _MS_SpherePref;
@@ -20,6 +22,8 @@ public class Environment : MonoBehaviour
         _HP_CubePref = _resourcesManager.GetPrefab<EnvironmentComponents, EnvModifier>(EnvironmentComponents.HP_Cube);
         _MS_SpherePref = _resourcesManager.GetPrefab<EnvironmentComponents, EnvModifier>(EnvironmentComponents.MS_Sphere);
         _heal_CubePref = _resourcesManager.GetPrefab<EnvironmentComponents, Heal>(EnvironmentComponents.Heal_Cube);
+
+        _bonusHolder = new GameObject(PlaceHolders.BonusesHolder.ToString()).transform;
     }
 
     private void Start()
@@ -59,6 +63,6 @@ public class Environment : MonoBehaviour
         Vector2 radiusPos = Random.insideUnitCircle * 20;
         var spawnPos = new Vector3(radiusPos.x, 1f, radiusPos.y);
 
-        Instantiate(bonus, spawnPos, Quaternion.identity);
+        Instantiate(bonus, spawnPos, Quaternion.identity, _bonusHolder);
     }
 }

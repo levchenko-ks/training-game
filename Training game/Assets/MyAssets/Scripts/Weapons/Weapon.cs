@@ -13,7 +13,7 @@ public abstract class Weapon : MonoBehaviour
     public Transform _firePoint;
 
     protected ICharacteristicControl _weaponCharacteristic;
-    protected IObjectPooler _objectPooler;
+    protected IResourcesManager _resourcesManger;
     protected ISoundManager _soundManager;
 
     protected Projectiles projectileName;
@@ -27,7 +27,7 @@ public abstract class Weapon : MonoBehaviour
 
     private IInputManager _inputManager;
     private Transform _projectileHolder;
-        
+
     private bool _isReload;
     private int _currentAmmo;
     private float _timeToFire = 0f;
@@ -38,10 +38,14 @@ public abstract class Weapon : MonoBehaviour
     {
         _inputManager = ServiceLocator.GetInputManagerStatic();
         _weaponCharacteristic = ServiceLocator.GetPlayerStatic().GetComponent<PlayerCharacteristics>();
-        _objectPooler = ServiceLocator.GetObjectPoolerStatic();
+        _resourcesManger = ServiceLocator.GetResourcesManagerStatic();
         _soundManager = ServiceLocator.GetSoundManagerStatic();
 
         SetupProperties();
+
+        var name = gameObject.name + PlaceHolders.ProjectilesHolder.ToString();
+        var go = new GameObject(name);
+        _projectileHolder = go.transform;
 
         _currentAmmo = maxAmmo;
         MaxAmmoChanged?.Invoke(maxAmmo);
@@ -57,8 +61,8 @@ public abstract class Weapon : MonoBehaviour
         MaxAmmoChanged?.Invoke(maxAmmo);
         CurrentAmmoChanged?.Invoke(_currentAmmo);
         WeaponIconUpdate?.Invoke(weaponIndex);
-        
-        if(_isReload) { Reload(); }
+
+        if (_isReload) { Reload(); }
     }
 
     private void Update()
@@ -72,11 +76,11 @@ public abstract class Weapon : MonoBehaviour
     abstract public void SetupProperties();
 
     public void OnFire()
-    {        
+    {
         if (Time.time >= _timeToFire && !_isReload)
-        {            
+        {
             Firing();
-        }        
+        }
     }
 
     private void Shoot(int numberOfShot)
@@ -86,15 +90,15 @@ public abstract class Weapon : MonoBehaviour
             var spray = Quaternion.Euler(0f, Random.Range(-sprayAngle, sprayAngle), 0f);
             Quaternion fireDirection = _firePoint.rotation * spray;
 
-            var projectile = _objectPooler.GetObject<Projectiles, Projectile>(projectileName);
-                        
+            var projectile = _resourcesManger.GetPooledObject<Projectiles, Projectile>(projectileName);
+
             projectile.transform.position = _firePoint.position;
             projectile.transform.rotation = fireDirection;
             projectile.transform.SetParent(_projectileHolder);
             projectile.SetActive(true);
         }
 
-        _soundManager.PlaySound(sound);
+        _soundManager.PlayEffect(sound);
 
         _timeToFire = Time.time + 60f / rateOfFire;
         _currentAmmo--;
@@ -107,14 +111,14 @@ public abstract class Weapon : MonoBehaviour
     }
 
     private void Firing()
-    {       
-        if (_currentAmmo != 0) { Shoot(numberOfShot); Debug.Log("Fire!"); }
-        else { Reload(); }        
+    {
+        if (_currentAmmo != 0) { Shoot(numberOfShot); }
+        else { Reload(); }
     }
 
     private void Reloading()
     {
-        ReloadStatusChanged?.Invoke(reloadTime - (_timeToFire - Time.time));        
+        ReloadStatusChanged?.Invoke(reloadTime - (_timeToFire - Time.time));
 
         if (Time.time >= _timeToFire)
         {

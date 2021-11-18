@@ -38,9 +38,9 @@ public class Player : MonoBehaviour
         _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
 
         _rb = GetComponent<Rigidbody>();
-        _playerCharacteristic = GetComponent<PlayerCharacteristics>();        
+        _playerCharacteristic = GetComponent<PlayerCharacteristics>();
         _target = _resourcesManager.GetInstance<Characters, Target>(Characters.Target).transform;
-        _weaponList = new List<Weapon>();        
+        _weaponList = new List<Weapon>();
 
         _inputManager.Move += OnMove;
         _inputManager.AlphaSelect += SelectWeapon;
@@ -139,10 +139,14 @@ public class Player : MonoBehaviour
         Vector3 newPosition = transform.position + moveDirection * _moveSpeed * Time.fixedDeltaTime;
 
         Vector3 lookDirection = _target.position - transform.position;
+
         Quaternion newRotation = Quaternion.LookRotation(lookDirection);
 
         _rb.MovePosition(newPosition);
-        _rb.MoveRotation(newRotation);
+        if (lookDirection != null)
+        {
+            _rb.MoveRotation(newRotation);
+        }
     }
 
     private void CalculateMyCharacteristic()
@@ -166,6 +170,6 @@ public class Player : MonoBehaviour
     private void GameOver()
     {
         Debug.Log("Player Died");
-        PlayerDied();
+        PlayerDied?.Invoke();
     }
 }

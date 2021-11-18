@@ -1,5 +1,6 @@
 public interface ISoundManager
 {
-    void PlaySound(Sounds sound);
+    void PlayMusic(Sounds sound);
+    void PlayEffect(Sounds sound);
 
 }

@@ -5,6 +5,7 @@ public class Bennelli_M4 : Weapon
     private float _baserateOfFire = 5f;
     private float _baseReloadTime = 5f;
     private float _baseSprayAngle = 15f;
+    
 
 
     override public void SetupProperties()

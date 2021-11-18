@@ -7,8 +7,7 @@ public class ServiceLocator : MonoBehaviour, IServiceLocator
     private static IStateService _stateService;
     private static ISaveService _saveService;
     private static IInputManager _inputManager;
-    private static ISoundManager _soundManager;
-    private static IObjectPooler _objectPooler;
+    private static ISoundManager _soundManager;    
     // private static IUnitRepository _unitRepository;
 
 
@@ -21,8 +20,7 @@ public class ServiceLocator : MonoBehaviour, IServiceLocator
 
     private void Awake()
     {
-        _inputManager = null;
-        _objectPooler = null;
+        _inputManager = null;        
 
         Player = null;
         Camera = null;
@@ -83,18 +81,7 @@ public class ServiceLocator : MonoBehaviour, IServiceLocator
         }
 
         return _soundManager;
-    }
-
-    public static IObjectPooler GetObjectPoolerStatic()
-    {
-        if (_objectPooler == null)
-        {
-            var go = new GameObject(Services.ObjectPooler.ToString());
-            _objectPooler = go.AddComponent<ObjectPooler>();
-        }
-
-        return _objectPooler;
-    }
+    }   
 
     public static Player GetPlayerStatic()
     {
@@ -148,9 +135,7 @@ public class ServiceLocator : MonoBehaviour, IServiceLocator
 
     public IInputManager GetInputManager() => GetInputManagerStatic();
 
-    public ISoundManager GetSoundManager() => GetSoundManagerStatic();
-
-    public IObjectPooler GetObjectPooler() => GetObjectPoolerStatic();
+    public ISoundManager GetSoundManager() => GetSoundManagerStatic();    
 
     public Player GetPlayer() => GetPlayerStatic();
 

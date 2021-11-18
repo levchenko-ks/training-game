@@ -7,17 +7,16 @@ public class Spawner : MonoBehaviour
     private ILevelScore _levelScore;
 
     private Player _player;
-    private Enemy _zombiePref;
     private Transform _cam;
 
     private float _spawnInterval = 5f;
     private float _timeToSpawn = 2f;
-    private Transform _placeholder;     
-    
+    private Transform _placeholder;
+
     private int _levelCount;
     private int _enemysToSpawn;
-    private int _enemysLeft;         
-    
+    private int _enemysLeft;
+
 
     private void Awake()
     {
@@ -25,11 +24,10 @@ public class Spawner : MonoBehaviour
         _saveService = ServiceLocator.GetSaveServiceStatic();
 
         _levelScore = ServiceLocator.GetLevelScoreStatic();
-        _player = ServiceLocator.GetPlayerStatic();        
+        _player = ServiceLocator.GetPlayerStatic();
         _cam = ServiceLocator.GetCameraStatic().GetComponent<Transform>();
-        _zombiePref = _resourcesManager.GetPrefab<Characters, Enemy>(Characters.Zombie);
-                
-        _levelCount = _saveService.GetInt(SavesKeys.Level);        
+
+        _levelCount = _saveService.GetInt(SavesKeys.Level);
         SetEnemyCounter();
 
         // TODO: Implement dependency between levelCount and EnemyCharacteristics
@@ -38,9 +36,7 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
-        var name = gameObject.name.ToString() + "Placeholder";
-        _placeholder = new GameObject(name).transform;
-        
+        _placeholder = new GameObject(PlaceHolders.EnemiesHolder.ToString()).transform;
     }
 
     void Update()
@@ -51,8 +47,8 @@ public class Spawner : MonoBehaviour
         }
 
         if (Time.time >= _timeToSpawn)
-        {            
-            Spawn();            
+        {
+            Spawn();
         }
     }
 
@@ -63,12 +59,22 @@ public class Spawner : MonoBehaviour
         _timeToSpawn = Time.time + _spawnInterval;
         _enemysLeft--;
 
-        var enemy = Instantiate(_zombiePref, _spawnPos, Quaternion.identity, _placeholder);
+        Debug.Log("Try spawn " + _enemysLeft);
+
+        var go = _resourcesManager.GetPooledObject<Characters, Enemy>(Characters.Zombie);
+        var enemy = go.GetComponent<Enemy>();
+        var container = go.GetComponent<ScoreContainer>();
+
+        go.transform.position = _spawnPos;
+        go.transform.SetParent(_placeholder);
+        go.SetActive(true);
+
         enemy.Target = _player.transform;
         enemy.Cam = _cam;
 
-        var container = enemy.gameObject.GetComponent<ScoreContainer>();
         _levelScore.AddScoreContainer(container);
+
+        Debug.Log("Good spawn " + _enemysLeft);
     }
 
     private void SetEnemyCounter()

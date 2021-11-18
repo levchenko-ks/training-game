@@ -4,17 +4,32 @@ public class SoundManager : MonoBehaviour, ISoundManager
 {
     private IResourcesManager _resourcesManager;
 
-    // private AudioSource AK_74_Fire;
+    private Transform _sceneSoundHolder = null;
 
     private void Awake()
     {
         DontDestroyOnLoad(this);
 
         _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
+
+        
     }
-    public void PlaySound(Sounds sound)
+    public void PlayMusic(Sounds sound)
     {
         var go = _resourcesManager.GetInstance<Sounds, AudioSource>(sound);
         go.transform.SetParent(transform, false);
     }
+
+    public void PlayEffect(Sounds sound)
+    {
+        var go = _resourcesManager.GetPooledObject<Sounds, AudioSource>(sound);
+
+        if (_sceneSoundHolder == null)
+        {
+            _sceneSoundHolder = new GameObject(PlaceHolders.SoundsHolder.ToString()).transform;
+        }
+
+        go.transform.SetParent(_sceneSoundHolder, false);
+    }
+
 }

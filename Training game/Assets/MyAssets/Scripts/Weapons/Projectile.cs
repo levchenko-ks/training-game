@@ -41,8 +41,7 @@ public class Projectile : MonoBehaviour
 
     private IEnumerator SelfDestroy()
     {
-        yield return new WaitForSeconds(2f);
-        Debug.Log("AutoDestroy");
+        yield return new WaitForSeconds(2f);        
         gameObject.SetActive(false);
     }
 }

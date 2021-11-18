@@ -1,18 +1,29 @@
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public abstract class Weapon : MonoBehaviour
 {
-    public GameObject Projectile;
+    public event Action<float> ReloadTimeChanged;
+    public event Action<float> ReloadStatusChanged;
+    public event Action<int> MaxAmmoChanged;
+    public event Action<int> CurrentAmmoChanged;
+    public event Action<int> WeaponIconUpdate;
 
     public Transform _firePoint;
 
-    public int numberOfShot = 1;
-    public int maxAmmo = 15;
-    public float rateOfFire = 10f; // per minute    
-    public float reloadTime = 3f;
-    public float sprayAngle = 1f; // per side
+    protected ICharacteristicControl _weaponCharacteristic;
+    protected IObjectPooler _objectPooler;
+    protected ISoundManager _soundManager;
 
-    private InputControls _gameplayControls;
+    protected Projectiles projectileName;
+    protected int weaponIndex;
+    protected int numberOfShot;
+    protected int maxAmmo;
+    protected float rateOfFire; // per minute    
+    protected float reloadTime;
+    protected float sprayAngle; // per side    
+    protected Sounds sound;
+
+    private IInputManager _inputManager;
     private Transform _projectileHolder;
     private IGameHUD _gameHUD;
 
@@ -23,12 +34,10 @@ public class Weapon : MonoBehaviour
 
     public InputControls InputControls
     {
-        get => _gameplayControls;
-        set
-        {
-            _gameplayControls = value;
-            _gameplayControls.Fire += OnFire;
-        }
+        _inputManager = ServiceLocator.GetInputManagerStatic();
+        _weaponCharacteristic = ServiceLocator.GetPlayerStatic().GetComponent<PlayerCharacteristics>();
+        _objectPooler = ServiceLocator.GetObjectPoolerStatic();
+        _soundManager = ServiceLocator.GetSoundManagerStatic();
 
     }
     public Transform ProjectileHolder { get => _projectileHolder; set => _projectileHolder = value; }
@@ -39,11 +48,19 @@ public class Weapon : MonoBehaviour
     private void Awake()
     {
         _currentAmmo = maxAmmo;
+        MaxAmmoChanged?.Invoke(maxAmmo);
+        _inputManager.LeftClick += OnFire;
+
+        gameObject.SetActive(false);
     }
 
     private void OnEnable()
     {
-        _isFire = false;
+        ReloadTimeChanged?.Invoke(reloadTime);
+        ReloadStatusChanged?.Invoke(0f);
+        MaxAmmoChanged?.Invoke(maxAmmo);
+        CurrentAmmoChanged?.Invoke(_currentAmmo);
+        WeaponIconUpdate?.Invoke(weaponIndex);
 
         if (_gameHUD == null)
         {
@@ -71,6 +88,8 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    abstract public void SetupProperties();
+
     public void OnFire()
     {
         _isFire = true;
@@ -83,9 +102,15 @@ public class Weapon : MonoBehaviour
             var spray = Quaternion.Euler(0f, Random.Range(-sprayAngle, sprayAngle), 0f);
             Quaternion fireDirection = _firePoint.rotation * spray;
 
-            GameObject bullet = Instantiate(Projectile, _firePoint.position, fireDirection, _projectileHolder);
-            Destroy(bullet, 2f);
+            var projectile = _objectPooler.GetObject<Projectiles, Projectile>(projectileName);
+
+            projectile.SetActive(true);
+            projectile.transform.position = _firePoint.position;
+            projectile.transform.rotation = fireDirection;
+            projectile.transform.SetParent(_projectileHolder);
         }
+
+        _soundManager.PlaySound(sound);
 
         _timeToFire = Time.time + 60f / rateOfFire;
         _currentAmmo--;
@@ -117,5 +142,4 @@ public class Weapon : MonoBehaviour
             _isReload = false;
         }
     }
-
 }

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2269596275752068308}
-  - component: {fileID: 3888338163936653546}
+  - component: {fileID: 3438033316377867401}
   m_Layer: 0
   m_Name: Bennelli_M4
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3888338163936653546
+--- !u!114 &3438033316377867401
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,19 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8947999611255525273}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d485597ee5e3ff48a4f8555a67ca124, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d97403d54458344a89c335f778b93ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Projectile: {fileID: 3725062538626794365, guid: bd043c628e94c1549a791d14381fb114, type: 3}
-  Projectiles: {fileID: 0}
-  ReloadBar: {fileID: 0}
-  AmmoCounter: {fileID: 0}
   _firePoint: {fileID: 933274313633513638}
-  numberOfShot: 12
-  maxAmmo: 8
-  rateOfFire: 100
-  reloadTime: 3
-  sprayAngle: 20
 --- !u!1001 &5518744776555008443
 PrefabInstance:
   m_ObjectHideFlags: 0

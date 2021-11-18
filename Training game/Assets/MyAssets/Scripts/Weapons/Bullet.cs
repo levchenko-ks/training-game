@@ -1,6 +1,7 @@
+using System.Collections;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Projectile : MonoBehaviour
 {
     public float speed = 30f;
     public float damage = 20f;
@@ -9,7 +10,12 @@ public class Bullet : MonoBehaviour
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();        
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(SelfDestroy());
     }
 
     private void FixedUpdate()
@@ -23,7 +29,7 @@ public class Bullet : MonoBehaviour
         if (enemy != null)
         {
             enemy.TakeDamage(damage);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 
@@ -31,6 +37,13 @@ public class Bullet : MonoBehaviour
     {
         var newpos = transform.position + transform.forward * speed * Time.fixedDeltaTime;
         _rb.MovePosition(newpos);
+    }
+
+    private IEnumerator SelfDestroy()
+    {
+        yield return new WaitForSeconds(2f);
+        Debug.Log("AutoDestroy");
+        gameObject.SetActive(false);
     }
 }
 

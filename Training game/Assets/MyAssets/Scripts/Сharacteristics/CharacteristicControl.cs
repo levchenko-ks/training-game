@@ -66,7 +66,7 @@ public class CharacteristicControl : MonoBehaviour, ICharacteristicControl
 
     private float CalculateReloadSpeed(float value)
     {
-        var percent = 1 - value * 5;
+        var percent = 1 - value * 0.05f;
         return Mathf.Clamp(percent, 0.1f, 1f);
     }
 
@@ -87,7 +87,7 @@ public class CharacteristicControl : MonoBehaviour, ICharacteristicControl
 
     private float CalculateAccuracy(float value)
     {
-        var percent = 1 - value * 5;
+        var percent = 1 - value * 0.05f;
         return Mathf.Clamp(percent, 0.1f, 1f);
     }
 

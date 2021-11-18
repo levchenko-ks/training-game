@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3500510632186889653}
-  - component: {fileID: 6560026907627232227}
+  - component: {fileID: -6780406338126332148}
   m_Layer: 0
   m_Name: AK74
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6560026907627232227
+--- !u!114 &-6780406338126332148
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,19 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8147413249601430496}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d485597ee5e3ff48a4f8555a67ca124, type: 3}
+  m_Script: {fileID: 11500000, guid: 3641029af12cc5c429a03c3625851a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Projectile: {fileID: 6991141541265590592, guid: c5d49286ef58ba8468e0457a77ae0193, type: 3}
-  Projectiles: {fileID: 0}
-  ReloadBar: {fileID: 0}
-  AmmoCounter: {fileID: 0}
   _firePoint: {fileID: 1127397538262797308}
-  numberOfShot: 1
-  maxAmmo: 15
-  rateOfFire: 250
-  reloadTime: 3
-  sprayAngle: 3
 --- !u!1001 &263171852946915761
 PrefabInstance:
   m_ObjectHideFlags: 0

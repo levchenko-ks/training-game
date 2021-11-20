@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
     private IInputManager _inputManager;
     private IResourcesManager _resourcesManager;
     private ICharacteristicControl _playerCharacteristic;
+    private ISoundManager _soundManager;
 
     private float _maxHealth;
     private float _moveSpeed;
@@ -36,6 +38,7 @@ public class Player : MonoBehaviour
     {
         _inputManager = ServiceLocator.GetInputManagerStatic();
         _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
+        _soundManager = ServiceLocator.GetSoundManagerStatic();
 
         _rb = GetComponent<Rigidbody>();
         _playerCharacteristic = GetComponent<PlayerCharacteristics>();
@@ -77,12 +80,22 @@ public class Player : MonoBehaviour
     {
         _playerCharacteristic.AddModifier(name, modifier);
         CalculateMyCharacteristic();
+        _soundManager.PlayEffect(Sounds.Bonus);
         UpdateHUD();
     }
 
     public void TakeDamage(float damage)
     {
         _currentHealth -= damage;
+
+        Sounds sound = Sounds.Player_Damage_1;
+        var value = Random.value;
+        if(value < 0.25f) { sound = Sounds.Player_Damage_2;  }
+        else if(value < 0.5f) { sound = Sounds.Player_Damage_3; }
+        else if(value < 0.75f) { sound = Sounds.Player_Damage_4; }
+
+        _soundManager.PlayEffect(sound);
+
         CurrentHPChanged?.Invoke(_currentHealth);
 
         if (_currentHealth <= 0f)
@@ -170,6 +183,10 @@ public class Player : MonoBehaviour
     private void GameOver()
     {
         Debug.Log("Player Died");
+
+        _soundManager.PlayEffect(Sounds.PlayerDeth);
+
         PlayerDied?.Invoke();
+        gameObject.SetActive(false);
     }
 }

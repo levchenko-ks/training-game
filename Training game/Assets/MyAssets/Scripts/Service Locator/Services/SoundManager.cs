@@ -10,9 +10,7 @@ public class SoundManager : MonoBehaviour, ISoundManager
     {
         DontDestroyOnLoad(this);
 
-        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
-
-        
+        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();        
     }
     public void PlayMusic(Sounds sound)
     {
@@ -30,6 +28,7 @@ public class SoundManager : MonoBehaviour, ISoundManager
         }
 
         go.transform.SetParent(_sceneSoundHolder, false);
+        go.SetActive(true);
     }
 
 }

@@ -8,9 +8,13 @@ public class Projectile : MonoBehaviour
 
     private Rigidbody _rb;
 
-    private void Awake()
+    private ISoundManager _soundManager;
+
+
+   private void Awake()
     {
-        _rb = GetComponent<Rigidbody>();        
+        _rb = GetComponent<Rigidbody>();
+        _soundManager = ServiceLocator.GetSoundManagerStatic();
     }
 
     private void OnEnable()
@@ -29,6 +33,7 @@ public class Projectile : MonoBehaviour
         if (enemy != null)
         {
             enemy.TakeDamage(damage);
+            _soundManager.PlayEffect(Sounds.Bulletimpact);
             gameObject.SetActive(false);
         }
     }
@@ -41,7 +46,7 @@ public class Projectile : MonoBehaviour
 
     private IEnumerator SelfDestroy()
     {
-        yield return new WaitForSeconds(2f);        
+        yield return new WaitForSeconds(2f);
         gameObject.SetActive(false);
     }
 }

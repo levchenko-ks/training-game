@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public event Action<float> MaxHPChanged;
     public event Action<CharacteristicsNames, float> CharacteristicChanged;
     public event Action<Weapon> WeaponAdded;
+    public event Action<EnvironmentComponents> ObjectFinded;
 
     public Transform weaponHolder;
 
@@ -36,9 +37,9 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        _inputManager = ServiceLocator.GetInputManagerStatic();
-        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
-        _soundManager = ServiceLocator.GetSoundManagerStatic();
+        _inputManager = ServiceLocator.GetInputManager();
+        _resourcesManager = ServiceLocator.GetResourcesManager();
+        _soundManager = ServiceLocator.GetSoundManager();
 
         _rb = GetComponent<Rigidbody>();
         _playerCharacteristic = GetComponent<PlayerCharacteristics>();
@@ -108,6 +109,11 @@ public class Player : MonoBehaviour
     {
         _currentHealth = Mathf.Clamp(_currentHealth + heal, 0f, _maxHealth);
         UpdateHUD();
+    }
+
+    public void FindObject(EnvironmentComponents obj)
+    {
+        ObjectFinded?.Invoke(obj);
     }
 
     private void OnMove(Vector2 obj)

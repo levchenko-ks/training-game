@@ -11,8 +11,8 @@ public class Target : MonoBehaviour
 
     private void Awake()
     {        
-        _inputManager = ServiceLocator.GetInputManagerStatic();        
-        _cameraPosition = ServiceLocator.GetCameraStatic().transform;        
+        _inputManager = ServiceLocator.GetInputManager();        
+        _cameraPosition = ServiceLocator.GetCamera().transform;        
         _inputManager.Look += OnLook;
         _mainCamera = Camera.main;        
     }

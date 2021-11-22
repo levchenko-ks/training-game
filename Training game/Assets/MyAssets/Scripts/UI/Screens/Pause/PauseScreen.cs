@@ -11,10 +11,10 @@ public class PauseScreen : MonoBehaviour, IScreen
 
     private void Awake()
     {
-        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
-        _inputManager = ServiceLocator.GetInputManagerStatic();
-        _stateService = ServiceLocator.GetStateServiceStatic();
-        _canvasFHD = ServiceLocator.GetCanvasStatic();
+        _resourcesManager = ServiceLocator.GetResourcesManager();
+        _inputManager = ServiceLocator.GetInputManager();
+        _stateService = ServiceLocator.GetStateService();
+        _canvasFHD = ServiceLocator.GetCanvas();
 
         View = _resourcesManager.GetInstance<UIViews, PauseScreenView>(UIViews.PauseScreen);
         View.SetCanvas(_canvasFHD);

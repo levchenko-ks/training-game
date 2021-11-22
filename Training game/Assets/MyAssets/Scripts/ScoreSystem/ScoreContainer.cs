@@ -7,7 +7,7 @@ public class ScoreContainer : MonoBehaviour
 
     public ScoreGainers Name;
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         GainScore(Name);
     }

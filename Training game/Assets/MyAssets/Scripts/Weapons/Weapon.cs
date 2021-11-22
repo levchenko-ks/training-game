@@ -36,10 +36,10 @@ public abstract class Weapon : MonoBehaviour
 
     private void Awake()
     {
-        _inputManager = ServiceLocator.GetInputManagerStatic();
-        _weaponCharacteristic = ServiceLocator.GetPlayerStatic().GetComponent<PlayerCharacteristics>();
-        _resourcesManger = ServiceLocator.GetResourcesManagerStatic();
-        _soundManager = ServiceLocator.GetSoundManagerStatic();
+        _inputManager = ServiceLocator.GetInputManager();
+        _weaponCharacteristic = ServiceLocator.GetPlayer().GetComponent<PlayerCharacteristics>();
+        _resourcesManger = ServiceLocator.GetResourcesManager();
+        _soundManager = ServiceLocator.GetSoundManager();
 
         SetupProperties();
 

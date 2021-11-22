@@ -16,7 +16,7 @@ public class Environment : MonoBehaviour
 
     private void Awake()
     {
-        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
+        _resourcesManager = ServiceLocator.GetResourcesManager();
 
         _floorTilePref = _resourcesManager.GetPrefab<EnvironmentComponents, GameObject>(EnvironmentComponents.FloorTile);
         _HP_CubePref = _resourcesManager.GetPrefab<EnvironmentComponents, EnvModifier>(EnvironmentComponents.HP_Cube);

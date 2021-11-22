@@ -10,8 +10,8 @@ public class GameOverScreen : MonoBehaviour, IScreen
 
     private void Awake()
     {
-        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();        
-        _canvasFHD = ServiceLocator.GetCanvasStatic();
+        _resourcesManager = ServiceLocator.GetResourcesManager();        
+        _canvasFHD = ServiceLocator.GetCanvas();
 
         View = _resourcesManager.GetInstance<UIViews, GameOverScreenView>(UIViews.GameOverScreen);
         View.SetCanvas(_canvasFHD);

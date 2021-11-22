@@ -7,5 +7,6 @@ public enum EnvironmentComponents
     MS_Sphere, // Bonus
     Spawner,
     LevelScore,
+    HiddenObject,
 
 }

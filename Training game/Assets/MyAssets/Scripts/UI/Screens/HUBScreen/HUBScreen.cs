@@ -14,9 +14,9 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
 
     private void Awake()
     {
-        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
-        _saveService = ServiceLocator.GetSaveServiceStatic();
-        _canvasFHD = ServiceLocator.GetCanvasStatic();
+        _resourcesManager = ServiceLocator.GetResourcesManager();
+        _saveService = ServiceLocator.GetSaveService();
+        _canvasFHD = ServiceLocator.GetCanvas();
 
         View = _resourcesManager.GetInstance<UIViews, HUBScreenView>(UIViews.HUBScreen);
         View.SetCanvas(_canvasFHD);

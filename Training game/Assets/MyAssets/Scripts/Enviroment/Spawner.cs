@@ -20,12 +20,12 @@ public class Spawner : MonoBehaviour
 
     private void Awake()
     {
-        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
-        _saveService = ServiceLocator.GetSaveServiceStatic();
+        _resourcesManager = ServiceLocator.GetResourcesManager();
+        _saveService = ServiceLocator.GetSaveService();
 
-        _levelScore = ServiceLocator.GetLevelScoreStatic();
-        _player = ServiceLocator.GetPlayerStatic();
-        _cam = ServiceLocator.GetCameraStatic().GetComponent<Transform>();
+        _levelScore = ServiceLocator.GetLevelScore();
+        _player = ServiceLocator.GetPlayer();
+        _cam = ServiceLocator.GetCamera().GetComponent<Transform>();
 
         _levelCount = _saveService.GetInt(SavesKeys.Level);
         SetEnemyCounter();
@@ -59,7 +59,7 @@ public class Spawner : MonoBehaviour
         _timeToSpawn = Time.time + _spawnInterval;
         _enemysLeft--;
 
-        Debug.Log("Try spawn " + _enemysLeft);
+        //Debug.Log("Try spawn " + _enemysLeft);
 
         var go = _resourcesManager.GetPooledObject<Characters, Enemy>(Characters.Zombie);
         var enemy = go.GetComponent<Enemy>();
@@ -74,7 +74,7 @@ public class Spawner : MonoBehaviour
 
         _levelScore.AddScoreContainer(container);
 
-        Debug.Log("Good spawn " + _enemysLeft);
+        //Debug.Log("Good spawn " + _enemysLeft);
     }
 
     private void SetEnemyCounter()

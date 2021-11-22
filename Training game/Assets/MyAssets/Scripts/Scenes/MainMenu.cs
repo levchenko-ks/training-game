@@ -8,8 +8,8 @@ public class MainMenu : MonoBehaviour
 
     private void Awake()
     {
-        _stateService = ServiceLocator.GetStateServiceStatic();
-        _soundManager = ServiceLocator.GetSoundManagerStatic();
+        _stateService = ServiceLocator.GetStateService();
+        _soundManager = ServiceLocator.GetSoundManager();
     }
 
     private void Start()

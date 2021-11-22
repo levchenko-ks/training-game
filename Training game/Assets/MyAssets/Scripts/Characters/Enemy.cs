@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        _soundManager = ServiceLocator.GetSoundManagerStatic();
+        _soundManager = ServiceLocator.GetSoundManager();
 
         _rb = GetComponent<Rigidbody>();
         _enemyCharacteristic = EnemyCharacteristic;

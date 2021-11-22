@@ -14,7 +14,7 @@ public class Projectile : MonoBehaviour
    private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
-        _soundManager = ServiceLocator.GetSoundManagerStatic();
+        _soundManager = ServiceLocator.GetSoundManager();
     }
 
     private void OnEnable()

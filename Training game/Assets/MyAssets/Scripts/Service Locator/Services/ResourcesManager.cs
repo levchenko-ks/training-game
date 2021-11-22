@@ -46,4 +46,9 @@ public class ResourcesManager : IResourcesManager
         pool.Add(newgo);
         return newgo;
     }
+
+    public void ResetPools()
+    {
+        _objectPools = new Dictionary<string, List<GameObject>>();
+    }
 }

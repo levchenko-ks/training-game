@@ -4,24 +4,26 @@ using UnityEngine;
 public class LevelScore : MonoBehaviour, ILevelScore
 {
     public event Action<float> ScoreChanged;
-    public event Action<int> EnemyKilled;
-    
+    public event Action<Characters> EnemyKilled;
+
     private ISaveService _saveService;
-    
-    private float _currentScore;
-    private int _enemyKillsCounter = 0;
+
+    private float _currentScore;    
 
     private float ZombieScore = 100f;
     private float CapsuleScore = 500f;
 
 
-
-
     private void Awake()
     {
-        _saveService = ServiceLocator.GetSaveServiceStatic();
+        _saveService = ServiceLocator.GetSaveService();
 
-        _currentScore = _saveService.GetFloat(SavesKeys.Score);        
+        _currentScore = _saveService.GetFloat(SavesKeys.Score);
+    }
+
+    private void Start()
+    {
+        ScoreChanged?.Invoke(_currentScore);
     }
 
     public void AddScore(ScoreGainers name)
@@ -29,9 +31,8 @@ public class LevelScore : MonoBehaviour, ILevelScore
         switch (name)
         {
             case ScoreGainers.Zombie:
-                _currentScore += ZombieScore;
-                _enemyKillsCounter++;
-                EnemyKilled?.Invoke(_enemyKillsCounter);
+                _currentScore += ZombieScore;                
+                EnemyKilled?.Invoke(Characters.Zombie);
                 break;
             case ScoreGainers.Score_Capsule:
                 _currentScore += CapsuleScore;
@@ -44,7 +45,7 @@ public class LevelScore : MonoBehaviour, ILevelScore
 
     public void AddScoreContainer(ScoreContainer container)
     {
-        container.GainScore += AddScore;
+        container.GainScore += AddScore;        
     }
 
 }

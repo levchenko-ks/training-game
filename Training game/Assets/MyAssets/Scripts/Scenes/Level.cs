@@ -9,13 +9,13 @@ public class Level : MonoBehaviour
 
     private void Awake()
     {
-        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
-        _camera = ServiceLocator.GetCameraStatic();        
+        _resourcesManager = ServiceLocator.GetResourcesManager();
+        _camera = ServiceLocator.GetCamera();        
     }
 
     private void Start()
     {
-        var player = ServiceLocator.GetPlayerStatic();
+        var player = ServiceLocator.GetPlayer();
         _camera.SetTarget(player.transform);
 
         _resourcesManager.GetInstance<CoreComponents, Light>(CoreComponents.Standart_Directional_Light);

@@ -1,13 +1,14 @@
 using UnityEngine;
 
-public class ServiceLocator : MonoBehaviour, IServiceLocator
+public class ServiceLocator : MonoBehaviour
 {
     // Services
     private static IResourcesManager _resourcesManager;
     private static IStateService _stateService;
     private static ISaveService _saveService;
     private static IInputManager _inputManager;
-    private static ISoundManager _soundManager;    
+    private static ISoundManager _soundManager;
+    private static IProgressManager _progressManager;
     // private static IUnitRepository _unitRepository;
 
 
@@ -20,7 +21,9 @@ public class ServiceLocator : MonoBehaviour, IServiceLocator
 
     private void Awake()
     {
-        _inputManager = null;        
+        _inputManager = null;
+        _progressManager = null;
+        if (_resourcesManager != null) { GetResourcesManager().ResetPools(); }
 
         Player = null;
         Camera = null;
@@ -31,7 +34,7 @@ public class ServiceLocator : MonoBehaviour, IServiceLocator
     // TODO Universal service calling Method
     // public static T GetService<T>(Services service)    
 
-    public static IResourcesManager GetResourcesManagerStatic()
+    public static IResourcesManager GetResourcesManager()
     {
         if (_resourcesManager == null)
         {
@@ -41,7 +44,7 @@ public class ServiceLocator : MonoBehaviour, IServiceLocator
         return _resourcesManager;
     }
 
-    public static IStateService GetStateServiceStatic()
+    public static IStateService GetStateService()
     {
         if (_stateService == null)
         {
@@ -51,7 +54,7 @@ public class ServiceLocator : MonoBehaviour, IServiceLocator
         return _stateService;
     }
 
-    public static ISaveService GetSaveServiceStatic()
+    public static ISaveService GetSaveService()
     {
         if (_saveService == null)
         {
@@ -61,7 +64,7 @@ public class ServiceLocator : MonoBehaviour, IServiceLocator
         return _saveService;
     }
 
-    public static IInputManager GetInputManagerStatic()
+    public static IInputManager GetInputManager()
     {
         if (_inputManager == null)
         {
@@ -72,7 +75,7 @@ public class ServiceLocator : MonoBehaviour, IServiceLocator
         return _inputManager;
     }
 
-    public static ISoundManager GetSoundManagerStatic()
+    public static ISoundManager GetSoundManager()
     {
         if (_soundManager == null)
         {
@@ -81,68 +84,61 @@ public class ServiceLocator : MonoBehaviour, IServiceLocator
         }
 
         return _soundManager;
-    }   
+    }
 
-    public static Player GetPlayerStatic()
+    public static IProgressManager GetProgressManager()
+    {
+        if(_progressManager == null)
+        {
+            var go = new GameObject(Services.ProgressManager.ToString());
+            _progressManager = go.AddComponent<ProgressManager>();
+        }
+
+        return _progressManager;
+    }
+
+    public static Player GetPlayer()
     {
         if (Player == null)
         {
-            var service = GetResourcesManagerStatic();
+            var service = GetResourcesManager();
             Player = service.GetInstance<Characters, Player>(Characters.Player);
         }
 
         return Player;
     }
 
-    public static CameraControl GetCameraStatic()
+    public static CameraControl GetCamera()
     {
         if (Camera == null)
         {
-            var service = GetResourcesManagerStatic();
+            var service = GetResourcesManager();
             Camera = service.GetInstance<CoreComponents, CameraControl>(CoreComponents.Main_Camera);
         }
 
         return Camera;
     }
 
-    public static Canvas GetCanvasStatic()
+    public static Canvas GetCanvas()
     {
         if (Canvas == null)
         {
-            var service = GetResourcesManagerStatic();
+            var service = GetResourcesManager();
             Canvas = service.GetInstance<UIViews, Canvas>(UIViews.CanvasFHD);
         }
 
         return Canvas;
     }
 
-    public static LevelScore GetLevelScoreStatic()
+    public static LevelScore GetLevelScore()
     {
         if (LevelScore == null)
         {
-            var service = GetResourcesManagerStatic();
+            var service = GetResourcesManager();
             LevelScore = service.GetInstance<EnvironmentComponents, LevelScore>(EnvironmentComponents.LevelScore);
         }
 
         return LevelScore;
     }
-
-    public IResourcesManager GetResourcesManager() => GetResourcesManagerStatic();
-
-    public IStateService GetStateService() => GetStateServiceStatic();
-
-    public ISaveService GetSaveService() => GetSaveServiceStatic();
-
-    public IInputManager GetInputManager() => GetInputManagerStatic();
-
-    public ISoundManager GetSoundManager() => GetSoundManagerStatic();    
-
-    public Player GetPlayer() => GetPlayerStatic();
-
-    public CameraControl GetCamera() => GetCameraStatic();
-
-    public Canvas GetCanvas() => GetCanvasStatic();
-
-    public LevelScore GetLevelScore() => GetLevelScoreStatic();
 
 }

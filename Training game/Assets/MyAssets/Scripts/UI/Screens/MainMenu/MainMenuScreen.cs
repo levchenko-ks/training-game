@@ -11,9 +11,9 @@ public class MainMenuScreen : MonoBehaviour, IScreen
 
     private void Awake()
     {
-        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
-        _saveService = ServiceLocator.GetSaveServiceStatic();
-        _canvasFHD = ServiceLocator.GetCanvasStatic();
+        _resourcesManager = ServiceLocator.GetResourcesManager();
+        _saveService = ServiceLocator.GetSaveService();
+        _canvasFHD = ServiceLocator.GetCanvas();
 
         View = _resourcesManager.GetInstance<UIViews, MainMenuView>(UIViews.MainMenuScreen);
         View.SetCanvas(_canvasFHD);

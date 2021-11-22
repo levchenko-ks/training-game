@@ -10,8 +10,8 @@ public class SplashScreen : MonoBehaviour, IScreen
 
     private void Awake()
     {
-        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
-        _canvasFHD = ServiceLocator.GetCanvasStatic();
+        _resourcesManager = ServiceLocator.GetResourcesManager();
+        _canvasFHD = ServiceLocator.GetCanvas();
 
         View = _resourcesManager.GetInstance<UIViews, SplashScreenView>(UIViews.SplashScreen);
         View.SetCanvas(_canvasFHD);
@@ -29,8 +29,7 @@ public class SplashScreen : MonoBehaviour, IScreen
     private void OnStartClicked()
     {
         Hide();
-
-        var MMgo = new GameObject(UIViews.MainMenuScreen.ToString(), typeof(MainMenuScreen));
+        
         _mainMenuScreen.Show();            
     }
 

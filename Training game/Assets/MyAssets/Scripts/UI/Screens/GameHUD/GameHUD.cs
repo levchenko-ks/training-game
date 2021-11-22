@@ -3,6 +3,8 @@ using UnityEngine;
 public class GameHUD : MonoBehaviour, IGameHUD
 {
     private IResourcesManager _resourcesManager;
+    private IProgressManager _progressManager;
+    private ILevelScore _levelScore;
 
     private Player _player;
     private Canvas _canvasFHD;
@@ -12,9 +14,11 @@ public class GameHUD : MonoBehaviour, IGameHUD
 
     private void Awake()
     {
-        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();
-        _player = ServiceLocator.GetPlayerStatic();
-        _canvasFHD = ServiceLocator.GetCanvasStatic();
+        _resourcesManager = ServiceLocator.GetResourcesManager();
+        _progressManager = ServiceLocator.GetProgressManager();
+        _player = ServiceLocator.GetPlayer();
+        _levelScore = ServiceLocator.GetLevelScore();
+        _canvasFHD = ServiceLocator.GetCanvas();
 
         View = _resourcesManager.GetInstance<UIViews, GameHUDView>(UIViews.GameHUD);
         View.SetCanvas(_canvasFHD);
@@ -24,7 +28,13 @@ public class GameHUD : MonoBehaviour, IGameHUD
         _player.CurrentHPChanged += SetHP;
         _player.CharacteristicChanged += SetCharacteristic;
         _player.WeaponAdded += WeaponRegister;
+
+        _levelScore.ScoreChanged += SetScore;
+
+        //_progressManager.Task1Added
+        
     }
+        
 
     private void Start()
     {

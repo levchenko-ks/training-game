@@ -10,7 +10,7 @@ public class SoundManager : MonoBehaviour, ISoundManager
     {
         DontDestroyOnLoad(this);
 
-        _resourcesManager = ServiceLocator.GetResourcesManagerStatic();        
+        _resourcesManager = ServiceLocator.GetResourcesManager();        
     }
     public void PlayMusic(Sounds sound)
     {

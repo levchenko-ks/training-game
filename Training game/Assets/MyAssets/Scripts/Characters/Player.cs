@@ -24,8 +24,6 @@ public class Player : MonoBehaviour
     private float _maxHealth;
     private float _moveSpeed;
     private float _maxStamina;
-    private float _reloadSpeed;
-    private float _accuracy;
 
     private float _currentHealth;
     private float _stamina;
@@ -80,9 +78,9 @@ public class Player : MonoBehaviour
     public void CollectBonus(CharacteristicsNames name, Modifier modifier)
     {
         _playerCharacteristic.AddModifier(name, modifier);
-        CalculateMyCharacteristic();
-        _soundManager.PlayEffect(Sounds.Bonus);
+        CalculateMyCharacteristic();        
         UpdateHUD();
+        _soundManager.PlayEffect(Sounds.Bonus);
     }
 
     public void TakeDamage(float damage)
@@ -91,9 +89,9 @@ public class Player : MonoBehaviour
 
         Sounds sound = Sounds.Player_Damage_1;
         var value = Random.value;
-        if(value < 0.25f) { sound = Sounds.Player_Damage_2;  }
-        else if(value < 0.5f) { sound = Sounds.Player_Damage_3; }
-        else if(value < 0.75f) { sound = Sounds.Player_Damage_4; }
+        if (value < 0.25f) { sound = Sounds.Player_Damage_2; }
+        else if (value < 0.5f) { sound = Sounds.Player_Damage_3; }
+        else if (value < 0.75f) { sound = Sounds.Player_Damage_4; }
 
         _soundManager.PlayEffect(sound);
 
@@ -114,6 +112,7 @@ public class Player : MonoBehaviour
     public void FindObject(EnvironmentComponents obj)
     {
         ObjectFinded?.Invoke(obj);
+        _soundManager.PlayEffect(Sounds.Bonus);
     }
 
     private void OnMove(Vector2 obj)
@@ -172,8 +171,7 @@ public class Player : MonoBehaviour
     {
         _maxHealth = _playerCharacteristic.CalculateAmount(CharacteristicsNames.Health);
         _moveSpeed = _playerCharacteristic.CalculateAmount(CharacteristicsNames.MoveSpeed);
-        _maxStamina = _playerCharacteristic.CalculateAmount(CharacteristicsNames.Stamina);
-        _accuracy = _playerCharacteristic.CalculateAmount(CharacteristicsNames.Accuracy);
+        _maxStamina = _playerCharacteristic.CalculateAmount(CharacteristicsNames.Stamina);        
     }
 
     private void UpdateHUD()

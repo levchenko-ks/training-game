@@ -3,6 +3,7 @@ using UnityEngine;
 public class Level : MonoBehaviour
 {
     private IResourcesManager _resourcesManager;
+    private IProgressManager _progressManager;
 
     private IScreen _gameHUD;
     private CameraControl _camera;    
@@ -10,6 +11,7 @@ public class Level : MonoBehaviour
     private void Awake()
     {
         _resourcesManager = ServiceLocator.GetResourcesManager();
+        _progressManager = ServiceLocator.GetProgressManager();
         _camera = ServiceLocator.GetCamera();        
     }
 
@@ -20,12 +22,14 @@ public class Level : MonoBehaviour
 
         _resourcesManager.GetInstance<CoreComponents, Light>(CoreComponents.Standart_Directional_Light);
         _resourcesManager.GetInstance<EnvironmentComponents, Environment>(EnvironmentComponents.Environment);
-        _resourcesManager.GetInstance<EnvironmentComponents, Spawner>(EnvironmentComponents.Spawner);
+        _resourcesManager.GetInstance<EnvironmentComponents, Spawner>(EnvironmentComponents.Spawner);        
         
         var HUDgo = new GameObject(UIViews.GameHUD.ToString(), typeof(GameHUD));
         _gameHUD = HUDgo.GetComponent<GameHUD>();
         _gameHUD.Show();
 
         player.AddWeapon(Weapons.AK_74);
+
+        _progressManager.AddNewKillingTask(Characters.Zombie, 3);
     }
 }

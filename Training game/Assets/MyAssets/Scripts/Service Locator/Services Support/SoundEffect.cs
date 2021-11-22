@@ -7,7 +7,7 @@ public class SoundEffect : MonoBehaviour
     private AudioSource _audioSource;
     private float _timer;
 
-    private void Awake()
+    private void OnEnable()
     {
         _audioSource = GetComponent<AudioSource>();
         _timer = _audioSource.clip.length;

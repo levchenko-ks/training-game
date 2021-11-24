@@ -73,6 +73,11 @@ public abstract class Weapon : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        _inputManager.LeftClick -= OnFire;
+    }
+
     abstract public void SetupProperties();
 
     public void OnFire()

@@ -22,6 +22,11 @@ public class Target : MonoBehaviour
         Moving();
     }
 
+    private void OnDestroy()
+    {
+        _inputManager.Look -= OnLook;
+    }
+
     private void OnLook(Vector2 obj)
     {
         _horizontal = Mathf.Clamp(obj.x, 0f, Screen.width);

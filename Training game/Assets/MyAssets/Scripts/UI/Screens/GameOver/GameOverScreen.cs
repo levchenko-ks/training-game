@@ -21,6 +21,11 @@ public class GameOverScreen : MonoBehaviour, IScreen
         View.RestartClicked += OnRestartCliked;
     }
 
+    private void OnDestroy()
+    {
+        View.MainMenuClicked -= OnMainMenuClicked;
+        View.RestartClicked -= OnRestartCliked;
+    }
     private void OnRestartCliked()
     {
         Time.timeScale = 1f;

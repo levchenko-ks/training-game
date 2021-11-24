@@ -25,6 +25,10 @@ public class SplashScreen : MonoBehaviour, IScreen
         var MMgo = new GameObject(UIViews.MainMenuScreen.ToString(), typeof(MainMenuScreen));
         _mainMenuScreen = MMgo.GetComponent<MainMenuScreen>();
     }
+    private void OnDestroy()
+    {
+        View.Clicked -= OnStartClicked;
+    }
 
     private void OnStartClicked()
     {

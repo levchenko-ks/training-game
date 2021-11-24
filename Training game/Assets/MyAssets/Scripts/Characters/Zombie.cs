@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Zombie : Enemy
 {
@@ -15,10 +16,10 @@ public class Zombie : Enemy
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody>();
-        _enemyCharacteristic = GetComponent<EnemyCharacteristic>();
-
         _soundManager = ServiceLocator.GetSoundManager();
+
+        _rb = GetComponent<Rigidbody>();
+        _enemyCharacteristic = GetComponent<EnemyCharacteristic>();        
     }
 
     private void FixedUpdate()
@@ -74,13 +75,14 @@ public class Zombie : Enemy
         _rb.MoveRotation(newRotation);
     }
 
-    protected override IEnumerator Die()
+    protected override IEnumerator Dying()
     {
         _target = null;
         _rb.isKinematic = false;
         _rb.useGravity = true;
         _soundManager.PlayEffect(Sounds.ZombieDeth_1);
         yield return new WaitForSeconds(1.5f);
+        DiedNotify(this);
         gameObject.SetActive(false);
     }
 
@@ -105,8 +107,7 @@ public class Zombie : Enemy
             {
                 sound = Sounds.ZombieMoving_2;
             }
-
-            Debug.Log(_soundManager);
+                        
             _soundManager.PlayEffect(sound);
         }
     }

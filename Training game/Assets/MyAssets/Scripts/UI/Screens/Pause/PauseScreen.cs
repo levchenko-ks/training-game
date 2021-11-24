@@ -30,6 +30,12 @@ public class PauseScreen : MonoBehaviour, IScreen
         Hide();
     }
 
+    private void OnDestroy()
+    {
+        View.MainMenuClicked -= OnMainMenuClicked;
+        View.ResumeClicked -= OnResumeCliked;
+    }
+
     public void Hide()
     {
         View.Hide();

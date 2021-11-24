@@ -64,6 +64,12 @@ public class Player : MonoBehaviour
         Moving();
     }
 
+    private void OnDestroy()
+    {
+        _inputManager.Move -= OnMove;
+        _inputManager.AlphaSelect -= SelectWeapon;
+    }
+
     public void AddWeapon(Weapons weapon)
     {
         var weaponInstance = _resourcesManager.GetInstance<Weapons, Weapon>(weapon);

@@ -29,6 +29,14 @@ public class MainMenuScreen : MonoBehaviour, IScreen
     {
         Hide();
     }
+    private void OnDestroy()
+    {
+        View.ContinueClicked -= OnContinueClicked;
+        View.NewGameClicked -= OnNewGameClicked;
+        View.SettingsClicked -= OnSettingsClicked;
+        View.ExitClicked -= OnExitClicked;
+    }
+
     private void OnExitClicked()
     {
         EditorApplication.ExitPlaymode();
@@ -41,12 +49,12 @@ public class MainMenuScreen : MonoBehaviour, IScreen
 
     private void OnNewGameClicked()
     {
-        _saveService.ClearProgress();        
+        _saveService.ClearProgress();
         SceneManager.LoadScene("Level");
     }
 
     private void OnContinueClicked()
-    {        
+    {
         SceneManager.LoadScene("Level");
     }
 

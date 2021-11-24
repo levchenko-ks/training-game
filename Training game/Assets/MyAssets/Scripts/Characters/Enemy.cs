@@ -1,17 +1,20 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour, IEnemy
 {
-    public Billboard Billboard;
-    public HealthBar HealthBar;    
+    public event Action<IEnemy> Died;
 
+    public Billboard Billboard;
+    public HealthBar HealthBar;
+        
     protected Transform _target;
     protected Transform _cam;
 
     protected float _maxHealth;
     protected float _currentHealth;
-    protected float _moveSpeed;
+    protected float _moveSpeed;    
 
     public Transform Target { set => _target = value; }
     public Transform Cam
@@ -39,15 +42,20 @@ public abstract class Enemy : MonoBehaviour, IEnemy
         HealthBar.SetHP(_currentHealth);
         if (_currentHealth <= 0f)
         {
-            StartCoroutine(Die());
+            StartCoroutine(Dying());
         }
+    }
+
+    protected void DiedNotify(IEnemy enemy)
+    {
+        Died?.Invoke(enemy);
     }
 
     protected abstract void TakeDamageScream();
 
     protected abstract void Moving();
 
-    protected abstract IEnumerator Die();   
+    protected abstract IEnumerator Dying();   
         
     protected abstract void CalculateMyCharacteristic();
 

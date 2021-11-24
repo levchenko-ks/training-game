@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ResourcesManager : IResourcesManager
 {
-    private Dictionary<string, List<GameObject>> _objectPools = new Dictionary<string, List<GameObject>>();
+    private Dictionary<string, List<GameObject>> _objectPools = new();
 
     public T GetInstance<E, T>(E item) where T : Object
     {

@@ -61,6 +61,16 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
         CheckUprgadePrices();
     }
 
+    private void OnDestroy()
+    {
+        View.UpgradeHPClicked -= OnUpgradeHPCliked;
+        View.UpgradeSTClicked -= OnUpgradeSTCliked;
+        View.UpgradeRSClicked -= OnUpgradeRSCliked;
+        View.UpgradeMSClicked -= OnUpgradeMSCliked;
+        View.UpgradeACClicked -= OnUpgradeACCliked;
+        View.NextLevelClicked -= OnNextLevelClicked;
+    }
+
     public void Hide() => View.Hide();
 
     public void SetScoreCounter(float score) => View.SetScoreCounter(score);

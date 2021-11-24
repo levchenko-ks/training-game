@@ -3,7 +3,7 @@ using UnityEngine;
 public class GameHUD : MonoBehaviour, IGameHUD
 {
     private IResourcesManager _resourcesManager;
-    private IProgressManager _progressManager;
+    private ITaskManager _progressManager;
     private ILevelScore _levelScore;
 
     private Player _player;

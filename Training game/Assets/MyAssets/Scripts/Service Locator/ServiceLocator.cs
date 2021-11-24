@@ -8,31 +8,29 @@ public class ServiceLocator : MonoBehaviour
     private static ISaveService _saveService;
     private static IInputManager _inputManager;
     private static ISoundManager _soundManager;
-    private static IProgressManager _progressManager;
-    // private static IUnitRepository _unitRepository;
+    private static ITaskManager _progressManager;
+    private static IUnitRepository _unitRepository;
 
 
     // Instances references
-    public static Player Player;
-    public static CameraControl Camera;
-    public static Canvas Canvas;
-    public static LevelScore LevelScore;
+    private static Player Player;
+    private static CameraControl Camera;
+    private static Canvas Canvas;
+    private static LevelScore LevelScore;
 
 
     private void Awake()
     {
         _inputManager = null;
         _progressManager = null;
-        if (_resourcesManager != null) { GetResourcesManager().ResetPools(); }
+        _resourcesManager = null;
+        _soundManager = null;
 
         Player = null;
         Camera = null;
         Canvas = null;
         LevelScore = null;
-    }
-
-    // TODO Universal service calling Method
-    // public static T GetService<T>(Services service)    
+    }    
 
     public static IResourcesManager GetResourcesManager()
     {
@@ -64,6 +62,17 @@ public class ServiceLocator : MonoBehaviour
         return _saveService;
     }
 
+    public static IUnitRepository GetUnitRepository()
+    {
+        if(_unitRepository == null)
+        {
+            var go = new GameObject(Services.UnitRepository.ToString());
+            _unitRepository = go.AddComponent<UnitRepository>();
+        }
+
+        return _unitRepository;
+    }
+
     public static IInputManager GetInputManager()
     {
         if (_inputManager == null)
@@ -86,12 +95,12 @@ public class ServiceLocator : MonoBehaviour
         return _soundManager;
     }
 
-    public static IProgressManager GetProgressManager()
+    public static ITaskManager GetProgressManager()
     {
         if(_progressManager == null)
         {
             var go = new GameObject(Services.ProgressManager.ToString());
-            _progressManager = go.AddComponent<ProgressManager>();
+            _progressManager = go.AddComponent<TaskManager>();
         }
 
         return _progressManager;

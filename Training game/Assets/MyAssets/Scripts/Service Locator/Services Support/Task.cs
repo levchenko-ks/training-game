@@ -1,13 +1,16 @@
-public abstract class Task
+using System;
+
+public abstract class Task : ITask
 {
+    public event Action Done;
+
+    protected string _name;
+    protected string _description; 
     protected bool _isDone = false;
-    protected string _descrption = "";
-    protected TaskTypes _type;
+    protected bool _isSide = false;       
 
-    public bool IsDone { get => _isDone; }
-    public string Description { get => _descrption; }
-    public TaskTypes Type { get => _type; }
-
-    public abstract void Progress();
-
+    public string Name { get => _name; }
+    public string Description { get => _description; }
+    public bool isDone { get => _isDone; }
+    public bool isSide { get => _isSide; }
 }

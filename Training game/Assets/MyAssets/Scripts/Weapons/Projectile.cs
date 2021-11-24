@@ -29,7 +29,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Enemy enemy = other.GetComponent<Enemy>();
+        IEnemy enemy = other.GetComponent<IEnemy>();
         if (enemy != null)
         {
             enemy.TakeDamage(damage);

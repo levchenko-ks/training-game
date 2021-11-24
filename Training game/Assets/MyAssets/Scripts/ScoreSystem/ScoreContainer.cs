@@ -5,10 +5,12 @@ public class ScoreContainer : MonoBehaviour
 {
     public event Action<ScoreGainers> GainScore;
 
-    public ScoreGainers Name;
+    private ScoreGainers _name;
+
+    public ScoreGainers Name { set => _name = value; }
 
     private void OnDisable()
     {
-        GainScore(Name);
+        GainScore?.Invoke(_name);
     }
 }

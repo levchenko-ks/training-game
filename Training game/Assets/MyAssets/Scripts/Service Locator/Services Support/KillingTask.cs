@@ -4,19 +4,17 @@ public class KillingTask : Task
     private int _requiredAmount;
     private int _currentAmount = 0;
 
-    public Characters Target { get => _target; }
-    public int Amount { get => _requiredAmount; }
-
-
-    public KillingTask(Characters Target, int Amount)
+    
+    public KillingTask(string name, Characters Target, int Amount)
     {
+        _name = name;
+        
         _target = Target;
         _requiredAmount = Amount;
-        _descrption = $"Kill {Amount} {Target}.";
-        _type = TaskTypes.KillingTask;
+        _description = $"Kill {Amount} {Target}.";        
     }
 
-    public override void Progress()
+    public void Progress()
     {
         _currentAmount++;
         if (_currentAmount >= _requiredAmount) { _isDone = true; }        

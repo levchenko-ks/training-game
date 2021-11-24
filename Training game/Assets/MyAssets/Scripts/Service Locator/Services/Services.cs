@@ -4,9 +4,9 @@ public enum Services
     ObjectPooler,
     ProgressManager,
     ResourcesManager,
-    SaveService,
-    Services,
+    SaveService,   
     SoundManager,
     StateService,
+    UnitRepository,
 
 }

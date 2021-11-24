@@ -3,7 +3,7 @@ using UnityEngine;
 public class Level : MonoBehaviour
 {
     private IResourcesManager _resourcesManager;
-    private IProgressManager _progressManager;
+    private ITaskManager _progressManager;
 
     private IScreen _gameHUD;
     private CameraControl _camera;    
@@ -28,8 +28,6 @@ public class Level : MonoBehaviour
         _gameHUD = HUDgo.GetComponent<GameHUD>();
         _gameHUD.Show();
 
-        player.AddWeapon(Weapons.AK_74);
-
-        _progressManager.AddNewKillingTask(Characters.Zombie, 3);
+        player.AddWeapon(Weapons.AK_74);        
     }
 }

@@ -2,26 +2,45 @@ using UnityEngine;
 
 public class SaveService : ISaveService
 {
+    private const string
+        ScoreKey = "Score",
+        LevelKey = "Level",
+        HealthKey = "Health",
+        MoveSpeedKey = "MoveSpeed",
+        StaminaKey = "Stamina",
+        ReloadSpeedKey = "ReloadSpeed",
+        AccuracyKey = "Accuracy",
+        WeaponLevelKey_1 = "WeaponLevel_1",
+        WeaponLevelKey_2 = "WeaponLevel_2",
+        WeaponLevelKey_3 = "WeaponLevel_3",
+        WeaponLevelKey_4 = "WeaponLevel_4",
+        WeaponLevelKey_5 = "WeaponLevel_5",
+        WeaponLevelKey_6 = "WeaponLevel_6";
+
+
+
     public void ClearProgress()
     {
-        PlayerPrefs.SetInt(SavesKeys.Level.ToString(), 1);
-        PlayerPrefs.SetFloat(SavesKeys.Score.ToString(), 0f);
+        PlayerPrefs.SetInt(LevelKey, 1);
+        PlayerPrefs.SetFloat(ScoreKey, 0f);
 
-        PlayerPrefs.DeleteKey(SavesKeys.Health.ToString());
-        PlayerPrefs.DeleteKey(SavesKeys.Stamina.ToString());
-        PlayerPrefs.DeleteKey(SavesKeys.ReloadSpeed.ToString());
-        PlayerPrefs.DeleteKey(SavesKeys.MoveSpeed.ToString());
-        PlayerPrefs.DeleteKey(SavesKeys.Accuracy.ToString());
+        PlayerPrefs.DeleteKey(HealthKey);
+        PlayerPrefs.DeleteKey(StaminaKey);
+        PlayerPrefs.DeleteKey(ReloadSpeedKey);
+        PlayerPrefs.DeleteKey(MoveSpeedKey);
+        PlayerPrefs.DeleteKey(AccuracyKey);
 
-        PlayerPrefs.DeleteKey(SavesKeys.WeaponLevel_1.ToString());
-        PlayerPrefs.DeleteKey(SavesKeys.WeaponLevel_2.ToString());
-        PlayerPrefs.DeleteKey(SavesKeys.WeaponLevel_3.ToString());
-        PlayerPrefs.DeleteKey(SavesKeys.WeaponLevel_4.ToString());
-        PlayerPrefs.DeleteKey(SavesKeys.WeaponLevel_5.ToString());
-        PlayerPrefs.DeleteKey(SavesKeys.WeaponLevel_6.ToString());
+        PlayerPrefs.DeleteKey(WeaponLevelKey_1);
+        PlayerPrefs.DeleteKey(WeaponLevelKey_2);
+        PlayerPrefs.DeleteKey(WeaponLevelKey_3);
+        PlayerPrefs.DeleteKey(WeaponLevelKey_4);
+        PlayerPrefs.DeleteKey(WeaponLevelKey_5);
+        PlayerPrefs.DeleteKey(WeaponLevelKey_6);
 
         PlayerPrefs.Save();
     }
+
+    // TODO: Rewrite all methods to avoid .ToString() expression
 
     public float GetFloat(SavesKeys key)
     {
@@ -33,7 +52,7 @@ public class SaveService : ISaveService
         return PlayerPrefs.GetInt(key.ToString());
     }
 
-    public void SaveFile()
+    public void Save()
     {
         PlayerPrefs.Save();
     }

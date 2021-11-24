@@ -1,6 +1,6 @@
 public interface ISaveService
 {
-    void SaveFile();
+    void Save();
     void ClearProgress();
     float GetFloat(SavesKeys key);
     int GetInt(SavesKeys key);

@@ -6,7 +6,7 @@ public class FindingTask : Task
 
     public EnvironmentComponents Target { get => _target; }
     public int Amount { get => _requiredAmount; }
-
+    /*
 
     public FindingTask(EnvironmentComponents Target, int Amount)
     {
@@ -21,4 +21,5 @@ public class FindingTask : Task
         _currentAmount++;
         if (_currentAmount >= _requiredAmount) { _isDone = true; }
     }
+    */
 }

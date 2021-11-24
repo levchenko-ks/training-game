@@ -506,7 +506,6 @@ GameObject:
   - component: {fileID: 1188324371345202407}
   - component: {fileID: 6719955094349750445}
   - component: {fileID: 892637356490192026}
-  - component: {fileID: 8141751782345697399}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -574,7 +573,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Billboard: {fileID: 7352727214297210208}
   HealthBar: {fileID: 5873977934448059774}
-  EnemyCharacteristic: {fileID: 0}
 --- !u!114 &892637356490192026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -590,19 +588,6 @@ MonoBehaviour:
   StartHealth: 5
   StartMoveSpeed: 2
   StartMeleeDamage: 5
---- !u!114 &8141751782345697399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2456748712407318239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b900322a0a9165247ab9d89bf50437e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: 100
 --- !u!1 &2901703695093098207
 GameObject:
   m_ObjectHideFlags: 0

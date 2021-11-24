@@ -71,8 +71,7 @@ public class Spawner : MonoBehaviour
         enemy.Target = _player.transform;
         enemy.Cam = _cam;
 
-        _unitRepository.AddEnemy(enemy);
-        //_levelScore.AddScoreContainer(container);
+        _unitRepository.AddEnemy(enemy);        
     }
 
     private void SetEnemyCounter()

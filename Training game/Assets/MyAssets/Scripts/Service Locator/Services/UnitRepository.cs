@@ -5,8 +5,9 @@ using UnityEngine;
 public class UnitRepository : MonoBehaviour, IUnitRepository
 {
     public event Action<IEnemy> EnemyDied;
+    public event Action<IEnemy> EnemyAdded;
 
-    private Dictionary<string, List<IEnemy>> _enemyLists = new();
+    private Dictionary<string, List<IEnemy>> _enemyLists = new Dictionary<string, List<IEnemy>>();
 
     public void AddEnemy(IEnemy enemy)
     {
@@ -20,6 +21,7 @@ public class UnitRepository : MonoBehaviour, IUnitRepository
         var list = _enemyLists[key];
         list.Add(enemy);
         enemy.Died += RemoveEnemy;
+        EnemyAdded?.Invoke(enemy);
     }
 
     private void RemoveEnemy(IEnemy enemy)

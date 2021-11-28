@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
 
-public class GameHUDView : MonoBehaviour, IGameHUDView
+public class GameHUDView : BaseView, IGameHUDView
 {
     public Slider healthBar;
     public Slider reloadBar;
@@ -18,21 +17,6 @@ public class GameHUDView : MonoBehaviour, IGameHUDView
     public Text AC;
 
     public List<Image> WeaponImages;
-
-    public void SetCanvas(Canvas canvas)
-    {
-        transform.SetParent(canvas.transform, false);
-    }
-
-    public void Hide()
-    {
-        gameObject.SetActive(false);
-    }
-
-    public void Show()
-    {
-        gameObject.SetActive(true);
-    }
 
     public void SetAmmo(int count)
     {
@@ -101,6 +85,7 @@ public class GameHUDView : MonoBehaviour, IGameHUDView
 
     public void SetScore(float score)
     {
-        if (Score) { Score.text = score.ToString(); }        
+        if (Score) { Score.text = score.ToString(); }
     }
+
 }

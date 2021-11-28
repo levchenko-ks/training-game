@@ -1,6 +1,8 @@
 public class KillingTask : Task
 {
-    private Characters _target;
+    private IUnitRepository _unitRepository;
+
+    private string _target;
     private int _requiredAmount;
     private int _currentAmount = 0;
 
@@ -8,15 +10,30 @@ public class KillingTask : Task
     public KillingTask(string name, Characters Target, int Amount)
     {
         _name = name;
-        
-        _target = Target;
+
+        _target = Target.ToString();
         _requiredAmount = Amount;
-        _description = $"Kill {Amount} {Target}.";        
+        DescriptionChanging();
+
+        _unitRepository = ServiceLocator.GetUnitRepository();
+        _unitRepository.EnemyDied += Progress;
     }
 
-    public void Progress()
+    private void DescriptionChanging()
     {
-        _currentAmount++;
-        if (_currentAmount >= _requiredAmount) { _isDone = true; }        
+        _description = $"Kill {_currentAmount}/{_requiredAmount} {_target}.";
+        UpdateDescription();
     }
+
+    private void Progress(IEnemy enemy)
+    {
+        var name = enemy.GetType().Name;
+        if (name != _target)
+        { return; }
+
+        _currentAmount++;
+        DescriptionChanging();
+        if (_currentAmount >= _requiredAmount) { _isDone = true; }
+    }
+
 }

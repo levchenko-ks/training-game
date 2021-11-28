@@ -6,5 +6,6 @@ public enum UIViews
     HUBScreen,
     MainMenuScreen,
     PauseScreen,
-    SplashScreen
+    SplashScreen,
+    TasksWidget,
 }

@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public interface IPauseScreenView
+public interface IPauseScreenView : IView
 {
     event Action ResumeClicked;
     event Action MainMenuClicked;
 
-    void Hide();
-    void Show();
     void OnResumeClicked();
     void OnMainMenuClicked();
-    void SetCanvas(Canvas canvas);
 }

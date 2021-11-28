@@ -1,9 +1,5 @@
-using UnityEngine;
-
-public interface IGameHUDView 
+public interface IGameHUDView: IView
 {
-    void Show();
-    void Hide();
     void SetMaxHP(float amount);
     void SetHP(float amount);
     void SetReloadTime(float amount);
@@ -14,5 +10,4 @@ public interface IGameHUDView
     void HideWeaponIcon(int index);
     void SetCharacteristic(CharacteristicsNames name, float count);
     void SetScore(float score);
-    void SetCanvas(Canvas canvas);
 }

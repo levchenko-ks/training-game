@@ -4,7 +4,7 @@ public interface ITaskManager
 {
     event Action<ITask> TaskAdded;
     event Action<ITask> TaskDone;
-    event Action<string> TaskDescriptionChanged;
+    event Action<ITask> TaskDescriptionChanged;
 
     void AddTask(ITask task);
 }

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUBScreenView : MonoBehaviour, IHUBScreenView
+public class HUBScreenView : BaseView, IHUBScreenView
 {
     public event Action UpgradeHPClicked;
     public event Action UpgradeSTClicked;
@@ -39,17 +39,7 @@ public class HUBScreenView : MonoBehaviour, IHUBScreenView
         UpgradeMS.onClick.AddListener(OnUpgradeMSClicked);
         UpgradeAC.onClick.AddListener(OnUpgradeACClicked);
         NextLevel.onClick.AddListener(OnNextLevelClicked);
-    }
-
-    public void Hide()
-    {
-        gameObject.SetActive(false);
-    }
-
-    public void SetCanvas(Canvas canvas)
-    {
-        transform.SetParent(canvas.transform, false);
-    }
+    }       
 
     public void HideUpgradeButton(SavesKeys name)
     {
@@ -115,11 +105,6 @@ public class HUBScreenView : MonoBehaviour, IHUBScreenView
                 PriceAC.text = "Upgrade: " + value.ToString();
                 break;
         }
-    }
-
-    public void Show()
-    {
-        gameObject.SetActive(true);
     }
 
     public void ShowUpgradeButton(SavesKeys name)

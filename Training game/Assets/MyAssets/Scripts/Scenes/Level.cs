@@ -28,6 +28,8 @@ public class Level : MonoBehaviour
         _gameHUD = HUDgo.GetComponent<GameHUD>();
         _gameHUD.Show();
 
-        player.AddWeapon(Weapons.AK_74);        
+        player.AddWeapon(Weapons.AK_74);
+
+        var FirstTask = new KillingTask("Hunt", Characters.Zombie, 3);
     }
 }

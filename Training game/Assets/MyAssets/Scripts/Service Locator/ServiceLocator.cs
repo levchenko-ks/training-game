@@ -20,7 +20,7 @@ public class ServiceLocator : MonoBehaviour
 
 
     private void Awake()
-    {
+    {        
         _inputManager = null;
         _progressManager = null;
         _resourcesManager = null;

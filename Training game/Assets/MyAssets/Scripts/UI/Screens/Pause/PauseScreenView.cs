@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseScreenView : MonoBehaviour, IPauseScreenView
+public class PauseScreenView : BaseView, IPauseScreenView
 {
     public event Action ResumeClicked;
     public event Action MainMenuClicked;
@@ -16,16 +16,6 @@ public class PauseScreenView : MonoBehaviour, IPauseScreenView
         MainMenuButton.onClick.AddListener(OnMainMenuClicked);
     }
 
-    public void SetCanvas(Canvas canvas)
-    {
-        transform.SetParent(canvas.transform, false);
-    }
-
-    public void Hide()
-    {
-        gameObject.SetActive(false);
-    }
-
     public void OnMainMenuClicked()
     {
         MainMenuClicked();
@@ -36,8 +26,4 @@ public class PauseScreenView : MonoBehaviour, IPauseScreenView
         ResumeClicked();
     }
 
-    public void Show()
-    {
-        gameObject.SetActive(true);
-    }
 }

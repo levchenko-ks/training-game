@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameOverScreenView : MonoBehaviour, IGameOverScreenView
+public class GameOverScreenView : BaseView, IGameOverScreenView
 {
     public event Action RestartClicked;
     public event Action MainMenuClicked;
@@ -16,28 +16,13 @@ public class GameOverScreenView : MonoBehaviour, IGameOverScreenView
         MainMenuButton.onClick.AddListener(OnMainMenuClicked);
     }
 
-    public void Hide()
-    {
-        gameObject.SetActive(false);
-    }
-
     public void OnMainMenuClicked()
     {
-        MainMenuClicked();        
+        MainMenuClicked();
     }
 
     public void OnRestartClicked()
     {
         RestartClicked();
-    }
-
-    public void Show()
-    {
-        gameObject.SetActive(true);
-    }
-
-    public void SetCanvas(Canvas canvas)
-    {
-        transform.SetParent(canvas.transform, false);
     }
 }

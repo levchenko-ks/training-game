@@ -31,6 +31,11 @@ public class LevelScore : MonoBehaviour, ILevelScore
         ScoreChanged?.Invoke(_currentScore);
     }
 
+    private void OnDestroy()
+    {
+        _unitRepository.EnemyDied -= AddEnemyScore;
+    }
+
     public void AddEnemyScore(IEnemy enemy)
     {
         var name = enemy.GetType().Name;

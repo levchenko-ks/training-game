@@ -3,6 +3,7 @@
 public interface ITask
 {
     event Action Done;
+    event Action<string> DescriptionChanged;
 
     string Name { get; }
     string Description { get; }

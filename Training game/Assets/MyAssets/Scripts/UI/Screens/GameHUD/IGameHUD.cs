@@ -9,5 +9,5 @@ public interface IGameHUD: IScreen
     void ShowWeaponIcon(int index);
     void HideWeaponIcon(int index);
     void SetCharacteristic(CharacteristicsNames name, float count);
-    void SetScore(float count);
+    void SetScore(float count);    
 }

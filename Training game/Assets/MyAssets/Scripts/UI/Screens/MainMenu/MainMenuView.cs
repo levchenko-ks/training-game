@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainMenuView : MonoBehaviour, IMainMenuView
+public class MainMenuView : BaseView, IMainMenuView
 {
     public event Action ContinueClicked;
     public event Action NewGameClicked;    
@@ -21,16 +21,6 @@ public class MainMenuView : MonoBehaviour, IMainMenuView
         NewGameButton.onClick.AddListener(OnNewGameClicked);
         SettingsButton.onClick.AddListener(OnSettingsClicked);
         ExitButton.onClick.AddListener(OnExitClicked);
-    }
-
-    public void SetCanvas(Canvas canvas)
-    {
-        transform.SetParent(canvas.transform, false);
-    }
-
-    public void Hide()
-    {
-        gameObject.SetActive(false);
     }
 
     public void OnContinueClicked()
@@ -53,8 +43,4 @@ public class MainMenuView : MonoBehaviour, IMainMenuView
         SettingsClicked();
     }
 
-    public void Show()
-    {
-        gameObject.SetActive(true);
-    }
 }

@@ -21,16 +21,17 @@ public class UnitRepository : MonoBehaviour, IUnitRepository
         var list = _enemyLists[key];
         list.Add(enemy);
         enemy.Died += RemoveEnemy;
-        EnemyAdded?.Invoke(enemy);
+        EnemyAdded?.Invoke(enemy);        
     }
 
     private void RemoveEnemy(IEnemy enemy)
     {
+        EnemyDied?.Invoke(enemy);
+        
         var key = enemy.GetType().Name;
         var list = _enemyLists[key];
 
         enemy.Died -= RemoveEnemy;
-        list.Remove(enemy);
-        EnemyDied?.Invoke(enemy);
+        list.Remove(enemy);        
     }
 }

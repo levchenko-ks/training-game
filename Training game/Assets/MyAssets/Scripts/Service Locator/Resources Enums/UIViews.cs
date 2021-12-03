@@ -8,4 +8,6 @@ public enum UIViews
     PauseScreen,
     SplashScreen,
     TasksWidget,
+    SimpleTaskView,
+
 }

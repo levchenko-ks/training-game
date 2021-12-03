@@ -1,4 +1,4 @@
-public interface ITasksWidget: IScreen
+public interface ITasksWidget: IView
 {
     void AddTask(ITask task);    
     void UpdateTask(ITask task);

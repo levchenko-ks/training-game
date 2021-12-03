@@ -76,7 +76,7 @@ public class Spawner : MonoBehaviour
 
     private void SetEnemyCounter()
     {
-        _enemysToSpawn = 3 + _levelCount * 2;
+        _enemysToSpawn = 6 + _levelCount * 2;
         _enemysLeft = _enemysToSpawn;
     }
 

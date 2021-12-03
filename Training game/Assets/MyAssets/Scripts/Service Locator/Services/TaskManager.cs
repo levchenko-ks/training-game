@@ -1,26 +1,36 @@
-using System;
 using UnityEngine;
 
 public class TaskManager : MonoBehaviour, ITaskManager
 {
-    public event Action<ITask> TaskAdded;
-    public event Action<ITask> TaskDone;
-    public event Action<ITask> TaskDescriptionChanged;
-
     private IResourcesManager _resourcesManager;
+    private Canvas _canvas;
 
-    private TasksWidget _tasksWidget;
+    private ITasksWidget _tasksWidget;
 
     private void Awake()
     {
         _resourcesManager = ServiceLocator.GetResourcesManager();
-        _tasksWidget = _resourcesManager.GetInstance<UIViews, TasksWidget>(UIViews.TasksWidget);
+        _canvas = ServiceLocator.GetCanvas();
 
-        _tasksWidget.
+        _tasksWidget = _resourcesManager.GetInstance<UIViews, TasksWidget>(UIViews.TasksWidget);
+        _tasksWidget.SetCanvas(_canvas);
     }
 
     public void AddTask(ITask task)
     {
-        
+        _tasksWidget.AddTask(task);
+
+        task.StatusChanged += UpdateTask;
     }
+
+    public void RemoveTask(ITask task)
+    {
+        _tasksWidget.RemoveTask(task);
+    }
+
+    private void UpdateTask(ITask task)
+    {
+        _tasksWidget.UpdateTask(task);
+    }
+
 }

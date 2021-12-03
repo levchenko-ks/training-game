@@ -3,11 +3,10 @@
 public interface ITask
 {
     event Action Done;
-    event Action<string> DescriptionChanged;
+    event Action<ITask> StatusChanged;
 
     string Name { get; }
     string Description { get; }
-    bool isDone { get; }
-    bool isSide { get; }   
-    
+    bool IsDone { get; }
+    bool IsSide { get; }     
 }

@@ -3,7 +3,7 @@ using System;
 public abstract class Task : ITask
 {
     public event Action Done;
-    public event Action<string> DescriptionChanged;
+    public event Action<ITask> StatusChanged;
 
     protected string _name;
     protected string _description; 
@@ -12,11 +12,11 @@ public abstract class Task : ITask
 
     public string Name { get => _name; }
     public string Description { get => _description; }
-    public bool isDone { get => _isDone; }
-    public bool isSide { get => _isSide; }
+    public bool IsDone { get => _isDone; }
+    public bool IsSide { get => _isSide; }
 
-    protected void UpdateDescription()
+    protected void StatusChanging()
     {
-        DescriptionChanged?.Invoke(_description);
+        StatusChanged?.Invoke(this);
     }
 }

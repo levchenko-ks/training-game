@@ -8,7 +8,7 @@ public class ServiceLocator : MonoBehaviour
     private static ISaveService _saveService;
     private static IInputManager _inputManager;
     private static ISoundManager _soundManager;
-    private static ITaskManager _progressManager;
+    private static ITaskManager _taskManager;
     private static IUnitRepository _unitRepository;
 
 
@@ -22,7 +22,7 @@ public class ServiceLocator : MonoBehaviour
     private void Awake()
     {        
         _inputManager = null;
-        _progressManager = null;
+        _taskManager = null;
         _resourcesManager = null;
         _soundManager = null;
 
@@ -95,15 +95,15 @@ public class ServiceLocator : MonoBehaviour
         return _soundManager;
     }
 
-    public static ITaskManager GetProgressManager()
+    public static ITaskManager GetTaskManager()
     {
-        if(_progressManager == null)
+        if(_taskManager == null)
         {
             var go = new GameObject(Services.ProgressManager.ToString());
-            _progressManager = go.AddComponent<TaskManager>();
+            _taskManager = go.AddComponent<TaskManager>();
         }
 
-        return _progressManager;
+        return _taskManager;
     }
 
     public static Player GetPlayer()

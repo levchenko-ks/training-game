@@ -15,7 +15,7 @@ public class GameHUD : MonoBehaviour, IGameHUD
     private void Awake()
     {
         _resourcesManager = ServiceLocator.GetResourcesManager();
-        _progressManager = ServiceLocator.GetProgressManager();
+        _progressManager = ServiceLocator.GetTaskManager();
         _player = ServiceLocator.GetPlayer();
         _levelScore = ServiceLocator.GetLevelScore();
         _canvasFHD = ServiceLocator.GetCanvas();

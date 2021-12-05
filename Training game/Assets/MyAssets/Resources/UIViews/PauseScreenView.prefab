@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 4069333648949422419}
   - component: {fileID: -5875120354428149714}
   m_Layer: 0
-  m_Name: PauseScreen
+  m_Name: PauseScreenView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

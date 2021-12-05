@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CameraControl : MonoBehaviour
+public class CameraControl : MonoBehaviour, ICameraControl
 {
     public float smooth = 5f;
 

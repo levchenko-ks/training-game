@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class HUBScreen : MonoBehaviour, IHUBScreen
 {
+    public event Action Hided;
+
     private IResourcesManager _resourcesManager;
     private ISaveService _saveService;
 
@@ -18,7 +21,7 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
         _saveService = ServiceLocator.GetSaveService();
         _canvasFHD = ServiceLocator.GetCanvas();
 
-        View = _resourcesManager.GetInstance<UIViews, HUBScreenView>(UIViews.HUBScreen);
+        View = _resourcesManager.GetInstance<UIViews, HUBScreenView>(UIViews.HUBScreenView);
         View.SetCanvas(_canvasFHD);
 
         View.UpgradeHPClicked += OnUpgradeHPCliked;

@@ -1,13 +1,12 @@
 public enum UIViews
 {
     CanvasFHD,
-    GameHUD,
-    GameOverScreen,
-    HUBScreen,
-    MainMenuScreen,
-    PauseScreen,
-    SplashScreen,
-    TasksWidget,
+    GameHUDView,
+    GameOverScreenView,
+    HUBScreenView,
+    MainMenuScreenView,
+    PauseScreenView,
+    SplashScreenView,    
     TaskWidget,
 
 }

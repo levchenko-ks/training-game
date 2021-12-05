@@ -119,7 +119,7 @@ public class ServiceLocator : MonoBehaviour
         return _player;
     }
 
-    public static CameraControl GetCamera()
+    public static ICameraControl GetCamera()
     {
         if (_camera == null)
         {

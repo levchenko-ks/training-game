@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameOverScreen : MonoBehaviour, IScreen
 {
+    public event Action Hided;
+
     private IResourcesManager _resourcesManager;    
 
     private Canvas _canvasFHD;
@@ -13,7 +16,7 @@ public class GameOverScreen : MonoBehaviour, IScreen
         _resourcesManager = ServiceLocator.GetResourcesManager();        
         _canvasFHD = ServiceLocator.GetCanvas();
 
-        View = _resourcesManager.GetInstance<UIViews, GameOverScreenView>(UIViews.GameOverScreen);
+        View = _resourcesManager.GetInstance<UIViews, GameOverScreenView>(UIViews.GameOverScreenView);
         View.SetCanvas(_canvasFHD);
         Hide();
 

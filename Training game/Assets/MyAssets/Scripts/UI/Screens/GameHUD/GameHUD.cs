@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class GameHUD : MonoBehaviour, IGameHUD
 {
+    public event Action Hided;
+
     private IResourcesManager _resourcesManager;
     private ITaskManager _taskManager;
     private ILevelScore _levelScore;
@@ -20,9 +23,8 @@ public class GameHUD : MonoBehaviour, IGameHUD
         _levelScore = ServiceLocator.GetLevelScore();
         _canvasFHD = ServiceLocator.GetCanvas();
 
-        View = _resourcesManager.GetInstance<UIViews, GameHUDView>(UIViews.GameHUD);
-        View.SetCanvas(_canvasFHD);
-        Hide();
+        View = _resourcesManager.GetInstance<UIViews, GameHUDView>(UIViews.GameHUDView);
+        View.SetCanvas(_canvasFHD);        
 
         _player.MaxHPChanged += SetMaxHP;
         _player.CurrentHPChanged += SetHP;

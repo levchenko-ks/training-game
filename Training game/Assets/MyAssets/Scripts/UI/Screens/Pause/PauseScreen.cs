@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseScreen : MonoBehaviour, IScreen
 {
+    public event Action Hided;
+
     private IResourcesManager _resourcesManager;
     private IInputManager _inputManager;
     private IStateService _stateService;
@@ -16,7 +19,7 @@ public class PauseScreen : MonoBehaviour, IScreen
         _stateService = ServiceLocator.GetStateService();
         _canvasFHD = ServiceLocator.GetCanvas();
 
-        View = _resourcesManager.GetInstance<UIViews, PauseScreenView>(UIViews.PauseScreen);
+        View = _resourcesManager.GetInstance<UIViews, PauseScreenView>(UIViews.PauseScreenView);
         View.SetCanvas(_canvasFHD);
         View.MainMenuClicked += OnMainMenuClicked;
         View.ResumeClicked += OnResumeCliked;

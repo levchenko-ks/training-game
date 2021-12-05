@@ -1,30 +1,24 @@
+using System;
 using UnityEngine;
 
 public class SplashScreen : MonoBehaviour, IScreen
 {
+    public event Action Hided;
+    
     private IResourcesManager _resourcesManager;
     private Canvas _canvasFHD;
-    private ISplashScreenView View;
-
-    private IScreen _mainMenuScreen;
+    private ISplashScreenView View;    
 
     private void Awake()
     {
         _resourcesManager = ServiceLocator.GetResourcesManager();
         _canvasFHD = ServiceLocator.GetCanvas();
 
-        View = _resourcesManager.GetInstance<UIViews, SplashScreenView>(UIViews.SplashScreen);
+        View = _resourcesManager.GetInstance<UIViews, SplashScreenView>(UIViews.SplashScreenView);
         View.SetCanvas(_canvasFHD);
-        View.Clicked += OnStartClicked;
-
-        Hide();
+        View.Clicked += OnStartClicked;        
     }
 
-    private void Start()
-    {
-        var MMgo = new GameObject(UIViews.MainMenuScreen.ToString(), typeof(MainMenuScreen));
-        _mainMenuScreen = MMgo.GetComponent<MainMenuScreen>();
-    }
     private void OnDestroy()
     {
         View.Clicked -= OnStartClicked;
@@ -33,14 +27,10 @@ public class SplashScreen : MonoBehaviour, IScreen
     private void OnStartClicked()
     {
         Hide();
-        
-        _mainMenuScreen.Show();            
+        Hided?.Invoke();
     }
 
-    public void Hide()
-    {
-        View.Hide();
-    }
+    public void Hide() => View.Hide();
 
     public void Show() => View.Show();
 }

@@ -1,9 +1,12 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenuScreen : MonoBehaviour, IScreen
 {
+    public event Action Hided;
+
     private IResourcesManager _resourcesManager;
     private ISaveService _saveService;
     private Canvas _canvasFHD;
@@ -15,7 +18,7 @@ public class MainMenuScreen : MonoBehaviour, IScreen
         _saveService = ServiceLocator.GetSaveService();
         _canvasFHD = ServiceLocator.GetCanvas();
 
-        View = _resourcesManager.GetInstance<UIViews, MainMenuView>(UIViews.MainMenuScreen);
+        View = _resourcesManager.GetInstance<UIViews, MainMenuView>(UIViews.MainMenuScreenView);
         View.SetCanvas(_canvasFHD);
         View.ContinueClicked += OnContinueClicked;
         View.NewGameClicked += OnNewGameClicked;

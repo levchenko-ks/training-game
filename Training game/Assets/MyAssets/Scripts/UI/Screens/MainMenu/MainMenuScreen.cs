@@ -24,14 +24,8 @@ public class MainMenuScreen : MonoBehaviour, IScreen
         View.NewGameClicked += OnNewGameClicked;
         View.SettingsClicked += OnSettingsClicked;
         View.ExitClicked += OnExitClicked;
-
-        Hide();
     }
 
-    private void Start()
-    {
-        Hide();
-    }
     private void OnDestroy()
     {
         View.ContinueClicked -= OnContinueClicked;

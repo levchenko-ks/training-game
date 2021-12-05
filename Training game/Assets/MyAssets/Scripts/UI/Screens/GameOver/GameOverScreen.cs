@@ -17,8 +17,7 @@ public class GameOverScreen : MonoBehaviour, IScreen
         _canvasFHD = ServiceLocator.GetCanvas();
 
         View = _resourcesManager.GetInstance<UIViews, GameOverScreenView>(UIViews.GameOverScreenView);
-        View.SetCanvas(_canvasFHD);
-        Hide();
+        View.SetCanvas(_canvasFHD);       
 
         View.MainMenuClicked += OnMainMenuClicked;
         View.RestartClicked += OnRestartCliked;

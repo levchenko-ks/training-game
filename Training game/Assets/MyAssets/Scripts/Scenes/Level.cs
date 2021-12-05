@@ -6,6 +6,9 @@ public class Level : MonoBehaviour
     private ITaskManager _taskManager;
     
     private ICameraControl _camera;
+    private IGameHUD _gameHUD;
+    private IScreen _pauseScreen;
+    private IScreen _gameOverScreen;
 
     private void Awake()
     {
@@ -22,7 +25,13 @@ public class Level : MonoBehaviour
         _resourcesManager.GetInstance<CoreComponents, Light>(CoreComponents.Standart_Directional_Light);
         _resourcesManager.GetInstance<EnvironmentComponents, Environment>(EnvironmentComponents.Environment);
         _resourcesManager.GetInstance<EnvironmentComponents, Spawner>(EnvironmentComponents.Spawner);
-        _resourcesManager.GetInstance<UIModels, GameHUD>(UIModels.GameHUD);
+
+        _gameHUD = _resourcesManager.GetInstance<UIModels, GameHUD>(UIModels.GameHUD);
+        _pauseScreen = _resourcesManager.GetInstance<UIModels, PauseScreen>(UIModels.PauseScreen);
+        _gameOverScreen = _resourcesManager.GetInstance<UIModels, GameOverScreen>(UIModels.GameOverScreen);
+
+        _pauseScreen.Hide();
+        _gameOverScreen.Hide();
 
         player.AddWeapon(Weapons.AK_74);
 

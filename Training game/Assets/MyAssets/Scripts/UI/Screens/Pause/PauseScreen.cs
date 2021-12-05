@@ -27,12 +27,6 @@ public class PauseScreen : MonoBehaviour, IScreen
         _inputManager.Pause += Pause;
     }
 
-    private void Start()
-    {
-        _stateService.GamePaused = false;
-        Hide();
-    }
-
     private void OnDestroy()
     {
         View.MainMenuClicked -= OnMainMenuClicked;

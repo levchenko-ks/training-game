@@ -9,7 +9,7 @@ public class Spawner : MonoBehaviour
     private IUnitRepository _unitRepository;
 
     private IPlayer _player;
-    private Transform _cam;
+    private IMovable _cam;
 
     private float _spawnInterval = 5f;
     private float _timeToSpawn = 2f;
@@ -27,7 +27,7 @@ public class Spawner : MonoBehaviour
         _unitRepository = ServiceLocator.GetUnitRepository();
 
         _player = ServiceLocator.GetPlayer();
-        _cam = ServiceLocator.GetCamera().GetComponent<Transform>();
+        _cam = ServiceLocator.GetCamera();
 
         _levelCount = _saveService.GetInt(SavesKeys.Level);
         SetEnemyCounter();

@@ -16,7 +16,7 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
     protected float _moveSpeed;    
 
     public IMovable Target { set => _target = value; }
-    public Transform BillboardCam { set => Billboard.Cam = value; }
+    public IMovable BillboardCam { set => Billboard.Cam = value; }
 
     private void Start()
     {

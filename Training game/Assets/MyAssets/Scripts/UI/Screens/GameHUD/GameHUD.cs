@@ -38,12 +38,6 @@ public class GameHUD : MonoBehaviour, IGameHUD
         _taskManager.TaskUpdated += UpdateTaskWidget;
     }
 
-    private void Start()
-    {
-        for (int i = 0; i < _numberOfWeapons; i++)
-        { HideWeaponIcon(i); }
-    }
-
     private void WeaponRegister(IWeapon weapon)
     {
         weapon.CurrentAmmoChanged += SetAmmo;

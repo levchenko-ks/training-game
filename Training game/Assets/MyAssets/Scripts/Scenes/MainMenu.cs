@@ -7,10 +7,12 @@ public class MainMenu : MonoBehaviour
     private ISoundManager _soundManager;
 
     private IScreen _splashScreen;
+    private IScreen _mainMenuScreen;
 
     private void Awake()
     {
         _stateService = ServiceLocator.GetStateService();
+        _resourcesManager = ServiceLocator.GetResourcesManager();
         _soundManager = ServiceLocator.GetSoundManager();
     }
 
@@ -18,7 +20,7 @@ public class MainMenu : MonoBehaviour
     {
         if (_stateService.SessionStarted == false)
         {
-            _splashScreen = _resourcesManager.GetInstance<UIModels, SplashScreen>(UIModels.SplashScreen);
+            _splashScreen = _resourcesManager.GetInstance<UIModels, SplashScreen>(UIModels.SplashScreen);            
             _splashScreen.Hided += ShowMainMenu;
 
             _soundManager.PlayMusic(Sounds.MainTheme);
@@ -26,13 +28,14 @@ public class MainMenu : MonoBehaviour
         }
         else
         {
-            _resourcesManager.GetInstance<UIModels, MainMenuScreen>(UIModels.MainMenuScreen);
+            _resourcesManager.GetInstance<UIModels, MainMenuScreen>(UIModels.MainMenuScreen);            
         }
     }
 
     private void ShowMainMenu()
     {
-        _resourcesManager.GetInstance<UIModels, MainMenuScreen>(UIModels.MainMenuScreen);
+        _resourcesManager.GetInstance<UIModels, MainMenuScreen>(UIModels.MainMenuScreen);      
+
         _splashScreen.Hided -= ShowMainMenu;
     }
 }

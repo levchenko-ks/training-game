@@ -7,7 +7,8 @@ public class ResourcesManager : IResourcesManager
 
     public T GetInstance<E, T>(E item) where T : Object
     {
-        var path = typeof(E).Name + "/" + item.ToString();
+
+        var path = typeof(E).Name + "/" + item.ToString();        
         var res = Resources.Load<T>(path);
         var instance = GameObject.Instantiate(res);
 

@@ -7,11 +7,15 @@ public class CameraControl : MonoBehaviour, ICameraControl
     private IMovable _target;
     private float _height = 12f;
 
+    public Vector3 Position => transform.position;
+    public Quaternion Rotation => transform.rotation;
+    public Vector3 Forward => transform.forward;
+
     void Start()
     {
         StartPositioning();
     }
-    
+
     private void LateUpdate()
     {
         MoveCamera();

@@ -4,21 +4,21 @@ public class Target : MonoBehaviour, IMovable
 {
     private IInputManager _inputManager;
     private Camera _mainCamera;
-    private Transform _cameraPosition;
+    private IMovable _cameraPosition;
 
     private float _horizontal;
     private float _vertical;
 
     public Vector3 Position => transform.position;
-
     public Quaternion Rotation => transform.rotation;
+    public Vector3 Forward => transform.forward;
 
     private void Awake()
-    {        
-        _inputManager = ServiceLocator.GetInputManager();        
-        _cameraPosition = ServiceLocator.GetCamera().transform;        
+    {
+        _inputManager = ServiceLocator.GetInputManager();
+        _cameraPosition = ServiceLocator.GetCamera();
         _inputManager.Look += OnLook;
-        _mainCamera = Camera.main;        
+        _mainCamera = Camera.main;
     }
 
     private void Update()
@@ -46,7 +46,7 @@ public class Target : MonoBehaviour, IMovable
 
         Vector3 hitpos;
         RaycastHit hit;
-        Ray mouseRay = _mainCamera.ScreenPointToRay(new Vector3(_horizontal, _vertical, _cameraPosition.transform.position.y));
+        Ray mouseRay = _mainCamera.ScreenPointToRay(new Vector3(_horizontal, _vertical, _cameraPosition.Position.y));
 
         if (Physics.Raycast(mouseRay, out hit))
         {

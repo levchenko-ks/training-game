@@ -36,8 +36,6 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
         _characteristicsList.Add(SavesKeys.ReloadSpeed);
         _characteristicsList.Add(SavesKeys.MoveSpeed);
         _characteristicsList.Add(SavesKeys.Accuracy);
-
-        Hide();
     }
 
     private void Start()

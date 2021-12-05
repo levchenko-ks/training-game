@@ -33,8 +33,8 @@ public class Player : MonoBehaviour, IPlayer
     private List<Characteristic> _characteristicsList;
 
     public Vector3 Position => transform.position;
-
     public Quaternion Rotation => transform.rotation;
+    public Vector3 Forward => transform.forward;
 
     private void Awake()
     {
@@ -81,7 +81,7 @@ public class Player : MonoBehaviour, IPlayer
         _weaponList.Add(weaponInstance);
         weaponInstance.SetHolder(weaponHolder);
         weaponInstance.SetWeaponCharacterisctics(_playerCharacteristic);
-        WeaponAdded?.Invoke(weaponInstance);        
+        WeaponAdded?.Invoke(weaponInstance);
     }
 
     public void CollectBonus(CharacteristicsNames name, Modifier modifier)

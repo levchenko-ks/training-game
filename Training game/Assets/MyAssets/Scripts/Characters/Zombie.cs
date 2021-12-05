@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Zombie : Enemy
+public class Zombie : BaseEnemy
 {
     private Rigidbody _rb;
     private ICharacteristicControl _enemyCharacteristic;
@@ -10,7 +10,7 @@ public class Zombie : Enemy
     private float _meleeDamage;
     protected ISoundManager _soundManager;
 
-    private float _attackSpeed = 2f;
+    private readonly float _attackSpeed = 2f;
     private float _timeToAttack = 0f;
 
 
@@ -37,6 +37,8 @@ public class Zombie : Enemy
         _rb.isKinematic = true;
         _rb.useGravity = false;
         transform.rotation = Quaternion.identity;
+
+        _currentHealth = _maxHealth;
 
         StartCoroutine(Mumble());
     }
@@ -65,10 +67,10 @@ public class Zombie : Enemy
 
     protected override void Moving()
     {
-        Vector3 moveDirection = _target.position - transform.position;
+        Vector3 moveDirection = _target.Position - transform.position;
         Vector3 newPosition = transform.position + moveDirection.normalized * _moveSpeed * Time.fixedDeltaTime;
 
-        Vector3 lookDirection = _target.position - transform.position;
+        Vector3 lookDirection = _target.Position - transform.position;
         Quaternion newRotation = Quaternion.LookRotation(lookDirection);
 
         _rb.MovePosition(newPosition);
@@ -77,6 +79,8 @@ public class Zombie : Enemy
 
     protected override IEnumerator Dying()
     {
+        StopCoroutine(Mumble());
+
         _target = null;
         _rb.isKinematic = false;
         _rb.useGravity = true;
@@ -88,7 +92,7 @@ public class Zombie : Enemy
 
     private void DoDamage(Collider other)
     {
-        Player player = other.GetComponent<Player>();
+        var player = other.GetComponent<IPlayer>();
         if (player != null && Time.time >= _timeToAttack)
         {
             _timeToAttack = Time.time + 1f / _attackSpeed;

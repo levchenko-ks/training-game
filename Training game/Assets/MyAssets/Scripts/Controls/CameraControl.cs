@@ -4,7 +4,7 @@ public class CameraControl : MonoBehaviour
 {
     public float smooth = 5f;
 
-    private Transform _target;
+    private IMovable _target;
     private float _height = 12f;
 
     void Start()
@@ -17,7 +17,7 @@ public class CameraControl : MonoBehaviour
         MoveCamera();
     }
 
-    public void SetTarget(Transform target)
+    public void SetTarget(IMovable target)
     {
         _target = target;
     }
@@ -28,7 +28,7 @@ public class CameraControl : MonoBehaviour
 
         if (_target != null)
         {
-            startpos = new Vector3(_target.position.x, _height, _target.position.z);
+            startpos = new Vector3(_target.Position.x, _height, _target.Position.z);
         }
 
         transform.position = startpos;
@@ -41,7 +41,7 @@ public class CameraControl : MonoBehaviour
             return;
         }
 
-        var newpos = new Vector3(_target.position.x, _height, _target.position.z);
+        var newpos = new Vector3(_target.Position.x, _height, _target.Position.z);
         transform.position = Vector3.Lerp(transform.position, newpos, Time.deltaTime * smooth);
     }
 }

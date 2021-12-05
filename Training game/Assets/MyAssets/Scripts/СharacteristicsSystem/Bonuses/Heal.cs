@@ -6,7 +6,7 @@ public class Heal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Player player = other.GetComponent<Player>();
+        IPlayer player = other.GetComponent<IPlayer>();
         if (player == null) { return; }
 
         player.TakeHeal(HealAmount);

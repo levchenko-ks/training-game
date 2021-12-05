@@ -5,7 +5,7 @@ public class HiddenObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Player player = other.GetComponent<Player>();
+        var player = other.GetComponent<IPlayer>();
         if (player == null) { return; }
 
         player.FindObject(EnvironmentComponents.HiddenObject);

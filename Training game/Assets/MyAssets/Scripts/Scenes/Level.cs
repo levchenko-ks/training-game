@@ -6,35 +6,33 @@ public class Level : MonoBehaviour
     private ITaskManager _taskManager;
 
     private IScreen _gameHUD;
-    private CameraControl _camera;    
+    private CameraControl _camera;
 
     private void Awake()
     {
         _resourcesManager = ServiceLocator.GetResourcesManager();
         _taskManager = ServiceLocator.GetTaskManager();
-        _camera = ServiceLocator.GetCamera();        
+        _camera = ServiceLocator.GetCamera();
     }
 
     private void Start()
     {
         var player = ServiceLocator.GetPlayer();
-        _camera.SetTarget(player.transform);
+        _camera.SetTarget(player);
 
         _resourcesManager.GetInstance<CoreComponents, Light>(CoreComponents.Standart_Directional_Light);
         _resourcesManager.GetInstance<EnvironmentComponents, Environment>(EnvironmentComponents.Environment);
-        _resourcesManager.GetInstance<EnvironmentComponents, Spawner>(EnvironmentComponents.Spawner);        
-        
+        _resourcesManager.GetInstance<EnvironmentComponents, Spawner>(EnvironmentComponents.Spawner);
+
         var HUDgo = new GameObject(UIViews.GameHUD.ToString(), typeof(GameHUD));
         _gameHUD = HUDgo.GetComponent<GameHUD>();
         _gameHUD.Show();
 
         player.AddWeapon(Weapons.AK_74);
 
-        var FirstTask = new KillingTask("Hunt", Characters.Zombie, 3);
-        
-
+        var FirstTask = new KillingTask("Hunt", Characters.Zombie, 1);
         _taskManager.AddTask(FirstTask);
-        FirstTask.Done += FirstTask_Done;        
+        FirstTask.Done += FirstTask_Done;
     }
 
     private void FirstTask_Done()

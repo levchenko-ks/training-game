@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public abstract class Weapon : MonoBehaviour
+public abstract class BaseWeapon : MonoBehaviour, IWeapon
 {
     public event Action<float> ReloadTimeChanged;
     public event Action<float> ReloadStatusChanged;
@@ -36,8 +36,7 @@ public abstract class Weapon : MonoBehaviour
 
     private void Awake()
     {
-        _inputManager = ServiceLocator.GetInputManager();
-        _weaponCharacteristic = ServiceLocator.GetPlayer().GetComponent<PlayerCharacteristics>();
+        _inputManager = ServiceLocator.GetInputManager();        
         _resourcesManger = ServiceLocator.GetResourcesManager();
         _soundManager = ServiceLocator.GetSoundManager();
 
@@ -76,11 +75,26 @@ public abstract class Weapon : MonoBehaviour
     private void OnDestroy()
     {
         _inputManager.LeftClick -= OnFire;
+    }       
+
+    public void SetWeaponCharacterisctics(ICharacteristicControl characteristics)
+    {
+        _weaponCharacteristic = characteristics;
     }
 
-    abstract public void SetupProperties();
+    public void SetHolder(Transform holder)
+    {
+        transform.SetParent(holder, false);
+    }
 
-    public void OnFire()
+    public void SetActive(bool state)
+    {
+        gameObject.SetActive(state);
+    }
+
+    abstract protected void SetupProperties();
+
+    private void OnFire()
     {
         if (Time.time >= _timeToFire && !_isReload)
         {
@@ -133,4 +147,5 @@ public abstract class Weapon : MonoBehaviour
             _isReload = false;
         }
     }
+
 }

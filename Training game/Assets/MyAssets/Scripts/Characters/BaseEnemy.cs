@@ -2,29 +2,21 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public abstract class Enemy : MonoBehaviour, IEnemy
+public abstract class BaseEnemy : MonoBehaviour, IEnemy
 {
     public event Action<IEnemy> Died;
 
     public Billboard Billboard;
     public HealthBar HealthBar;
         
-    protected Transform _target;
-    protected Transform _cam;
+    protected IMovable _target;    
 
     protected float _maxHealth;
     protected float _currentHealth;
     protected float _moveSpeed;    
 
-    public Transform Target { set => _target = value; }
-    public Transform Cam
-    {
-        set
-        {
-            _cam = value;
-            Billboard.Cam = _cam;
-        }
-    }
+    public IMovable Target { set => _target = value; }
+    public Transform BillboardCam { set => Billboard.Cam = value; }
 
     private void Start()
     {

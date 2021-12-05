@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
     private ISaveService _saveService;
     private IUnitRepository _unitRepository;
 
-    private Player _player;
+    private IPlayer _player;
     private Transform _cam;
 
     private float _spawnInterval = 5f;
@@ -57,21 +57,24 @@ public class Spawner : MonoBehaviour
     private void Spawn(Characters name)
     {
         Vector2 radiusPos = Random.insideUnitCircle * 20;
-        var _spawnPos = _player.transform.position + new Vector3(radiusPos.x, 0f, radiusPos.y);
-        _timeToSpawn = Time.time + _spawnInterval;
-        _enemysLeft--;
 
-        var go = _resourcesManager.GetPooledObject<Characters, Enemy>(name);
+        var playerPosition = _player.Position;
+        var _spawnPos = playerPosition + new Vector3(radiusPos.x, 0f, radiusPos.y);
+
+        var go = _resourcesManager.GetPooledObject<Characters, BaseEnemy>(name);
         var enemy = go.GetComponent<IEnemy>();
 
         go.transform.position = _spawnPos;
         go.transform.SetParent(_placeholder);
         go.SetActive(true);
 
-        enemy.Target = _player.transform;
-        enemy.Cam = _cam;
+        enemy.Target = _player;
+        enemy.BillboardCam = _cam;
 
-        _unitRepository.AddEnemy(enemy);        
+        _unitRepository.AddEnemy(enemy);
+
+        _timeToSpawn = Time.time + _spawnInterval;
+        _enemysLeft--;
     }
 
     private void SetEnemyCounter()

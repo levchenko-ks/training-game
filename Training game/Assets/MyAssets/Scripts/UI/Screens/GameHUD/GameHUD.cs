@@ -3,10 +3,10 @@ using UnityEngine;
 public class GameHUD : MonoBehaviour, IGameHUD
 {
     private IResourcesManager _resourcesManager;
-    private ITaskManager _progressManager;
+    private ITaskManager _taskManager;
     private ILevelScore _levelScore;
 
-    private Player _player;
+    private IPlayer _player;
     private Canvas _canvasFHD;
     private IGameHUDView View;
     private readonly int _numberOfWeapons = 1;
@@ -15,7 +15,7 @@ public class GameHUD : MonoBehaviour, IGameHUD
     private void Awake()
     {
         _resourcesManager = ServiceLocator.GetResourcesManager();
-        _progressManager = ServiceLocator.GetTaskManager();
+        _taskManager = ServiceLocator.GetTaskManager();
         _player = ServiceLocator.GetPlayer();
         _levelScore = ServiceLocator.GetLevelScore();
         _canvasFHD = ServiceLocator.GetCanvas();
@@ -31,10 +31,10 @@ public class GameHUD : MonoBehaviour, IGameHUD
 
         _levelScore.ScoreChanged += SetScore;
 
-        //_progressManager.Task1Added
-        
+        _taskManager.TaskAdded += CreateTaskWidget;
+        _taskManager.TaskRemoved += RemoveTaskWidget;
+        _taskManager.TaskUpdated += UpdateTaskWidget;
     }
-        
 
     private void Start()
     {
@@ -42,13 +42,13 @@ public class GameHUD : MonoBehaviour, IGameHUD
         { HideWeaponIcon(i); }
     }
 
-    private void WeaponRegister(Weapon weapon)
-    {        
+    private void WeaponRegister(IWeapon weapon)
+    {
         weapon.CurrentAmmoChanged += SetAmmo;
         weapon.MaxAmmoChanged += SetMaxAmmo;
         weapon.ReloadStatusChanged += SetReloadStatus;
         weapon.ReloadTimeChanged += SetReloadTime;
-        weapon.WeaponIconUpdate += SetWeaponIcon;
+        weapon.WeaponIconUpdate += SetWeaponIcon;        
     }
 
     public void Hide() => View.Hide();
@@ -89,4 +89,10 @@ public class GameHUD : MonoBehaviour, IGameHUD
     public void SetCharacteristic(CharacteristicsNames name, float count) => View.SetCharacteristic(name, count);
 
     public void SetScore(float count) => View.SetScore(count);
+
+    public void UpdateTaskWidget(ITask task) => View.UpdateTaskWidget(task);
+
+    public void RemoveTaskWidget(ITask task) => View.RemoveTaskWidget(task);
+
+    public void CreateTaskWidget(ITask task) => View.CreateTaskWidget(task);
 }

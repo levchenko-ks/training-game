@@ -5,8 +5,8 @@ public interface IEnemy
 {
     event Action<IEnemy> Died;
 
-    Transform Target { set; }
-    Transform Cam { set; }
+    IMovable Target { set; }
+    Transform BillboardCam { set; }
     void TakeDamage(float damage);
     
 }

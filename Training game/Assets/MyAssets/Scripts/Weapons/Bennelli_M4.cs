@@ -1,14 +1,12 @@
-public class Bennelli_M4 : Weapon
+public class Bennelli_M4 : BaseWeapon, IWeapon
 {
     private int _baseNumberOfShot = 8;
     private int _baseMaxAmmo = 8;
     private float _baserateOfFire = 5f;
     private float _baseReloadTime = 5f;
-    private float _baseSprayAngle = 15f;
-    
+    private float _baseSprayAngle = 15f;   
 
-
-    override public void SetupProperties()
+    override protected void SetupProperties()
     {
         weaponIndex = 1;
         projectileName = Projectiles.Buckshot;

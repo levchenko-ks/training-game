@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Target : MonoBehaviour
+public class Target : MonoBehaviour, IMovable
 {
     private IInputManager _inputManager;
     private Camera _mainCamera;
@@ -8,6 +8,10 @@ public class Target : MonoBehaviour
 
     private float _horizontal;
     private float _vertical;
+
+    public Vector3 Position => transform.position;
+
+    public Quaternion Rotation => transform.rotation;
 
     private void Awake()
     {        

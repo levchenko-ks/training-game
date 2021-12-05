@@ -18,27 +18,32 @@ public class KillingTask : Task
         DescriptionChanging();
 
         _unitRepository = ServiceLocator.GetUnitRepository();
-        _unitRepository.EnemyDied += Progress;       
+        _unitRepository.EnemyDied += Progress;
     }
 
     private void DescriptionChanging()
     {
-        _description = $"Kill {_currentAmount}/{_requiredAmount} {_target}.";        
+        _description = $"Kill {_currentAmount}/{_requiredAmount} {_target}.";
     }
 
     private void Progress(IEnemy enemy)
-    {        
+    {
         if (_isDone)
         { return; }
 
         var name = enemy.GetType().Name;
         if (name != _target)
-        { return; }        
+        { return; }
 
         _currentAmount++;
         DescriptionChanging();
-        if (_currentAmount >= _requiredAmount) { _isDone = true; }
-        StatusChanging();
+        if (_currentAmount >= _requiredAmount)
+        {
+            _isDone = true;
+            InvokeDone();
+        }
+
+        InvokeStatus();
     }
 
 }

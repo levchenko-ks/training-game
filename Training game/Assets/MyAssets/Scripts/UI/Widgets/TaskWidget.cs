@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SimpleTaskView : BaseView, ISimpleTaskView
+public class TaskWidget : BaseView, ITaskWidget
 {
     public Text Name;
     public Text Description;

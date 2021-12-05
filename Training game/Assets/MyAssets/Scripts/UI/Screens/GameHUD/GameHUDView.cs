@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GameHUDView : BaseView, IGameHUDView
@@ -9,6 +10,7 @@ public class GameHUDView : BaseView, IGameHUDView
     public Text AmmoCounter;
     public Text MaxAmmo;
     public Text Score;
+    public Transform TaskHolder;
 
     public Text HP;
     public Text ST;
@@ -17,6 +19,40 @@ public class GameHUDView : BaseView, IGameHUDView
     public Text AC;
 
     public List<Image> WeaponImages;
+
+    private IResourcesManager _resourcesManager;
+
+    private Dictionary<ITask, ITaskWidget> _taskWidgets = new Dictionary<ITask, ITaskWidget>();
+
+    private void Awake()
+    {
+        _resourcesManager = ServiceLocator.GetResourcesManager();
+    }
+
+    public void CreateTaskWidget(ITask task)
+    {
+        var taskWidget = _resourcesManager.GetInstance<UIViews, TaskWidget>(UIViews.TaskWidget);
+        var widgetTransform = taskWidget.transform;
+
+        _taskWidgets.Add(task, taskWidget);
+
+        taskWidget.Show();        
+        widgetTransform.SetParent(TaskHolder, false);
+
+        UpdateTaskView(task);
+    }
+
+    public void RemoveTaskWidget(ITask task)
+    {
+        var taskWidget = _taskWidgets[task];
+        taskWidget.Hide();
+        _taskWidgets.Remove(task);
+    }
+
+    public void UpdateTaskWidget(ITask task)
+    {
+        UpdateTaskView(task);
+    }
 
     public void SetAmmo(int count)
     {
@@ -85,7 +121,16 @@ public class GameHUDView : BaseView, IGameHUDView
 
     public void SetScore(float score)
     {
-        if (Score) { Score.text = score.ToString(); }
+        Score.text = score.ToString();
+    }
+
+    private void UpdateTaskView(ITask task)
+    {
+        var taskView = _taskWidgets[task];
+
+        taskView.SetName(task.Name);
+        taskView.SetDescription(task.Description);
+        taskView.SetCheckMark(task.IsDone);
     }
 
 }

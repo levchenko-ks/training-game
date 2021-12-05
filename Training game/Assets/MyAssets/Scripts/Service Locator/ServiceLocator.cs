@@ -13,10 +13,11 @@ public class ServiceLocator : MonoBehaviour
 
 
     // Instances references
-    private static Player Player;
-    private static CameraControl Camera;
-    private static Canvas Canvas;
-    private static LevelScore LevelScore;
+    private static IPlayer _player;
+    private static CameraControl _camera;
+    private static Canvas _canvas;
+    private static LevelScore _levelScore;
+    private static IGameHUD _gameHUD;
 
 
     private void Awake()
@@ -26,10 +27,11 @@ public class ServiceLocator : MonoBehaviour
         _resourcesManager = null;
         _soundManager = null;
 
-        Player = null;
-        Camera = null;
-        Canvas = null;
-        LevelScore = null;
+        _player = null;
+        _camera = null;
+        _canvas = null;
+        _levelScore = null;
+        _gameHUD = null;
     }    
 
     public static IResourcesManager GetResourcesManager()
@@ -106,48 +108,47 @@ public class ServiceLocator : MonoBehaviour
         return _taskManager;
     }
 
-    public static Player GetPlayer()
+    public static IPlayer GetPlayer()
     {
-        if (Player == null)
+        if (_player == null)
         {
             var service = GetResourcesManager();
-            Player = service.GetInstance<Characters, Player>(Characters.Player);
+            _player = service.GetInstance<Characters, Player>(Characters.Player);
         }
 
-        return Player;
+        return _player;
     }
 
     public static CameraControl GetCamera()
     {
-        if (Camera == null)
+        if (_camera == null)
         {
             var service = GetResourcesManager();
-            Camera = service.GetInstance<CoreComponents, CameraControl>(CoreComponents.Main_Camera);
+            _camera = service.GetInstance<CoreComponents, CameraControl>(CoreComponents.Main_Camera);
         }
 
-        return Camera;
+        return _camera;
     }
 
     public static Canvas GetCanvas()
     {
-        if (Canvas == null)
+        if (_canvas == null)
         {
             var service = GetResourcesManager();
-            Canvas = service.GetInstance<UIViews, Canvas>(UIViews.CanvasFHD);
+            _canvas = service.GetInstance<UIViews, Canvas>(UIViews.CanvasFHD);
         }
 
-        return Canvas;
+        return _canvas;
     }
 
     public static LevelScore GetLevelScore()
     {
-        if (LevelScore == null)
+        if (_levelScore == null)
         {
             var service = GetResourcesManager();
-            LevelScore = service.GetInstance<EnvironmentComponents, LevelScore>(EnvironmentComponents.LevelScore);
+            _levelScore = service.GetInstance<EnvironmentComponents, LevelScore>(EnvironmentComponents.LevelScore);
         }
 
-        return LevelScore;
+        return _levelScore;
     }
-
 }

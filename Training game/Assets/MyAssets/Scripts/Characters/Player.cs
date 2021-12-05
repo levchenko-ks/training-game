@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IPlayer
 {
-    public event Action PlayerDied;
+    public event Action<IPlayer> PlayerDied;
     public event Action<float> CurrentHPChanged;
     public event Action<float> MaxHPChanged;
     public event Action<CharacteristicsNames, float> CharacteristicChanged;
-    public event Action<Weapon> WeaponAdded;
+    public event Action<IWeapon> WeaponAdded;
     public event Action<EnvironmentComponents> ObjectFinded;
 
     public Transform weaponHolder;
 
     private Rigidbody _rb;
-    private Transform _target;
+    private IMovable _target;
     private IInputManager _inputManager;
     private IResourcesManager _resourcesManager;
     private ICharacteristicControl _playerCharacteristic;
@@ -29,9 +29,12 @@ public class Player : MonoBehaviour
     private float _stamina;
     private float _horizontal;
     private float _vertical;
-    private List<Weapon> _weaponList;
+    private List<IWeapon> _weaponList;
     private List<Characteristic> _characteristicsList;
 
+    public Vector3 Position => transform.position;
+
+    public Quaternion Rotation => transform.rotation;
 
     private void Awake()
     {
@@ -41,12 +44,13 @@ public class Player : MonoBehaviour
 
         _rb = GetComponent<Rigidbody>();
         _playerCharacteristic = GetComponent<PlayerCharacteristics>();
-        _target = _resourcesManager.GetInstance<Characters, Target>(Characters.Target).transform;
-        _weaponList = new List<Weapon>();
+        var target = _resourcesManager.GetInstance<Characters, Target>(Characters.Target);
+        _target = target;
 
         _inputManager.Move += OnMove;
         _inputManager.AlphaSelect += SelectWeapon;
 
+        _weaponList = new List<IWeapon>();
         _characteristicsList = _playerCharacteristic.CharacteristicsList;
 
     }
@@ -72,19 +76,18 @@ public class Player : MonoBehaviour
 
     public void AddWeapon(Weapons weapon)
     {
-        var weaponInstance = _resourcesManager.GetInstance<Weapons, Weapon>(weapon);
+        IWeapon weaponInstance = _resourcesManager.GetInstance<Weapons, BaseWeapon>(weapon);
 
-        weaponInstance.transform.SetParent(weaponHolder, false);
         _weaponList.Add(weaponInstance);
-        WeaponAdded?.Invoke(weaponInstance);
-
-        weaponInstance.gameObject.SetActive(true);
+        weaponInstance.SetHolder(weaponHolder);
+        weaponInstance.SetWeaponCharacterisctics(_playerCharacteristic);
+        WeaponAdded?.Invoke(weaponInstance);        
     }
 
     public void CollectBonus(CharacteristicsNames name, Modifier modifier)
     {
         _playerCharacteristic.AddModifier(name, modifier);
-        CalculateMyCharacteristic();        
+        CalculateMyCharacteristic();
         UpdateHUD();
         _soundManager.PlayEffect(Sounds.Bonus);
     }
@@ -92,20 +95,12 @@ public class Player : MonoBehaviour
     public void TakeDamage(float damage)
     {
         _currentHealth -= damage;
-
-        Sounds sound = Sounds.Player_Damage_1;
-        var value = Random.value;
-        if (value < 0.25f) { sound = Sounds.Player_Damage_2; }
-        else if (value < 0.5f) { sound = Sounds.Player_Damage_3; }
-        else if (value < 0.75f) { sound = Sounds.Player_Damage_4; }
-
-        _soundManager.PlayEffect(sound);
-
         CurrentHPChanged?.Invoke(_currentHealth);
+        PlayDamagingSound();
 
         if (_currentHealth <= 0f)
         {
-            GameOver();
+            Diyng();
         }
     }
 
@@ -131,7 +126,7 @@ public class Player : MonoBehaviour
     {
         bool weaponExist = false;
 
-        foreach (Weapon weapon in _weaponList)
+        foreach (IWeapon weapon in _weaponList)
         {
             if (weapon.WeaponIndex == index)
             {
@@ -144,15 +139,15 @@ public class Player : MonoBehaviour
             return;
         }
 
-        foreach (Weapon weapon in _weaponList)
+        foreach (IWeapon weapon in _weaponList)
         {
             if (weapon.WeaponIndex == index)
             {
-                weapon.gameObject.SetActive(true);
+                weapon.SetActive(true);
             }
             else
             {
-                weapon.gameObject.SetActive(false);
+                weapon.SetActive(false);
             }
         }
     }
@@ -162,7 +157,7 @@ public class Player : MonoBehaviour
         Vector3 moveDirection = Vector3.right * _horizontal + Vector3.forward * _vertical;
         Vector3 newPosition = transform.position + moveDirection * _moveSpeed * Time.fixedDeltaTime;
 
-        Vector3 lookDirection = _target.position - transform.position;
+        Vector3 lookDirection = _target.Position - transform.position;
 
         Quaternion newRotation = Quaternion.LookRotation(lookDirection);
 
@@ -177,7 +172,7 @@ public class Player : MonoBehaviour
     {
         _maxHealth = _playerCharacteristic.CalculateAmount(CharacteristicsNames.Health);
         _moveSpeed = _playerCharacteristic.CalculateAmount(CharacteristicsNames.MoveSpeed);
-        _maxStamina = _playerCharacteristic.CalculateAmount(CharacteristicsNames.Stamina);        
+        _maxStamina = _playerCharacteristic.CalculateAmount(CharacteristicsNames.Stamina);
     }
 
     private void UpdateHUD()
@@ -189,14 +184,24 @@ public class Player : MonoBehaviour
             CharacteristicChanged?.Invoke(characteristic.Name, characteristic.Value);
         }
     }
+    private void PlayDamagingSound()
+    {
+        Sounds sound = Sounds.Player_Damage_1;
+        var value = Random.value;
+        if (value < 0.25f) { sound = Sounds.Player_Damage_2; }
+        else if (value < 0.5f) { sound = Sounds.Player_Damage_3; }
+        else if (value < 0.75f) { sound = Sounds.Player_Damage_4; }
 
-    private void GameOver()
+        _soundManager.PlayEffect(sound);
+    }
+
+    private void Diyng()
     {
         Debug.Log("Player Died");
 
         _soundManager.PlayEffect(Sounds.PlayerDeth);
 
-        PlayerDied?.Invoke();
+        PlayerDied?.Invoke(this);
         gameObject.SetActive(false);
     }
 }

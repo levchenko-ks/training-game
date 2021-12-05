@@ -1,4 +1,4 @@
-public interface IGameHUD: IScreen
+public interface IGameHUD : IScreen
 {
     void SetMaxHP(float amount);
     void SetHP(float amount);
@@ -9,5 +9,9 @@ public interface IGameHUD: IScreen
     void ShowWeaponIcon(int index);
     void HideWeaponIcon(int index);
     void SetCharacteristic(CharacteristicsNames name, float count);
-    void SetScore(float count);    
+    void SetScore(float count);
+
+    void UpdateTaskWidget(ITask task);
+    void RemoveTaskWidget(ITask task);
+    void CreateTaskWidget(ITask task);
 }

@@ -10,4 +10,8 @@ public interface IGameHUDView: IView
     void HideWeaponIcon(int index);
     void SetCharacteristic(CharacteristicsNames name, float count);
     void SetScore(float score);
+
+    void CreateTaskWidget(ITask task);
+    void RemoveTaskWidget(ITask task);
+    void UpdateTaskWidget(ITask task);
 }

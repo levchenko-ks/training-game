@@ -33,6 +33,11 @@ public class PauseScreen : MonoBehaviour, IScreen
         View.ResumeClicked -= OnResumeCliked;
     }
 
+    public void SetHolder(Transform holder)
+    {
+        transform.SetParent(holder, false);
+    }
+
     public void Hide()
     {
         View.Hide();
@@ -68,6 +73,4 @@ public class PauseScreen : MonoBehaviour, IScreen
         Pause();
         SceneManager.LoadScene("MainMenu");
     }
-
-
 }

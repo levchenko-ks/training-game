@@ -5,5 +5,6 @@ public enum PlaceHolders
     SoundsHolder,
     EnvironmentHolder,
     BonusesHolder,
+    UIModelsHolder,
 
 }

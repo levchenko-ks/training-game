@@ -27,7 +27,7 @@ public class Player : MonoBehaviour, IPlayer
 
     private float _currentHealth;
     private float _stamina;
-    private float _horizontal;
+    private float _horizontal; // Update
     private float _vertical;
     private List<IWeapon> _weaponList;
     private List<Characteristic> _characteristicsList;

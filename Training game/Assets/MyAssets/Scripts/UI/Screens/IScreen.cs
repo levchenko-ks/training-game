@@ -7,4 +7,6 @@ public interface IScreen
 
     void Show();
     void Hide();
+
+    void SetHolder(Transform holder);
 }

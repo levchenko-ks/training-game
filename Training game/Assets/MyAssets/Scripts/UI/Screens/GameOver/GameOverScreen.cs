@@ -11,6 +11,9 @@ public class GameOverScreen : MonoBehaviour, IScreen
     private Canvas _canvasFHD;
     private IGameOverScreenView View;
 
+    private static string _level = Scenes.Level.ToString();
+    private static string _mainMenu = Scenes.MainMenu.ToString();
+
     private void Awake()
     {
         _resourcesManager = ServiceLocator.GetResourcesManager();        
@@ -28,16 +31,10 @@ public class GameOverScreen : MonoBehaviour, IScreen
         View.MainMenuClicked -= OnMainMenuClicked;
         View.RestartClicked -= OnRestartCliked;
     }
-    private void OnRestartCliked()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("Level");
-    }
 
-    private void OnMainMenuClicked()
+    public void SetHolder(Transform holder)
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+        transform.SetParent(holder, false);
     }
 
     public void Hide()
@@ -49,5 +46,17 @@ public class GameOverScreen : MonoBehaviour, IScreen
     {
         Time.timeScale = 0f;
         View.Show();
+    }
+
+    private void OnRestartCliked()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(_level);
+    }
+
+    private void OnMainMenuClicked()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(_mainMenu);
     }
 }

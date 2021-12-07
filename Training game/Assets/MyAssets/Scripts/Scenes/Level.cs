@@ -4,23 +4,29 @@ public class Level : MonoBehaviour
 {
     private IResourcesManager _resourcesManager;
     private ITaskManager _taskManager;
-    
+    private IStateService _stateService;
+    private ISaveService _saveService;
+
     private ICameraControl _camera;
     private IGameHUD _gameHUD;
     private IScreen _pauseScreen;
     private IScreen _gameOverScreen;
 
+    private readonly string _holder = PlaceHolders.UIModelsHolder.ToString();
+
     private void Awake()
     {
         _resourcesManager = ServiceLocator.GetResourcesManager();
         _taskManager = ServiceLocator.GetTaskManager();
+        _stateService = ServiceLocator.GetStateService();
+        _saveService = ServiceLocator.GetSaveService();
         _camera = ServiceLocator.GetCamera();
     }
 
     private void Start()
     {
         var player = ServiceLocator.GetPlayer();
-        _camera.SetTarget(player);
+        _stateService.PlayerIsDead = false;
 
         _resourcesManager.GetInstance<CoreComponents, Light>(CoreComponents.Standart_Directional_Light);
         _resourcesManager.GetInstance<EnvironmentComponents, Environment>(EnvironmentComponents.Environment);
@@ -33,16 +39,24 @@ public class Level : MonoBehaviour
         _pauseScreen.Hide();
         _gameOverScreen.Hide();
 
-        player.AddWeapon(Weapons.AK_74);
+        var UIHolder = new GameObject(_holder).transform;
+        _gameHUD.SetHolder(UIHolder);
+        _pauseScreen.SetHolder(UIHolder);
+        _gameOverScreen.SetHolder(UIHolder);
 
-        var FirstTask = new KillingTask("Hunt", Characters.Zombie, 2);
-        _taskManager.AddTask(FirstTask);
-        FirstTask.Done += FirstTask_Done;
+        _camera.SetTarget(player);
+        player.AddWeapon(Weapons.AK_74);
+        player.PlayerDied += InterruptLevel;
     }
 
-    private void FirstTask_Done()
+    private void InterruptLevel(IPlayer player)
     {
-        var SecondTask = new KillingTask("Second Hunt", Characters.Zombie, 1);
-        _taskManager.AddTask(SecondTask);
+        _stateService.PlayerIsDead = true;
+        _gameOverScreen.Show();
+    }
+
+    private void SetupTasks()
+    {
+        //var level = _saveService.
     }
 }

@@ -38,13 +38,9 @@ public class GameHUD : MonoBehaviour, IGameHUD
         _taskManager.TaskUpdated += UpdateTaskWidget;
     }
 
-    private void WeaponRegister(IWeapon weapon)
+    public void SetHolder(Transform holder)
     {
-        weapon.CurrentAmmoChanged += SetAmmo;
-        weapon.MaxAmmoChanged += SetMaxAmmo;
-        weapon.ReloadStatusChanged += SetReloadStatus;
-        weapon.ReloadTimeChanged += SetReloadTime;
-        weapon.WeaponIconUpdate += SetWeaponIcon;        
+        transform.SetParent(holder, false);
     }
 
     public void Hide() => View.Hide();
@@ -91,4 +87,13 @@ public class GameHUD : MonoBehaviour, IGameHUD
     public void RemoveTaskWidget(ITask task) => View.RemoveTaskWidget(task);
 
     public void CreateTaskWidget(ITask task) => View.CreateTaskWidget(task);
+
+    private void WeaponRegister(IWeapon weapon)
+    {
+        weapon.CurrentAmmoChanged += SetAmmo;
+        weapon.MaxAmmoChanged += SetMaxAmmo;
+        weapon.ReloadStatusChanged += SetReloadStatus;
+        weapon.ReloadTimeChanged += SetReloadTime;
+        weapon.WeaponIconUpdate += SetWeaponIcon;
+    }
 }

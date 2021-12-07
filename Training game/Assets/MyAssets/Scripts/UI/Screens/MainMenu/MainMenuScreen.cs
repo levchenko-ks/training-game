@@ -34,6 +34,15 @@ public class MainMenuScreen : MonoBehaviour, IScreen
         View.ExitClicked -= OnExitClicked;
     }
 
+    public void SetHolder(Transform holder)
+    {
+        transform.SetParent(holder, false);
+    }
+
+    public void Hide() => View.Hide();
+
+    public void Show() => View.Show();
+
     private void OnExitClicked()
     {
         EditorApplication.ExitPlaymode();
@@ -54,8 +63,4 @@ public class MainMenuScreen : MonoBehaviour, IScreen
     {
         SceneManager.LoadScene("Level");
     }
-
-    public void Hide() => View.Hide();
-
-    public void Show() => View.Show();
 }

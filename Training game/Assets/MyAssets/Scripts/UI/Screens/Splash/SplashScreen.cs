@@ -24,13 +24,18 @@ public class SplashScreen : MonoBehaviour, IScreen
         View.Clicked -= OnStartClicked;
     }
 
+    public void SetHolder(Transform holder)
+    {
+        transform.SetParent(holder, false);
+    }        
+
+    public void Hide() => View.Hide();
+
+    public void Show() => View.Show();
+
     private void OnStartClicked()
     {
         Hide();
         Hided?.Invoke();
     }
-
-    public void Hide() => View.Hide();
-
-    public void Show() => View.Show();
 }

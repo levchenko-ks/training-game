@@ -72,6 +72,11 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
         View.NextLevelClicked -= OnNextLevelClicked;
     }
 
+    public void SetHolder(Transform holder)
+    {
+        transform.SetParent(holder, false);
+    }
+
     public void Hide() => View.Hide();
 
     public void SetScoreCounter(float score) => View.SetScoreCounter(score);

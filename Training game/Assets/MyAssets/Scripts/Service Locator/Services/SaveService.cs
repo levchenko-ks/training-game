@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SaveService : ISaveService
 {
-    private const string
+    private static readonly string
         ScoreKey = "Score",
         LevelKey = "Level",
         HealthKey = "Health",
@@ -18,6 +18,10 @@ public class SaveService : ISaveService
         WeaponLevelKey_6 = "WeaponLevel_6";
 
 
+    public void Save()
+    {
+        PlayerPrefs.Save();
+    }
 
     public void ClearProgress()
     {
@@ -40,31 +44,93 @@ public class SaveService : ISaveService
         PlayerPrefs.Save();
     }
 
-    // TODO: Rewrite all methods to avoid .ToString() expression
+    public void SetScore(float value) => PlayerPrefs.SetFloat(ScoreKey, value);
 
-    public float GetFloat(SavesKeys key)
+    public void SetLevel(int value) => PlayerPrefs.SetInt(LevelKey, value);
+
+    public void SetHealth(float value) => PlayerPrefs.SetFloat(HealthKey, value);
+
+    public void SetMoveSpeed(float value) => PlayerPrefs.SetFloat(MoveSpeedKey, value);
+
+    public void SetStamina(float value) => PlayerPrefs.SetFloat(StaminaKey, value);
+
+    public void SetReloadSpeed(float value) => PlayerPrefs.SetFloat(ReloadSpeedKey, value);
+
+    public void SetAccuracy(float value) => PlayerPrefs.SetFloat(AccuracyKey, value);
+
+    public void SetWeaponLevel(int weapon, int level)
     {
-        return PlayerPrefs.GetFloat(key.ToString());
+        string key;
+
+        switch (weapon)
+        {
+            case 1:
+                key = WeaponLevelKey_1;
+                break;
+            case 2:
+                key = WeaponLevelKey_2;
+                break;
+            case 3:
+                key = WeaponLevelKey_3;
+                break;
+            case 4:
+                key = WeaponLevelKey_4;
+                break;
+            case 5:
+                key = WeaponLevelKey_5;
+                break;
+            case 6:
+                key = WeaponLevelKey_6;
+                break;
+            default:
+                return;
+        }
+
+        PlayerPrefs.SetInt(key, level);
     }
 
-    public int GetInt(SavesKeys key)
-    {
-        return PlayerPrefs.GetInt(key.ToString());
-    }
+    public float GetScore() => PlayerPrefs.GetFloat(ScoreKey);
 
-    public void Save()
-    {
-        PlayerPrefs.Save();
-    }
+    public int GetLevel() => PlayerPrefs.GetInt(LevelKey);
 
-    public void SetFloat(SavesKeys key, float value)
-    {
-        PlayerPrefs.SetFloat(key.ToString(), value);
-    }
+    public float GetHealth() => PlayerPrefs.GetFloat(HealthKey);
 
-    public void SetInt(SavesKeys key, int value)
-    {
-        PlayerPrefs.SetInt(key.ToString(), value);
-    }
+    public float GetMoveSpeed() => PlayerPrefs.GetFloat(MoveSpeedKey);
 
+    public float GetStamina() => PlayerPrefs.GetFloat(StaminaKey);
+
+    public float GetReloadSpeed() => PlayerPrefs.GetFloat(ReloadSpeedKey);
+
+    public float GetAccuracy() => PlayerPrefs.GetFloat(AccuracyKey);
+
+    public int GetWeaponLevel(int weapon)
+    {
+        string key;
+
+        switch (weapon)
+        {
+            case 1:
+                key = WeaponLevelKey_1;
+                break;
+            case 2:
+                key = WeaponLevelKey_2;
+                break;
+            case 3:
+                key = WeaponLevelKey_3;
+                break;
+            case 4:
+                key = WeaponLevelKey_4;
+                break;
+            case 5:
+                key = WeaponLevelKey_5;
+                break;
+            case 6:
+                key = WeaponLevelKey_6;
+                break;
+            default:
+                return 0;
+        }
+
+        return PlayerPrefs.GetInt(key, 0);
+    }
 }

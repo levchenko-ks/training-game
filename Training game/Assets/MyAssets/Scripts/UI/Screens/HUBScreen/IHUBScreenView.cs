@@ -3,6 +3,7 @@ using UnityEngine;
 
 public interface IHUBScreenView : IView
 {
+    /*
     event Action UpgradeHPClicked;
     event Action UpgradeSTClicked;
     event Action UpgradeRSClicked;
@@ -22,4 +23,5 @@ public interface IHUBScreenView : IView
     void OnUpgradeACClicked();
     void OnNextLevelClicked();
     void SetNextLevelCounter(int counter);
+    */
 }

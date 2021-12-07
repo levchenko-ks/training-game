@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HUBScreen : MonoBehaviour, IHUBScreen
+public class HUBScreen : MonoBehaviour /*, IHUBScreen*/
 {
+    /*
     public event Action Hided;
 
     private IResourcesManager _resourcesManager;
@@ -12,7 +13,6 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
 
     private Canvas _canvasFHD;
     private IHUBScreenView View;
-    private readonly List<SavesKeys> _characteristicsList = new List<SavesKeys>();
 
 
     private void Awake()
@@ -30,28 +30,22 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
         View.UpgradeMSClicked += OnUpgradeMSCliked;
         View.UpgradeACClicked += OnUpgradeACCliked;
         View.NextLevelClicked += OnNextLevelClicked;
-
-        _characteristicsList.Add(SavesKeys.Health);
-        _characteristicsList.Add(SavesKeys.Stamina);
-        _characteristicsList.Add(SavesKeys.ReloadSpeed);
-        _characteristicsList.Add(SavesKeys.MoveSpeed);
-        _characteristicsList.Add(SavesKeys.Accuracy);
     }
 
     private void Start()
     {
-        var score = _saveService.GetFloat(SavesKeys.Score);
-        var level = _saveService.GetInt(SavesKeys.Level);
+        var score = _saveService.GetScore();
+        var level = _saveService.GetLevel();
 
         SetScoreCounter(score);
         CheckButtons(score);
 
         // Update counters
-        var HP = _saveService.GetFloat(SavesKeys.Health);
-        var ST = _saveService.GetFloat(SavesKeys.Stamina);
-        var RS = _saveService.GetFloat(SavesKeys.ReloadSpeed);
-        var MS = _saveService.GetFloat(SavesKeys.MoveSpeed);
-        var AC = _saveService.GetFloat(SavesKeys.ReloadSpeed);
+        var HP = _saveService.GetHealth();
+        var ST = _saveService.GetStamina();
+        var RS = _saveService.GetReloadSpeed();
+        var MS = _saveService.GetMoveSpeed();
+        var AC = _saveService.GetAccuracy();
 
         SetCounter(SavesKeys.Health, HP);
         SetCounter(SavesKeys.Stamina, ST);
@@ -179,5 +173,5 @@ public class HUBScreen : MonoBehaviour, IHUBScreen
             SetUpgradePrice(name, price);
         }
     }
-
+*/
 }

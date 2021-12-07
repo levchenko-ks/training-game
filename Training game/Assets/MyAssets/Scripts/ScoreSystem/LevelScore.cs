@@ -19,7 +19,7 @@ public class LevelScore : MonoBehaviour, ILevelScore
         _saveService = ServiceLocator.GetSaveService();
         _unitRepository = ServiceLocator.GetUnitRepository();
 
-        _currentScore = _saveService.GetFloat(SavesKeys.Score);
+        _currentScore = _saveService.GetScore();
         _unitRepository.EnemyDied += AddEnemyScore;
 
         _enemyPrices = new Dictionary<string, float>();
@@ -44,7 +44,7 @@ public class LevelScore : MonoBehaviour, ILevelScore
         {
             _currentScore += _enemyPrices[name];
             ScoreChanged?.Invoke(_currentScore);
-            _saveService.SetFloat(SavesKeys.Score, _currentScore);
+            _saveService.SetScore(_currentScore);
         }        
     }
 }

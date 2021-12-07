@@ -29,7 +29,7 @@ public class Spawner : MonoBehaviour
         _player = ServiceLocator.GetPlayer();
         _cam = ServiceLocator.GetCamera();
 
-        _levelCount = _saveService.GetInt(SavesKeys.Level);
+        _levelCount = _saveService.GetLevel();
         SetEnemyCounter();
 
         // TODO: Implement dependency between levelCount and EnemyCharacteristics

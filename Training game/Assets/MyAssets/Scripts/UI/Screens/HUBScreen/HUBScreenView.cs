@@ -2,8 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUBScreenView : BaseView, IHUBScreenView
+public class HUBScreenView : BaseView /*, IHUBScreenView*/
 {
+    /*
     public event Action UpgradeHPClicked;
     public event Action UpgradeSTClicked;
     public event Action UpgradeRSClicked;
@@ -147,4 +148,5 @@ public class HUBScreenView : BaseView, IHUBScreenView
     {
         LevelCounter.text = "Go to next level: " + counter.ToString();
     }
+    */
 }

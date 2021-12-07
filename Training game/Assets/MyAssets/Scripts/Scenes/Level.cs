@@ -57,6 +57,6 @@ public class Level : MonoBehaviour
 
     private void SetupTasks()
     {
-        //var level = _saveService.
+        var level = _saveService.GetLevel();
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Level : MonoBehaviour
 {
@@ -11,8 +12,11 @@ public class Level : MonoBehaviour
     private IGameHUD _gameHUD;
     private IScreen _pauseScreen;
     private IScreen _gameOverScreen;
+    private IPlayer _player;
 
-    private readonly string _holder = PlaceHolders.UIModelsHolder.ToString();
+    private readonly string
+        _holder = PlaceHolders.UIModelsHolder.ToString(),
+        _HUB = Scenes.HUB.ToString();
 
     private void Awake()
     {
@@ -21,13 +25,11 @@ public class Level : MonoBehaviour
         _stateService = ServiceLocator.GetStateService();
         _saveService = ServiceLocator.GetSaveService();
         _camera = ServiceLocator.GetCamera();
+        _player = ServiceLocator.GetPlayer();
     }
 
     private void Start()
     {
-        var player = ServiceLocator.GetPlayer();
-        _stateService.PlayerIsDead = false;
-
         _resourcesManager.GetInstance<CoreComponents, Light>(CoreComponents.Standart_Directional_Light);
         _resourcesManager.GetInstance<EnvironmentComponents, Environment>(EnvironmentComponents.Environment);
         _resourcesManager.GetInstance<EnvironmentComponents, Spawner>(EnvironmentComponents.Spawner);
@@ -44,14 +46,22 @@ public class Level : MonoBehaviour
         _pauseScreen.SetHolder(UIHolder);
         _gameOverScreen.SetHolder(UIHolder);
 
-        _camera.SetTarget(player);
-        player.AddWeapon(Weapons.AK_74);
-        player.PlayerDied += InterruptLevel;
+        _camera.SetTarget(_player);
+        _player.AddWeapon(Weapons.AK_74);
+        _player.PlayerDied += InterruptLevel;
+
+        var task = new KillingTask("Test", Characters.Zombie, 2);
+        _taskManager.AddTask(task);
+        task.Done += Task_Done;
+    }
+
+    private void Task_Done()
+    {
+        SceneManager.LoadScene(_HUB);
     }
 
     private void InterruptLevel(IPlayer player)
-    {
-        _stateService.PlayerIsDead = true;
+    {        
         _gameOverScreen.Show();
     }
 

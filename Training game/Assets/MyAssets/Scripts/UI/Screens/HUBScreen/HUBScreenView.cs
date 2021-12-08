@@ -2,9 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUBScreenView : BaseView /*, IHUBScreenView*/
-{
-    /*
+public class HUBScreenView : BaseView , IHUBScreenView
+{    
     public event Action UpgradeHPClicked;
     public event Action UpgradeSTClicked;
     public event Action UpgradeRSClicked;
@@ -42,89 +41,89 @@ public class HUBScreenView : BaseView /*, IHUBScreenView*/
         NextLevel.onClick.AddListener(OnNextLevelClicked);
     }       
 
-    public void HideUpgradeButton(SavesKeys name)
+    public void HideUpgradeButton(CharacteristicsNames name)
     {
         switch (name)
         {
-            case SavesKeys.Health:
+            case CharacteristicsNames.Health:
                 UpgradeHP.interactable = false;
                 break;
-            case SavesKeys.Stamina:
+            case CharacteristicsNames.Stamina:
                 UpgradeST.interactable = false;
                 break;
-            case SavesKeys.ReloadSpeed:
+            case CharacteristicsNames.ReloadSpeed:
                 UpgradeRS.interactable = false;
                 break;
-            case SavesKeys.MoveSpeed:
+            case CharacteristicsNames.MoveSpeed:
                 UpgradeMS.interactable = false;
                 break;
-            case SavesKeys.Accuracy:
+            case CharacteristicsNames.Accuracy:
                 UpgradeAC.interactable = false;
                 break;
         }
     }
 
-    public void SetCounter(SavesKeys name, float value)
+    public void SetCounter(CharacteristicsNames name, float value)
     {
         switch (name)
         {
-            case SavesKeys.Health:
+            case CharacteristicsNames.Health:
                 HP.text = value.ToString();
                 break;
-            case SavesKeys.Stamina:
+            case CharacteristicsNames.Stamina:
                 ST.text = value.ToString();
                 break;
-            case SavesKeys.ReloadSpeed:
+            case CharacteristicsNames.ReloadSpeed:
                 RS.text = value.ToString();
                 break;
-            case SavesKeys.MoveSpeed:
+            case CharacteristicsNames.MoveSpeed:
                 MS.text = value.ToString();
                 break;
-            case SavesKeys.Accuracy:
+            case CharacteristicsNames.Accuracy:
                 AC.text = value.ToString();
                 break;
         }
     }
 
-    public void SetUpgradePrice(SavesKeys name, float value)
+    public void SetUpgradePrice(CharacteristicsNames name, float value)
     {
         switch (name)
         {
-            case SavesKeys.Health:
-                PriceHP.text = "Upgrade: " + value.ToString();
+            case CharacteristicsNames.Health:
+                PriceHP.text = $"Upgrade: {value}";
                 break;
-            case SavesKeys.Stamina:
-                PriceST.text = "Upgrade: " + value.ToString();
+            case CharacteristicsNames.Stamina:
+                PriceST.text = $"Upgrade: {value}";
                 break;
-            case SavesKeys.ReloadSpeed:
-                PriceRS.text = "Upgrade: " + value.ToString();
+            case CharacteristicsNames.ReloadSpeed:
+                PriceRS.text = $"Upgrade: {value}";
                 break;
-            case SavesKeys.MoveSpeed:
-                PriceMS.text = "Upgrade: " + value.ToString();
+            case CharacteristicsNames.MoveSpeed:
+                PriceMS.text = $"Upgrade: {value}";
                 break;
-            case SavesKeys.Accuracy:
-                PriceAC.text = "Upgrade: " + value.ToString();
+            case CharacteristicsNames.Accuracy:
+                PriceAC.text = $"Upgrade: {value}";
                 break;
         }
     }
 
-    public void ShowUpgradeButton(SavesKeys name)
+    public void ShowUpgradeButton(CharacteristicsNames name)
     {
         switch (name)
         {
-            case SavesKeys.Health:
+            case CharacteristicsNames.Health:
                 UpgradeHP.interactable = true;
                 break;
-            case SavesKeys.Stamina:
+            case CharacteristicsNames.Stamina:
                 UpgradeST.interactable = true;
                 break;
-            case SavesKeys.ReloadSpeed:
+            case CharacteristicsNames.ReloadSpeed:
                 UpgradeRS.interactable = true;
                 break;
-            case SavesKeys.MoveSpeed:
+            case CharacteristicsNames.MoveSpeed:
                 UpgradeMS.interactable = true;
                 break;
-            case SavesKeys.Accuracy:
+            case CharacteristicsNames.Accuracy:
                 UpgradeAC.interactable = true;
                 break;
         }
@@ -146,7 +145,6 @@ public class HUBScreenView : BaseView /*, IHUBScreenView*/
 
     public void SetNextLevelCounter(int counter)
     {
-        LevelCounter.text = "Go to next level: " + counter.ToString();
-    }
-    */
+        LevelCounter.text = $"Go to next level: {counter}";
+    }    
 }

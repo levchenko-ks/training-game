@@ -1,30 +1,30 @@
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
-{
-    private IStateService _stateService;
+{    
     private IResourcesManager _resourcesManager;
     private ISoundManager _soundManager;
 
     private IScreen _splashScreen;
     private IScreen _mainMenuScreen;
 
+    private static bool SessionStarted;
+
     private void Awake()
-    {
-        _stateService = ServiceLocator.GetStateService();
+    {        
         _resourcesManager = ServiceLocator.GetResourcesManager();
         _soundManager = ServiceLocator.GetSoundManager();
     }
 
     private void Start()
     {
-        if (_stateService.SessionStarted == false)
+        if (SessionStarted == false)
         {
             _splashScreen = _resourcesManager.GetInstance<UIModels, SplashScreen>(UIModels.SplashScreen);            
             _splashScreen.Hided += ShowMainMenu;
 
             _soundManager.PlayMusic(Sounds.MainTheme);
-            _stateService.SessionStarted = true;
+            SessionStarted = true;
         }
         else
         {

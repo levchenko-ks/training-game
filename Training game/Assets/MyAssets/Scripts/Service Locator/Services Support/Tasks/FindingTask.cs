@@ -5,21 +5,41 @@ public class FindingTask : Task
     private int _currentAmount = 0;
 
     public EnvironmentComponents Target { get => _target; }
-    public int Amount { get => _requiredAmount; }
-    /*
+    public int Amount { get => _requiredAmount; }    
 
-    public FindingTask(EnvironmentComponents Target, int Amount)
+    public FindingTask(string name, EnvironmentComponents Target, int Amount)
     {
+        var player = ServiceLocator.GetPlayer();
+
+        _name = name;
         _target = Target;
         _requiredAmount = Amount;
-        _descrption = $"Find {Amount} {Target}";
-        _type = TaskTypes.FindingTask;
+        DescriptionChanging();
+
+        player.ObjectFinded += Progress;
+    }
+    private void DescriptionChanging()
+    {
+        _description = $"Find {_currentAmount}/{_requiredAmount} {_target}.";
     }
 
-    public override void Progress()
+    private void Progress(EnvironmentComponents obj)
     {
+        if (_isDone)
+        { return; }
+        
+        if (obj != _target)
+        { return; }
+
         _currentAmount++;
-        if (_currentAmount >= _requiredAmount) { _isDone = true; }
+        DescriptionChanging();
+        if (_currentAmount >= _requiredAmount)
+        {
+            _isDone = true;
+            InvokeDone();
+        }
+
+        InvokeStatus();
     }
-    */
+
 }

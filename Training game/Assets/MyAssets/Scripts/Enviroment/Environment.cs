@@ -1,35 +1,32 @@
 using UnityEngine;
 
-public class Environment : MonoBehaviour
+public class Environment : MonoBehaviour, IEnvironment
 {
     private IResourcesManager _resourcesManager;
 
     private Transform _bonusHolder;
 
     private GameObject _floorTilePref;
-    private EnvModifier _HP_CubePref;
-    private EnvModifier _MS_SpherePref;
-    private Heal _heal_CubePref;
+    private GameObject _bonus_MS;    
+    private GameObject _heal_CubePref;
+    private GameObject _hiddenObject;
 
-    private int _length = 20; // Real size x2
-    private int _width = 20; // Real size x2
+    private int _length = 30; // Real size x2
+    private int _width = 30; // Real size x2
+
+    private readonly string _holderName = PlaceHolders.BonusesHolder.ToString();
+
 
     private void Awake()
     {
         _resourcesManager = ServiceLocator.GetResourcesManager();
 
         _floorTilePref = _resourcesManager.GetPrefab<EnvironmentComponents, GameObject>(EnvironmentComponents.FloorTile);
-        _HP_CubePref = _resourcesManager.GetPrefab<EnvironmentComponents, EnvModifier>(EnvironmentComponents.HP_Cube);
-        _MS_SpherePref = _resourcesManager.GetPrefab<EnvironmentComponents, EnvModifier>(EnvironmentComponents.MS_Sphere);
-        _heal_CubePref = _resourcesManager.GetPrefab<EnvironmentComponents, Heal>(EnvironmentComponents.Heal_Cube);
+        _bonus_MS = _resourcesManager.GetPrefab<EnvironmentComponents, GameObject>(EnvironmentComponents.Bonus_MS);     
+        _heal_CubePref = _resourcesManager.GetPrefab<EnvironmentComponents, GameObject>(EnvironmentComponents.Heal_Cube);
+        _hiddenObject = _resourcesManager.GetPrefab<EnvironmentComponents, GameObject>(EnvironmentComponents.HiddenObject);
 
-        _bonusHolder = new GameObject(PlaceHolders.BonusesHolder.ToString()).transform;
-    }
-
-    private void Start()
-    {
-        CreatePlane();
-        CreateBonuses();
+        _bonusHolder = new GameObject(_holderName).transform;
     }
 
     public void CreatePlane()
@@ -49,20 +46,24 @@ public class Environment : MonoBehaviour
 
     public void CreateBonuses()
     {
-        for (int i=0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
-            CreateBonus(_HP_CubePref.gameObject);
-            CreateBonus(_MS_SpherePref.gameObject);
-            CreateBonus(_heal_CubePref.gameObject);
+            CreateRandomPos(_bonus_MS);            
+            CreateRandomPos(_heal_CubePref);
         }
 
     }
 
-    private void CreateBonus(GameObject bonus)
+    public void CreateHiddenObject()
+    {
+        CreateRandomPos(_hiddenObject);
+    }
+
+    private void CreateRandomPos(GameObject obj)
     {
         Vector2 radiusPos = Random.insideUnitCircle * 20;
         var spawnPos = new Vector3(radiusPos.x, 1f, radiusPos.y);
 
-        Instantiate(bonus, spawnPos, Quaternion.identity, _bonusHolder);
+        Instantiate(obj, spawnPos, Quaternion.identity, _bonusHolder);
     }
 }

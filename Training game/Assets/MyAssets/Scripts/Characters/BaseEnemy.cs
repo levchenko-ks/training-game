@@ -8,15 +8,19 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
 
     public Billboard Billboard;
     public HealthBar HealthBar;
-        
-    protected IMovable _target;    
+
+    protected IMovable _target;
 
     protected float _maxHealth;
     protected float _currentHealth;
-    protected float _moveSpeed;    
+    protected float _moveSpeed;
 
     public IMovable Target { set => _target = value; }
     public IMovable BillboardCam { set => Billboard.Cam = value; }
+
+    public Vector3 Position => transform.position;
+    public Quaternion Rotation => transform.rotation;
+    public Vector3 Forward => transform.forward;
 
     private void Start()
     {
@@ -36,6 +40,11 @@ public abstract class BaseEnemy : MonoBehaviour, IEnemy
         {
             StartCoroutine(Dying());
         }
+    }
+
+    public void SetPosition(Vector3 pos)
+    {
+        transform.position = pos;
     }
 
     protected void DiedNotify(IEnemy enemy)

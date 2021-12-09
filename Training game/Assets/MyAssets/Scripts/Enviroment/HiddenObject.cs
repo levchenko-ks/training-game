@@ -9,6 +9,7 @@ public class HiddenObject : MonoBehaviour
         if (player == null) { return; }
 
         player.FindObject(EnvironmentComponents.HiddenObject);
+        Debug.Log("Find!");
         Destroy(gameObject);
     }
 }

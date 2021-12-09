@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Heal : MonoBehaviour
+public class HealCollider : MonoBehaviour
 {
     public float HealAmount;
 

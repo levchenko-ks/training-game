@@ -7,16 +7,14 @@ public class PauseScreen : MonoBehaviour, IScreen
     public event Action Hided;
 
     private IResourcesManager _resourcesManager;
-    private IInputManager _inputManager;
-    private IStateService _stateService;
+    private IInputManager _inputManager;    
     private Canvas _canvasFHD;
     private IPauseScreenView View;
 
     private void Awake()
     {
         _resourcesManager = ServiceLocator.GetResourcesManager();
-        _inputManager = ServiceLocator.GetInputManager();
-        _stateService = ServiceLocator.GetStateService();
+        _inputManager = ServiceLocator.GetInputManager();        
         _canvasFHD = ServiceLocator.GetCanvas();
 
         View = _resourcesManager.GetInstance<UIViews, PauseScreenView>(UIViews.PauseScreenView);
@@ -50,6 +48,7 @@ public class PauseScreen : MonoBehaviour, IScreen
 
     private void Pause()
     {
+        /*
         _stateService.GamePaused = !_stateService.GamePaused;
         if (_stateService.GamePaused)
         {
@@ -61,6 +60,7 @@ public class PauseScreen : MonoBehaviour, IScreen
             Time.timeScale = 1f;
             View.Hide();
         }
+        */
     }
 
     private void OnResumeCliked()

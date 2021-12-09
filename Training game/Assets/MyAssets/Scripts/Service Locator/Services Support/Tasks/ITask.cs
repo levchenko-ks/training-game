@@ -7,6 +7,5 @@ public interface ITask
 
     string Name { get; }
     string Description { get; }
-    bool IsDone { get; }
-    bool IsSide { get; }     
+    bool IsDone { get; }        
 }

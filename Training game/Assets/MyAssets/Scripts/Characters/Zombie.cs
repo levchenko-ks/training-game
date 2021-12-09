@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Zombie : BaseEnemy
+public class Zombie : BaseEnemy, IEnemy
 {
     private Rigidbody _rb;
     private ICharacteristicControl _enemyCharacteristic;

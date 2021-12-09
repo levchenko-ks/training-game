@@ -11,13 +11,13 @@ public class KillingTask : Task
 
     public KillingTask(string name, Characters Target, int Amount)
     {
-        _name = name;
+        _unitRepository = ServiceLocator.GetUnitRepository();
 
+        _name = name;
         _target = Target.ToString();
         _requiredAmount = Amount;
         DescriptionChanging();
-
-        _unitRepository = ServiceLocator.GetUnitRepository();
+        
         _unitRepository.EnemyDied += Progress;
     }
 

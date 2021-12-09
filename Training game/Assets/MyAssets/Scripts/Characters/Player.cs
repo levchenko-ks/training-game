@@ -122,6 +122,11 @@ public class Player : MonoBehaviour, IPlayer
         _vertical = obj.y;
     }
 
+    public void SetPosition(Vector3 pos)
+    {
+        transform.position = pos;
+    }
+
     private void SelectWeapon(int index)
     {
         bool weaponExist = false;

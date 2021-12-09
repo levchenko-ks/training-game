@@ -5,7 +5,6 @@ public class Level : MonoBehaviour
 {
     private IResourcesManager _resourcesManager;
     private ITaskManager _taskManager;
-    private IStateService _stateService;
     private ISaveService _saveService;
 
     private ICameraControl _camera;
@@ -13,16 +12,15 @@ public class Level : MonoBehaviour
     private IScreen _pauseScreen;
     private IScreen _gameOverScreen;
     private IPlayer _player;
+    private IEnvironment _environment;
+    private ISpawner _spawner;
 
-    private readonly string
-        _holder = PlaceHolders.UIModelsHolder.ToString(),
-        _HUB = Scenes.HUB.ToString();
+    private int _level;
 
     private void Awake()
     {
         _resourcesManager = ServiceLocator.GetResourcesManager();
         _taskManager = ServiceLocator.GetTaskManager();
-        _stateService = ServiceLocator.GetStateService();
         _saveService = ServiceLocator.GetSaveService();
         _camera = ServiceLocator.GetCamera();
         _player = ServiceLocator.GetPlayer();
@@ -31,42 +29,76 @@ public class Level : MonoBehaviour
     private void Start()
     {
         _resourcesManager.GetInstance<CoreComponents, Light>(CoreComponents.Standart_Directional_Light);
-        _resourcesManager.GetInstance<EnvironmentComponents, Environment>(EnvironmentComponents.Environment);
-        _resourcesManager.GetInstance<EnvironmentComponents, Spawner>(EnvironmentComponents.Spawner);
 
         _gameHUD = _resourcesManager.GetInstance<UIModels, GameHUD>(UIModels.GameHUD);
         _pauseScreen = _resourcesManager.GetInstance<UIModels, PauseScreen>(UIModels.PauseScreen);
         _gameOverScreen = _resourcesManager.GetInstance<UIModels, GameOverScreen>(UIModels.GameOverScreen);
+        _environment = _resourcesManager.GetInstance<EnvironmentComponents, Environment>(EnvironmentComponents.Environment);
+        _spawner = _resourcesManager.GetInstance<EnvironmentComponents, Spawner>(EnvironmentComponents.Spawner);
+        _level = _saveService.GetLevel();
 
-        _pauseScreen.Hide();
-        _gameOverScreen.Hide();
-
-        var UIHolder = new GameObject(_holder).transform;
-        _gameHUD.SetHolder(UIHolder);
-        _pauseScreen.SetHolder(UIHolder);
-        _gameOverScreen.SetHolder(UIHolder);
+        SetupUI();
+        SetupSpawner();
+        SetupEnvironment();
+        SetupTasks();
 
         _camera.SetTarget(_player);
         _player.AddWeapon(Weapons.AK_74);
         _player.PlayerDied += InterruptLevel;
-
-        var task = new KillingTask("Test", Characters.Zombie, 2);
-        _taskManager.AddTask(task);
-        task.Done += Task_Done;
     }
 
-    private void Task_Done()
+    private void SetupUI()
     {
-        SceneManager.LoadScene(_HUB);
+        var go = new GameObject(PlaceHolders.UIModelsHolder.ToString());
+        var UIModelsHolder = go.transform;
+        _gameHUD.SetHolder(UIModelsHolder);
+        _pauseScreen.SetHolder(UIModelsHolder);
+        _gameOverScreen.SetHolder(UIModelsHolder);
+
+        _pauseScreen.Hide();
+        _gameOverScreen.Hide();
     }
+
+    private void SetupSpawner()
+    {        
+        var counter = 4 + _level * 6;
+        _spawner.SetEnemyCounter(counter);
+        _spawner.StartSpawning();
+    }
+
+    private void SetupEnvironment()
+    {
+        _environment.CreatePlane();
+        _environment.CreateBonuses();
+    }
+
+
 
     private void InterruptLevel(IPlayer player)
-    {        
+    {
         _gameOverScreen.Show();
     }
 
     private void SetupTasks()
+    {        
+        var counter = _level * 3;
+        var firstTask = new KillingTask("Test", Characters.Zombie, counter);
+        _taskManager.AddTask(firstTask);
+
+        firstTask.Done += CreateSecondTask;
+    }
+    private void CreateSecondTask()
     {
-        var level = _saveService.GetLevel();
+        var secondTask = new FindingTask("Test_2", EnvironmentComponents.HiddenObject, 1);
+        _taskManager.AddTask(secondTask);
+        _environment.CreateHiddenObject();
+
+        secondTask.Done += FinishLevel;
+    }
+
+    private void FinishLevel()
+    {
+        _saveService.SetLevel(_level + 1);
+        SceneManager.LoadScene(Scenes.HUB.ToString());
     }
 }

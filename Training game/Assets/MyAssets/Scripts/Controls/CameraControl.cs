@@ -26,6 +26,11 @@ public class CameraControl : MonoBehaviour, ICameraControl
         _target = target;
     }
 
+    public void SetPosition(Vector3 pos)
+    {
+        transform.position = pos;
+    }
+
     private void StartPositioning()
     {
         var startpos = new Vector3(0f, _height, 0f);

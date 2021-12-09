@@ -1,8 +1,9 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Spawner : MonoBehaviour
+public class Spawner : MonoBehaviour, ISpawner
 {
     private IResourcesManager _resourcesManager;
     private ISaveService _saveService;
@@ -11,13 +12,11 @@ public class Spawner : MonoBehaviour
     private IPlayer _player;
     private IMovable _cam;
 
-    private float _spawnInterval = 5f;
-    private float _timeToSpawn = 2f;
+    private float _spawnInterval = 3f;
     private Transform _placeholder;
 
     private int _levelCount;
     private int _enemysToSpawn;
-    private int _enemysLeft;
 
 
     private void Awake()
@@ -29,62 +28,56 @@ public class Spawner : MonoBehaviour
         _player = ServiceLocator.GetPlayer();
         _cam = ServiceLocator.GetCamera();
 
-        _levelCount = _saveService.GetLevel();
-        SetEnemyCounter();
-
         // TODO: Implement dependency between levelCount and EnemyCharacteristics
+        // _levelCount = _saveService.GetLevel();
         // SetEnemyCharacteristics();
     }
 
     private void Start()
     {
-        _placeholder = new GameObject(PlaceHolders.EnemiesHolder.ToString()).transform;
+        var go = new GameObject(PlaceHolders.EnemiesHolder.ToString());
+        _placeholder = go.transform;
     }
 
-    void Update()
-    {
-        if (_enemysLeft == 0)
-        {
-            return;
-        }
-
-        if (Time.time >= _timeToSpawn)
-        {
-            Spawn(Characters.Zombie);
-        }
-    }
-
-    private void Spawn(Characters name)
+    public void Spawn(Characters name)
     {
         Vector2 radiusPos = Random.insideUnitCircle * 20;
+        var _spawnPos = new Vector3(radiusPos.x, 0f, radiusPos.y);
 
-        var playerPosition = _player.Position;
-        var _spawnPos = playerPosition + new Vector3(radiusPos.x, 0f, radiusPos.y);
-
-        var go = _resourcesManager.GetPooledObject<Characters, BaseEnemy>(name);
-        var enemy = go.GetComponent<IEnemy>();
-
-        go.transform.position = _spawnPos;
+        var go = _resourcesManager.GetPooledObject(name);
         go.transform.SetParent(_placeholder);
         go.SetActive(true);
+        var enemy = go.GetComponent<IEnemy>();
+        enemy.SetPosition(_spawnPos);
 
         enemy.Target = _player;
         enemy.BillboardCam = _cam;
 
         _unitRepository.AddEnemy(enemy);
-
-        _timeToSpawn = Time.time + _spawnInterval;
-        _enemysLeft--;
     }
 
-    private void SetEnemyCounter()
+    public void SetEnemyCounter(int counter)
     {
-        _enemysToSpawn = 6 + _levelCount * 2;
-        _enemysLeft = _enemysToSpawn;
+        _enemysToSpawn = counter;
     }
 
-    private void SetEnemyCharacteristics()
+    public void StartSpawning()
     {
+        StartCoroutine(Spawning(_enemysToSpawn));
+    }
 
+    public void StopSpawning()
+    {
+        StopAllCoroutines();
+    }
+
+    private IEnumerator Spawning(int counter)
+    {
+        for (int i = 0; i < counter; i++)
+        {
+            yield return new WaitForSeconds(_spawnInterval);
+            Spawn(Characters.Zombie);
+            _enemysToSpawn--;            
+        }
     }
 }

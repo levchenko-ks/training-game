@@ -3,8 +3,7 @@ using UnityEngine;
 public class ServiceLocator : MonoBehaviour
 {
     // Services
-    private static IResourcesManager _resourcesManager;
-    private static IStateService _stateService;
+    private static IResourcesManager _resourcesManager;    
     private static ISaveService _saveService;
     private static IInputManager _inputManager;
     private static ISoundManager _soundManager;
@@ -42,17 +41,7 @@ public class ServiceLocator : MonoBehaviour
         }
 
         return _resourcesManager;
-    }
-
-    public static IStateService GetStateService()
-    {
-        if (_stateService == null)
-        {
-            _stateService = new StateService();
-        }
-
-        return _stateService;
-    }
+    }    
 
     public static ISaveService GetSaveService()
     {

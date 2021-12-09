@@ -31,6 +31,11 @@ public class Target : MonoBehaviour, IMovable
         _inputManager.Look -= OnLook;
     }
 
+    public void SetPosition(Vector3 pos)
+    {
+        transform.position = pos;
+    }
+
     private void OnLook(Vector2 obj)
     {
         _horizontal = Mathf.Clamp(obj.x, 0f, Screen.width);

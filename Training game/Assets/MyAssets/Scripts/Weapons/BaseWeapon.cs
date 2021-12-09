@@ -109,7 +109,7 @@ public abstract class BaseWeapon : MonoBehaviour, IWeapon
             var spray = Quaternion.Euler(0f, Random.Range(-sprayAngle, sprayAngle), 0f);
             Quaternion fireDirection = _firePoint.rotation * spray;
 
-            var projectile = _resourcesManger.GetPooledObject<Projectiles, Projectile>(projectileName);
+            var projectile = _resourcesManger.GetPooledObject(projectileName);
 
             projectile.transform.position = _firePoint.position;
             projectile.transform.rotation = fireDirection;

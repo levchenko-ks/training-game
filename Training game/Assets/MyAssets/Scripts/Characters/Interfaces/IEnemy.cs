@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public interface IEnemy
+public interface IEnemy: IMovable
 {
     event Action<IEnemy> Died;
 

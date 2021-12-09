@@ -20,7 +20,7 @@ public class SoundManager : MonoBehaviour, ISoundManager
 
     public void PlayEffect(Sounds sound)
     {
-        var go = _resourcesManager.GetPooledObject<Sounds, AudioSource>(sound);
+        var go = _resourcesManager.GetPooledObject(sound);
 
         if (_sceneSoundHolder == null)
         {

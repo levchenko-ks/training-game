@@ -8,7 +8,7 @@ public class ResourcesManager : IResourcesManager
     public T GetInstance<E, T>(E item) where T : Object
     {
 
-        var path = typeof(E).Name + "/" + item.ToString();        
+        var path = $"{typeof(E).Name}/{item}";
         var res = Resources.Load<T>(path);
         var instance = GameObject.Instantiate(res);
 
@@ -17,20 +17,24 @@ public class ResourcesManager : IResourcesManager
 
     public T GetPrefab<E, T>(E item) where T : Object
     {
-        var path = typeof(E).Name + "/" + item.ToString();
+        var path = $"{typeof(E).Name}/{item}";
         var res = Resources.Load<T>(path);
 
         return res;
     }
 
-    public GameObject GetPooledObject<E, T>(E item) where T : Object
+    public GameObject GetPooledObject<E>(E item)
     {
-        if (_objectPools.ContainsKey(item.ToString()) == false)
+        //TODO: Create keys Dictionary<MyStruct, string>
+
+        var key = $"{typeof(E).Name}.{item}";
+
+        if (_objectPools.ContainsKey(key) == false)
         {
-            _objectPools.Add(item.ToString(), new List<GameObject>());
+            _objectPools.Add(key, new List<GameObject>());
         }
 
-        var pool = _objectPools[item.ToString()];
+        var pool = _objectPools[key];
 
         foreach (GameObject go in pool)
         {
